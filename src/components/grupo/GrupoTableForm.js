@@ -1,11 +1,11 @@
 import React from 'react'
 import { useFetchQuery } from '../../hooks/useFetchQuery';
-import {HOST_URL_BACK, API_GRUPOS} from '../../util/constant';
+import { HOST_URL_BACK, API_GRUPOS } from '../../util/constant';
 import { GrupoTableRowForm } from './GrupoTableRowForm';
 
-export const GrupoTableForm = ({ grupos, setGrupos }) => {
+export const GrupoTableForm = ({ grupos, setGrupos, setGrupoActive }) => {
 
-    const { loading } = useFetchQuery(`${HOST_URL_BACK}${API_GRUPOS}`, setGrupos);
+    useFetchQuery(`${HOST_URL_BACK}${API_GRUPOS}`, setGrupos);
 
     return (
         <div className="mt-3">
@@ -19,7 +19,8 @@ export const GrupoTableForm = ({ grupos, setGrupos }) => {
                 </thead>
                 <tbody>
                    {
-                       grupos && grupos.map(grupo => <GrupoTableRowForm key={grupo.id} grupo={grupo}/>)
+                       grupos && grupos.map(grupo => 
+                            <GrupoTableRowForm key={grupo.id} grupo={grupo} setGrupos={setGrupos} setGrupoActive={setGrupoActive} />)
                    }
                 </tbody>
             </table>

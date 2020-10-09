@@ -39,6 +39,5 @@ export const useFetchQuery = (url, setStateObject) => {
 
 useFetchQuery.prototype = {
     url : PropTypes.string.isRequired,
-    setStateObject: PropTypes.func.isRequired
-    
+    setStateObject: PropTypes.func.isRequired,    
 }

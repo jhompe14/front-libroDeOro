@@ -1,22 +1,60 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { commandFetch } from '../../helpers/CommandFetch';
 import { useForm } from '../../hooks/useForm'
-import { HOST_URL_BACK, API_GRUPOS, METHOD_POST } from '../../util/constant';
+import { HOST_URL_BACK, API_GRUPOS, METHOD_POST, METHOD_PUT } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
+import { filterDropById } from '../../util/selectors';
 
-export const GrupoForm = ({ setGrupos }) => {
+export const GrupoForm = ({ setGrupos, grupoActive }) => {
 
-    const [formValues, handleInputChange, reset] = useForm({
+    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
+        id: 0,
         nombre: '',
         descripcion: ''
     });
+    
+    useEffect(() => {
+        if(grupoActive.id){ 
+            handleObjectChange(grupoActive);
+        }
+    }, [grupoActive]);
 
-    const {nombre, descripcion} = formValues;
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         messageLoadingSwal();
+        if(formValues.id === 0){
+            createGrupo();
+        } else {
+            updateGrupo(formValues.id);
+        }    
+    }
+
+    const updateGrupo = (id) => {
+        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${id}`, METHOD_PUT, formValues)
+        .then(response => {
+            if(response.status === StatusCodes.ACCEPTED){
+                response.json().then(grupo => {
+                    setGrupos(grupos => [grupo, ...filterDropById(grupos, grupo.id)]);
+                    reset();
+                    messageCloseSwal();
+                    messageSuccessSwal("Grupo actualizado con exito");
+                })                
+            } else {
+                response.text().then(msg => {
+                    messageCloseSwal();
+                    messageErrorSwal(msg);                                       
+                });                
+            }
+        })
+        .catch(error =>  {
+            messageCloseSwal();
+            messageErrorSwal(error);
+        });
+    }
+
+    const createGrupo = () => {
         commandFetch(`${HOST_URL_BACK}${API_GRUPOS}`, METHOD_POST, formValues)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
@@ -34,7 +72,10 @@ export const GrupoForm = ({ setGrupos }) => {
                 
             }
         })
-        .catch(error => console.error(error));
+        .catch(error =>  {
+            messageCloseSwal();
+            messageErrorSwal(error);
+        });
     }
 
     return (
@@ -46,14 +87,14 @@ export const GrupoForm = ({ setGrupos }) => {
                     type="text" 
                     name="nombre" 
                     className="form-control"
-                    value= {nombre} 
+                    value= {formValues.nombre} 
                     onChange={handleInputChange}/>  
 
                 <label>Descripcion</label>  
                 <textarea 
                     name="descripcion" 
                     className="form-control" 
-                    value={descripcion}
+                    value={formValues.descripcion}
                     onChange={handleInputChange}/>                           
             </div>
             <div className="mt-2">
