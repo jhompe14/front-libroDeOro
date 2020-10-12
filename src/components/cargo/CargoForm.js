@@ -1,46 +1,71 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
+import { useForm } from '../../hooks/useForm';
 import { commandFetch } from '../../helpers/CommandFetch';
-import { useForm } from '../../hooks/useForm'
-import { HOST_URL_BACK, API_GRUPOS, METHOD_POST, METHOD_PUT } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faSave } from '@fortawesome/free-solid-svg-icons';
+import { HOST_URL_BACK, 
+        API_CARGOS, 
+        METHOD_POST, 
+        METHOD_PUT,
+        TYPE_CARGO_GRUPO,
+        TYPE_CARGO_RAMA,
+        TYPE_CARGO_SECCION } from '../../util/constant';
 
-export const GrupoForm = ({ setGrupos, grupoActive }) => {
+export const CargoForm = ({ setCargos, cargoActive, typecargo, typeId }) => {
+
+    const history= useHistory();
 
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
         id: 0,
         nombre: '',
         descripcion: ''
     });
-    
+
     useEffect(() => {
-        if(grupoActive.id){ 
-            handleObjectChange(grupoActive);
+        if(cargoActive.id){ 
+            handleObjectChange(cargoActive);
         }
-    }, [grupoActive]);
+    }, [cargoActive]);
+
+    const handleBack= () => {
+        switch(typecargo){
+            case TYPE_CARGO_GRUPO:
+                history.replace(`/grupo`);   
+                break;
+            case TYPE_CARGO_RAMA:
+                history.replace(`/rama`);
+                break;
+            case TYPE_CARGO_SECCION:
+                history.replace(`/seccion`);
+                break;
+            default:
+                break;
+        }
+    }
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         messageLoadingSwal();
         if(formValues.id === 0){
-            createGrupo();
+            createCargo();
         } else {
-            updateGrupo(formValues.id);
+            updateCargo(formValues.id);
         }    
     }
 
-    const updateGrupo = (id) => {
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${id}`, METHOD_PUT, formValues)
+    const updateCargo = (id) => {
+        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${id}`, METHOD_PUT, formValues)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
-                response.json().then(grupo => {
-                    setGrupos(grupos => [grupo, ...filterDropById(grupos, grupo.id)]);
+                response.json().then(cargo => {
+                    setCargos(cargos => [cargo, ...filterDropById(cargos, cargo.id)]);
                     reset();
                     messageCloseSwal();
-                    messageSuccessSwal("Grupo actualizado con exito");
+                    messageSuccessSwal("Cargo actualizado con exito");
                 })                
             } else {
                 response.text().then(msg => {
@@ -55,15 +80,15 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
         });
     }
 
-    const createGrupo = () => {
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}`, METHOD_POST, formValues)
+    const createCargo = () => {
+        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, METHOD_POST, formValues)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
-                response.json().then(grupo => {
-                    setGrupos(grupos => [grupo, ...grupos]);
+                response.json().then(cargo => {
+                    setCargos(cargos => [cargo, ...cargos]);
                     reset();
                     messageCloseSwal();
-                    messageSuccessSwal("Grupo creado con exito");
+                    messageSuccessSwal("Cargo creado con exito");
                 })                
             } else {
                 response.text().then(msg => {
@@ -78,6 +103,7 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
             messageErrorSwal(error);
         });
     }
+
 
     return (
         <form>
@@ -98,8 +124,11 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
                     value={formValues.descripcion}
                     onChange={handleInputChange}/>                           
             </div>
-            <div className="mt-2">
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+            <div className="row mt-2">
+                &nbsp;&nbsp;&nbsp;
+                <button onClick={handleBack} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Volver</button>
+                &nbsp;&nbsp;
+                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>   
             </div>
         </form>
     )

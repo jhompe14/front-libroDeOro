@@ -8,7 +8,7 @@ export const GrupoScreen = () => {
     const[grupoActive, setGrupoActive] = useState({});
 
     return (
-        <div className="content">
+        <div className="content animate__animated animate__slideInLeft">
             <h1>Grupos</h1>
             <hr/>
             <GrupoForm setGrupos = { setGrupos } grupoActive = { grupoActive } />

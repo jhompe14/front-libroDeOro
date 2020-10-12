@@ -1,14 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenAlt } from '@fortawesome/free-solid-svg-icons';
-import { HOST_URL_BACK, API_GRUPOS, METHOD_DELETE } from '../../util/constant';
+import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
 import { commandFetch } from '../../helpers/CommandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
+import { HOST_URL_BACK, 
+        API_GRUPOS, 
+        METHOD_DELETE,
+        TYPE_CARGO_GRUPO } from '../../util/constant';
 
 export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
+
+    const history= useHistory();
 
     const handleSetGrupoActive = () => {
         setGrupoActive(grupo);
@@ -35,14 +41,20 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
         });
     }
 
+    const handleGoCargos = () => {       
+        history.replace(`/cargo/type/${TYPE_CARGO_GRUPO}/id/${grupo.id}`);   
+    }
+
+
     return (
         <tr>
             <td>{grupo.nombre}</td>
             <td>{grupo.descripcion}</td>
             <td>
                 <div className="row">
-                    <div className="col-3" onClick={ handleSetGrupoActive }><FontAwesomeIcon icon={faPenAlt}/></div>
-                    <div className="col-3" onClick={ handleDeleteGrupo }><FontAwesomeIcon icon={faTrash}/></div>
+                    <div className="col-2" onClick={ handleSetGrupoActive } title="Editar"><FontAwesomeIcon icon={faPenAlt}/></div>
+                    <div className="col-2" onClick={ handleDeleteGrupo } title="Eliminar"><FontAwesomeIcon icon={faTrash}/></div>
+                    <div className="col-2" onClick={ handleGoCargos } title="Ver cargos"><FontAwesomeIcon icon={faTruckLoading}/></div>
                 </div>
             </td>
         </tr>
