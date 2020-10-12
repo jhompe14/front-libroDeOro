@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { queryFetch } from '../helpers/queryFetch';
 
-export const useFetchQuery = (url, setStateObject) => {
+export const useQueryFetch = (url, setStateObject) => {
 
     const isMounted = useRef(true);
     const [state, setstate] = useState({loading: null, error: null});
@@ -13,7 +14,7 @@ export const useFetchQuery = (url, setStateObject) => {
     }, []);
 
     useEffect(() => {
-        fetch(url)
+        queryFetch(url)
             .then(resp => resp.json())
             .then(data =>{
                 if(isMounted.current) {
@@ -37,7 +38,7 @@ export const useFetchQuery = (url, setStateObject) => {
     return state;
 }
 
-useFetchQuery.prototype = {
+useQueryFetch.prototype = {
     url : PropTypes.string.isRequired,
     setStateObject: PropTypes.func.isRequired,    
 }

@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
-import { commandFetch } from '../../helpers/CommandFetch';
+import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
+import { useDispatch } from 'react-redux';
+import { startLoadingGrupos } from '../../actions/grupoAction';
 import { HOST_URL_BACK, 
         API_GRUPOS, 
         METHOD_DELETE,
@@ -14,6 +16,7 @@ import { HOST_URL_BACK,
 
 export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
 
+    const dispatch = useDispatch();
     const history= useHistory();
 
     const handleSetGrupoActive = () => {
@@ -27,7 +30,8 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
             if(response.status === StatusCodes.ACCEPTED){
                 setGrupos(grupos => filterDropById(grupos, grupo.id));
                 messageCloseSwal();
-                messageSuccessSwal("Grupo eliminado con exito");                              
+                messageSuccessSwal("Grupo eliminado con exito");
+                dispatch(startLoadingGrupos());                              
             } else {
                 response.text().then(msg => {
                     messageCloseSwal();

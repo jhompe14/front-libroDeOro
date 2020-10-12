@@ -3,7 +3,7 @@ import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessS
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenAlt } from '@fortawesome/free-solid-svg-icons';
-import { commandFetch } from '../../helpers/CommandFetch';
+import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { HOST_URL_BACK, 
     API_CARGOS, 

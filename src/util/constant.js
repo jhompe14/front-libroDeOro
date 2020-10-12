@@ -8,6 +8,8 @@ export const METHOD_DELETE = "DELETE";
 export const HOST_URL_BACK= "http://localhost:8080/";
 export const API_GRUPOS = "api/grupo";
 export const API_CARGOS = "api/cargo"; 
+export const API_RAMAS = "api/rama";
+export const API_SECCIONES = "api/seccion";
 
 //Type Cargo
 export const TYPE_CARGO_GRUPO = "GR";

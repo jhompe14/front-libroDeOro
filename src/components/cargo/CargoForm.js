@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm } from '../../hooks/useForm';
-import { commandFetch } from '../../helpers/CommandFetch';
+import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';

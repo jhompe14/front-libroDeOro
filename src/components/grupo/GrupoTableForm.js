@@ -1,11 +1,11 @@
 import React from 'react'
-import { useFetchQuery } from '../../hooks/useFetchQuery';
+import { useQueryFetch } from '../../hooks/useQueryFetch';
 import { HOST_URL_BACK, API_GRUPOS } from '../../util/constant';
 import { GrupoTableRowForm } from './GrupoTableRowForm';
 
 export const GrupoTableForm = ({ grupos, setGrupos, setGrupoActive }) => {
 
-    useFetchQuery(`${HOST_URL_BACK}${API_GRUPOS}`, setGrupos);
+    useQueryFetch(`${HOST_URL_BACK}${API_GRUPOS}`, setGrupos);
 
     return (
         <div className="mt-3">

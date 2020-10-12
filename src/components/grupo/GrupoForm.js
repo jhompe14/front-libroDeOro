@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { commandFetch } from '../../helpers/CommandFetch';
+import { commandFetch } from '../../helpers/commandFetch';
 import { useForm } from '../../hooks/useForm'
 import { HOST_URL_BACK, API_GRUPOS, METHOD_POST, METHOD_PUT } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
@@ -7,9 +7,12 @@ import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessS
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { startLoadingGrupos } from '../../actions/grupoAction';
 
 export const GrupoForm = ({ setGrupos, grupoActive }) => {
 
+    const dispatch = useDispatch();
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
         id: 0,
         nombre: '',
@@ -41,7 +44,8 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
                     reset();
                     messageCloseSwal();
                     messageSuccessSwal("Grupo actualizado con exito");
-                })                
+                    dispatch(startLoadingGrupos());
+                });                
             } else {
                 response.text().then(msg => {
                     messageCloseSwal();
@@ -64,6 +68,7 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
                     reset();
                     messageCloseSwal();
                     messageSuccessSwal("Grupo creado con exito");
+                    dispatch(startLoadingGrupos());
                 })                
             } else {
                 response.text().then(msg => {

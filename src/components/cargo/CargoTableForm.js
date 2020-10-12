@@ -1,12 +1,12 @@
 import React from 'react'
-import { useFetchQuery } from '../../hooks/useFetchQuery';
+import { useQueryFetch } from '../../hooks/useQueryFetch';
 import { HOST_URL_BACK, API_CARGOS } from '../../util/constant';
 import { CargoTableRowForm } from './CargoTableRowForm';
 
 
 export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, typeId }) => {
 
-    useFetchQuery(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, setCargos);
+    useQueryFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, setCargos);
 
     return (
         <div className="mt-3">
