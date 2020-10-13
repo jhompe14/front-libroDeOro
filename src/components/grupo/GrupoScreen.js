@@ -11,7 +11,7 @@ export const GrupoScreen = () => {
         <div className="content animate__animated animate__slideInLeft">
             <h1>Grupos</h1>
             <hr/>
-            <GrupoForm setGrupos = { setGrupos } grupoActive = { grupoActive } />
+            <GrupoForm setGrupos = { setGrupos } grupoActive = { grupoActive } setGrupoActive = { setGrupoActive } />
             <GrupoTableForm grupos = { grupos }  setGrupos = { setGrupos } setGrupoActive = { setGrupoActive } />
         </div>
     )

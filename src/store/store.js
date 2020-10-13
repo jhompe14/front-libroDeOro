@@ -7,7 +7,7 @@ import { seccionReducer } from '../reducers/seccionReducer';
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const reducers = combineReducers({
-    gruposReducer: grupoReducer,
+    grupoReducer: grupoReducer,
     ramaReducer: ramaReducer,
     seccionReducer: seccionReducer,
 });

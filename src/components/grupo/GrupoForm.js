@@ -6,11 +6,11 @@ import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { startLoadingGrupos } from '../../actions/grupoAction';
 
-export const GrupoForm = ({ setGrupos, grupoActive }) => {
+export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive }) => {
 
     const dispatch = useDispatch();
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
@@ -35,16 +35,41 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
         }    
     }
 
+    const createGrupo = () => {
+        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}`, METHOD_POST, formValues)
+        .then(response => {
+            if(response.status === StatusCodes.CREATED){
+                response.json().then(grupo => {
+                    setGrupos(grupos => [grupo, ...grupos]);                    
+                    messageCloseSwal();
+                    messageSuccessSwal("Grupo creado con exito");
+                    dispatch(startLoadingGrupos());
+                    handleClean();
+                })                
+            } else {
+                response.text().then(msg => {
+                    messageCloseSwal();
+                    messageErrorSwal(msg);                                       
+                });
+                
+            }
+        })
+        .catch(error =>  {
+            messageCloseSwal();
+            messageErrorSwal(error);
+        });
+    }
+
     const updateGrupo = (id) => {
         commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${id}`, METHOD_PUT, formValues)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(grupo => {
-                    setGrupos(grupos => [grupo, ...filterDropById(grupos, grupo.id)]);
-                    reset();
+                    setGrupos(grupos => [grupo, ...filterDropById(grupos, grupo.id)]);                    
                     messageCloseSwal();
                     messageSuccessSwal("Grupo actualizado con exito");
                     dispatch(startLoadingGrupos());
+                    handleClean();
                 });                
             } else {
                 response.text().then(msg => {
@@ -59,29 +84,10 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
         });
     }
 
-    const createGrupo = () => {
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}`, METHOD_POST, formValues)
-        .then(response => {
-            if(response.status === StatusCodes.CREATED){
-                response.json().then(grupo => {
-                    setGrupos(grupos => [grupo, ...grupos]);
-                    reset();
-                    messageCloseSwal();
-                    messageSuccessSwal("Grupo creado con exito");
-                    dispatch(startLoadingGrupos());
-                })                
-            } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });
-                
-            }
-        })
-        .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
-        });
+    const handleClean = (e) =>{
+        e && e.preventDefault();
+        setGrupoActive({});
+        reset();
     }
 
     return (
@@ -104,6 +110,9 @@ export const GrupoForm = ({ setGrupos, grupoActive }) => {
                     onChange={handleInputChange}/>                           
             </div>
             <div className="mt-2">
+                &nbsp;&nbsp;&nbsp;
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
+                &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
             </div>
         </form>

@@ -15,6 +15,7 @@ export const startLoadingGrupos = () => {
                         grupos.push({
                             id: elemnt.id,
                             nombre: elemnt.nombre,
+                            descripcion: elemnt.descripcion,
                         });
                     });
                 }

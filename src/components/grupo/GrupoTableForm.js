@@ -1,11 +1,14 @@
-import React from 'react'
-import { useQueryFetch } from '../../hooks/useQueryFetch';
-import { HOST_URL_BACK, API_GRUPOS } from '../../util/constant';
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import { GrupoTableRowForm } from './GrupoTableRowForm';
 
 export const GrupoTableForm = ({ grupos, setGrupos, setGrupoActive }) => {
 
-    useQueryFetch(`${HOST_URL_BACK}${API_GRUPOS}`, setGrupos);
+    const grupoReducer= useSelector( state => state)?.grupoReducer;
+
+    useEffect(() => {
+        setGrupos(grupoReducer?.grupos);
+    }, [grupoReducer]);
 
     return (
         <div className="mt-3">

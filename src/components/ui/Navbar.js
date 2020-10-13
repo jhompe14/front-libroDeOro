@@ -29,6 +29,13 @@ export const Navbar = () => {
                                 to="/rama">
                                 Ramas
                             </NavLink>
+                            <NavLink 
+                                activeClassName="active"
+                                className="nav-item nav-link" 
+                                exact
+                                to="/seccion">
+                                Seccion
+                            </NavLink>
                         </div>
                     </li>
                 </ul>

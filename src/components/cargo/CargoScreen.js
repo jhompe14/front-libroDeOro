@@ -1,42 +1,60 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TYPE_CARGO_GRUPO, TYPE_CARGO_RAMA, TYPE_CARGO_SECCION } from '../../util/constant';
 import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 import { CargoForm } from './CargoForm';
 import { CargoTableForm } from './CargoTableForm';
+import { filterById } from '../../util/selectors';
 
 export const CargoScreen = () => {
 
     const[cargos, setCargos] = useState([]);
     const[cargoActive, setCargoActive] = useState({});
 
-    const { typecargo, typeId }= useParams();
+    const[headDescripTypeCargo, setHeadDescriptTypeCargo] = useState("");
+    const[descripTypeCargo, setDescripTypeCargo] = useState({});
     
-    const descripcionCargos = () => {
-        switch(typecargo){
-            case TYPE_CARGO_GRUPO:
-                return "CARGOS del GRUPO: ";
-                break;
-            case TYPE_CARGO_RAMA:
-                return "CARGOS de la RAMA: ";
-                break;
-            case TYPE_CARGO_SECCION:
-                return "CARGOS de la SECCION: ";
-                break;
-            default:
-                break;
+    const { typecargo, typeId }= useParams();
+
+    const grupoReducer = useSelector( state => state)?.grupoReducer;
+    const ramasReducer = useSelector( state => state)?.ramaReducer;
+    const seccionesReducer = useSelector( state => state)?.seccionReducer;
+
+    useEffect(() => {
+        const grupos = grupoReducer?.grupos
+        if(grupos.length > 0 && typecargo===TYPE_CARGO_GRUPO){
+            setHeadDescriptTypeCargo("Cargos del grupo: ");
+            setDescripTypeCargo(filterById(grupos, typeId)[0]);
+        }        
+    }, [grupoReducer]);
+
+    useEffect(() => {
+        const ramas = ramasReducer?.ramas;
+        if(ramas.length > 0 && typecargo===TYPE_CARGO_RAMA){
+            setHeadDescriptTypeCargo("Cargos de la rama: ");
+            setDescripTypeCargo(filterById(ramas, typeId)[0]);
         }
-    }
+    }, [ramasReducer])
+
+    useEffect(() => {
+        const secciones = seccionesReducer?.secciones
+        if(secciones.length > 0 && typecargo===TYPE_CARGO_SECCION){
+            setHeadDescriptTypeCargo("Cargos de la seccion: ");
+            setDescripTypeCargo(filterById(secciones, typeId)[0]);
+        }
+    }, [seccionesReducer])
+    
+    
 
     return (
         <div className="content animate__animated animate__slideInLeft">
-            <h1>
-               {descripcionCargos()}
-            </h1>
+            <p style={{fontSize: "37px"}}><b>{headDescripTypeCargo}</b> {descripTypeCargo.nombre}</p>
             <hr/>
             
             <CargoForm 
                 setCargos = { setCargos } 
-                cargoActive = { cargoActive } 
+                cargoActive = { cargoActive }
+                setCargoActive = { setCargoActive } 
                 typecargo={typecargo} 
                 typeId={typeId} />
             

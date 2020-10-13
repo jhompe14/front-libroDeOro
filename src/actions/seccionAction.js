@@ -15,7 +15,11 @@ export const startLoadingSecciones = () => {
                         secciones.push({
                             id: elemnt.id,
                             nombre: elemnt.nombre,
-                            idrama: elemnt.rama?.id,
+                            descripcion: elemnt.descripcion,
+                            idRama: elemnt.rama?.id,
+                            nombreRama: elemnt.rama?.nombre,
+                            idGrupo: elemnt.rama?.grupo?.id,
+                            nombreGrupo: elemnt.rama?.grupo?.nombre,
                         });
                     });
                 }

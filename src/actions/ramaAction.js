@@ -15,7 +15,11 @@ export const startLoadingRamas = () => {
                         ramas.push({
                             id: elemnt.id,
                             nombre: elemnt.nombre,
-                            idgrupo: elemnt.grupo?.id,
+                            edadMinima: elemnt.edadMinima,
+                            edadMaxima: elemnt.edadMaxima,
+                            descripcion: elemnt.descripcion,
+                            idGrupo: elemnt.grupo?.id,
+                            nombreGrupo: elemnt.grupo?.nombre,
                         });
                     });
                 }

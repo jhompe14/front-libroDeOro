@@ -8,30 +8,30 @@ import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { useDispatch } from 'react-redux';
-import { startLoadingGrupos } from '../../actions/grupoAction';
+import { startLoadingRamas } from '../../actions/ramaAction';
 import { HOST_URL_BACK, 
-        API_GRUPOS, 
+        API_RAMAS, 
         METHOD_DELETE,
-        TYPE_CARGO_GRUPO } from '../../util/constant';
+        TYPE_CARGO_RAMA } from '../../util/constant';
 
-export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
-
+export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
+    
     const dispatch = useDispatch();
     const history= useHistory();
 
-    const handleSetGrupoActive = () => {
-        setGrupoActive(grupo);
+    const handleSetRamaActive = () => {
+        setRamaActive(rama);
     };
 
-    const handleDeleteGrupo = () => {
+    const handleDeleteRama = () => {
         messageLoadingSwal();
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${grupo.id}`, METHOD_DELETE)
+        commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${rama.id}`, METHOD_DELETE)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
-                setGrupos(grupos => filterDropById(grupos, grupo.id));
+                setRamas(ramas => filterDropById(ramas, rama.id));
                 messageCloseSwal();
-                messageSuccessSwal("Grupo eliminado con exito");
-                dispatch(startLoadingGrupos());                              
+                messageSuccessSwal("Rama eliminada con exito");
+                dispatch(startLoadingRamas());                              
             } else {
                 response.text().then(msg => {
                     messageCloseSwal();
@@ -46,18 +46,20 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
     }
 
     const handleGoCargos = () => {       
-        history.replace(`/cargo/type/${TYPE_CARGO_GRUPO}/id/${grupo.id}`);   
+        history.replace(`/cargo/type/${TYPE_CARGO_RAMA}/id/${rama.id}`);   
     }
-
-
+    
     return (
         <tr>
-            <td>{grupo.nombre}</td>
-            <td>{grupo.descripcion}</td>
+            <td>{rama.nombreGrupo}</td>
+            <td>{rama.nombre}</td>
+            <td>{rama.edadMinima}</td>
+            <td>{rama.edadMaxima}</td>
+            <td>{rama.descripcion}</td>
             <td>
                 <div className="row">
-                    <div className="col-2" onClick={ handleSetGrupoActive } title="Editar"><FontAwesomeIcon icon={faPenAlt}/></div>
-                    <div className="col-2" onClick={ handleDeleteGrupo } title="Eliminar"><FontAwesomeIcon icon={faTrash}/></div>
+                    <div className="col-2" onClick={ handleSetRamaActive } title="Editar"><FontAwesomeIcon icon={faPenAlt}/></div>
+                    <div className="col-2" onClick={ handleDeleteRama } title="Eliminar"><FontAwesomeIcon icon={faTrash}/></div>
                     <div className="col-2" onClick={ handleGoCargos } title="Ver cargos"><FontAwesomeIcon icon={faTruckLoading}/></div>
                 </div>
             </td>
@@ -65,8 +67,8 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
     )
 }
 
-GrupoTableRowForm.prototype = {
-    grupo : PropTypes.object.isRequired,
-    setGrupos: PropTypes.func.isRequired,
-    setGrupoActive: PropTypes.func.isRequired,
+RamaTableRowForm.prototype = {
+    rama : PropTypes.object.isRequired,
+    setRamas: PropTypes.func.isRequired,
+    setRamaActive: PropTypes.func.isRequired,
 }

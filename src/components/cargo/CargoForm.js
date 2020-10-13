@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faSave, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 import { HOST_URL_BACK, 
         API_CARGOS, 
         METHOD_POST, 
@@ -15,7 +15,7 @@ import { HOST_URL_BACK,
         TYPE_CARGO_RAMA,
         TYPE_CARGO_SECCION } from '../../util/constant';
 
-export const CargoForm = ({ setCargos, cargoActive, typecargo, typeId }) => {
+export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, typeId }) => {
 
     const history= useHistory();
 
@@ -55,6 +55,30 @@ export const CargoForm = ({ setCargos, cargoActive, typecargo, typeId }) => {
         } else {
             updateCargo(formValues.id);
         }    
+    }    
+
+    const createCargo = () => {
+        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, METHOD_POST, formValues)
+        .then(response => {
+            if(response.status === StatusCodes.CREATED){
+                response.json().then(cargo => {
+                    setCargos(cargos => [cargo, ...cargos]);                   
+                    messageCloseSwal();
+                    messageSuccessSwal("Cargo creado con exito");
+                    handleClean();
+                })                
+            } else {
+                response.text().then(msg => {
+                    messageCloseSwal();
+                    messageErrorSwal(msg);                                       
+                });
+                
+            }
+        })
+        .catch(error =>  {
+            messageCloseSwal();
+            messageErrorSwal(error);
+        });
     }
 
     const updateCargo = (id) => {
@@ -62,10 +86,10 @@ export const CargoForm = ({ setCargos, cargoActive, typecargo, typeId }) => {
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(cargo => {
-                    setCargos(cargos => [cargo, ...filterDropById(cargos, cargo.id)]);
-                    reset();
+                    setCargos(cargos => [cargo, ...filterDropById(cargos, cargo.id)]);                    
                     messageCloseSwal();
                     messageSuccessSwal("Cargo actualizado con exito");
+                    handleClean();
                 })                
             } else {
                 response.text().then(msg => {
@@ -80,28 +104,10 @@ export const CargoForm = ({ setCargos, cargoActive, typecargo, typeId }) => {
         });
     }
 
-    const createCargo = () => {
-        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, METHOD_POST, formValues)
-        .then(response => {
-            if(response.status === StatusCodes.CREATED){
-                response.json().then(cargo => {
-                    setCargos(cargos => [cargo, ...cargos]);
-                    reset();
-                    messageCloseSwal();
-                    messageSuccessSwal("Cargo creado con exito");
-                })                
-            } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });
-                
-            }
-        })
-        .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
-        });
+    const handleClean = (e) =>{
+        e && e.preventDefault();
+        setCargoActive({});
+        reset();        
     }
 
 
@@ -126,7 +132,9 @@ export const CargoForm = ({ setCargos, cargoActive, typecargo, typeId }) => {
             </div>
             <div className="row mt-2">
                 &nbsp;&nbsp;&nbsp;
-                <button onClick={handleBack} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Volver</button>
+                <button onClick={handleBack} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Volver</button>                
+                &nbsp;&nbsp;
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
                 &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>   
             </div>
