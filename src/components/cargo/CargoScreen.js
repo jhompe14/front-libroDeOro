@@ -8,6 +8,11 @@ import { filterById } from '../../util/selectors';
 
 export const CargoScreen = () => {
 
+    const initialCargo = {
+        id: 0,
+        nombre: '',
+        descripcion: ''
+    };
     const[cargos, setCargos] = useState([]);
     const[cargoActive, setCargoActive] = useState({});
 
@@ -44,8 +49,6 @@ export const CargoScreen = () => {
         }
     }, [seccionesReducer])
     
-    
-
     return (
         <div className="content animate__animated animate__slideInLeft">
             <p style={{fontSize: "37px"}}><b>{headDescripTypeCargo}</b> {descripTypeCargo.nombre}</p>
@@ -55,8 +58,9 @@ export const CargoScreen = () => {
                 setCargos = { setCargos } 
                 cargoActive = { cargoActive }
                 setCargoActive = { setCargoActive } 
-                typecargo={typecargo} 
-                typeId={typeId} />
+                typecargo= { typecargo } 
+                typeId= { typeId }
+                initialCargo= { initialCargo } />
             
             <CargoTableForm 
                 cargos = { cargos }  

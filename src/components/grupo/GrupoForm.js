@@ -10,14 +10,10 @@ import { faSave, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { startLoadingGrupos } from '../../actions/grupoAction';
 
-export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive }) => {
+export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive, initialGrupo }) => {
 
     const dispatch = useDispatch();
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
-        id: 0,
-        nombre: '',
-        descripcion: ''
-    });
+    const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialGrupo);
     
     useEffect(() => {
         if(grupoActive.id){ 
@@ -86,8 +82,8 @@ export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive }) => {
 
     const handleClean = (e) =>{
         e && e.preventDefault();
-        setGrupoActive({});
-        reset();
+        setGrupoActive(initialGrupo);
+        reset(initialGrupo);
     }
 
     return (
@@ -110,7 +106,6 @@ export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive }) => {
                     onChange={handleInputChange}/>                           
             </div>
             <div className="mt-2">
-                &nbsp;&nbsp;&nbsp;
                 <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
                 &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
-import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { useDispatch } from 'react-redux';
 import { startLoadingGrupos } from '../../actions/grupoAction';
@@ -13,6 +12,11 @@ import { HOST_URL_BACK,
         API_GRUPOS, 
         METHOD_DELETE,
         TYPE_CARGO_GRUPO } from '../../util/constant';
+import { messageLoadingSwal, 
+        messageCloseSwal, 
+        messageErrorSwal, 
+        messageSuccessSwal, 
+        messageConfirmSwal } from '../../util/messages';
 
 export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
 
@@ -24,25 +28,27 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
     };
 
     const handleDeleteGrupo = () => {
-        messageLoadingSwal();
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${grupo.id}`, METHOD_DELETE)
-        .then(response => {
-            if(response.status === StatusCodes.ACCEPTED){
-                setGrupos(grupos => filterDropById(grupos, grupo.id));
-                messageCloseSwal();
-                messageSuccessSwal("Grupo eliminado con exito");
-                dispatch(startLoadingGrupos());                              
-            } else {
-                response.text().then(msg => {
+        messageConfirmSwal(`Quiere eliminar el grupo ${grupo.nombre}`, () =>{
+            messageLoadingSwal();
+            commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${grupo.id}`, METHOD_DELETE)
+            .then(response => {
+                if(response.status === StatusCodes.ACCEPTED){
+                    setGrupos(grupos => filterDropById(grupos, grupo.id));
                     messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
-            }
-        })
-        .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
-        });
+                    messageSuccessSwal("Grupo eliminado con exito");
+                    dispatch(startLoadingGrupos());                              
+                } else {
+                    response.text().then(msg => {
+                        messageCloseSwal();
+                        messageErrorSwal(msg);                                       
+                    });                
+                }
+            })
+            .catch(error =>  {
+                messageCloseSwal();
+                messageErrorSwal(error);
+            });
+        });       
     }
 
     const handleGoCargos = () => {       

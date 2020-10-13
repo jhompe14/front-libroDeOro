@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
-import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { useDispatch } from 'react-redux';
 import { startLoadingRamas } from '../../actions/ramaAction';
@@ -13,6 +12,11 @@ import { HOST_URL_BACK,
         API_RAMAS, 
         METHOD_DELETE,
         TYPE_CARGO_RAMA } from '../../util/constant';
+import { messageLoadingSwal,
+        messageCloseSwal, 
+        messageErrorSwal, 
+        messageSuccessSwal,
+        messageConfirmSwal } from '../../util/messages';
 
 export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
     
@@ -24,24 +28,26 @@ export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
     };
 
     const handleDeleteRama = () => {
-        messageLoadingSwal();
-        commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${rama.id}`, METHOD_DELETE)
-        .then(response => {
-            if(response.status === StatusCodes.ACCEPTED){
-                setRamas(ramas => filterDropById(ramas, rama.id));
-                messageCloseSwal();
-                messageSuccessSwal("Rama eliminada con exito");
-                dispatch(startLoadingRamas());                              
-            } else {
-                response.text().then(msg => {
+        messageConfirmSwal(`Quiere eliminar la rama ${rama.nombre}`, () =>{
+            messageLoadingSwal();
+            commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${rama.id}`, METHOD_DELETE)
+            .then(response => {
+                if(response.status === StatusCodes.ACCEPTED){
+                    setRamas(ramas => filterDropById(ramas, rama.id));
                     messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
-            }
-        })
-        .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+                    messageSuccessSwal("Rama eliminada con exito");
+                    dispatch(startLoadingRamas());                              
+                } else {
+                    response.text().then(msg => {
+                        messageCloseSwal();
+                        messageErrorSwal(msg);                                       
+                    });                
+                }
+            })
+            .catch(error =>  {
+                messageCloseSwal();
+                messageErrorSwal(error);
+            });
         });
     }
 

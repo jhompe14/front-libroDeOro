@@ -15,15 +15,11 @@ import { HOST_URL_BACK,
         TYPE_CARGO_RAMA,
         TYPE_CARGO_SECCION } from '../../util/constant';
 
-export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, typeId }) => {
+export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, typeId, initialCargo }) => {
 
     const history= useHistory();
 
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
-        id: 0,
-        nombre: '',
-        descripcion: ''
-    });
+    const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialCargo);
 
     useEffect(() => {
         if(cargoActive.id){ 
@@ -106,8 +102,8 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
 
     const handleClean = (e) =>{
         e && e.preventDefault();
-        setCargoActive({});
-        reset();        
+        setCargoActive(initialCargo);
+        reset(initialCargo);        
     }
 
 

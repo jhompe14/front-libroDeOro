@@ -10,21 +10,13 @@ import { faHandSparkles, faSave } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingSecciones } from '../../actions/seccionAction';
 
-export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive}) => {
+export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive, initialSeccion}) => {
 
     const dispatch = useDispatch();
     const grupos = useSelector( state => state)?.grupoReducer?.grupos;
     const ramas = useSelector(state => state)?.ramaReducer?.ramas;    
     const[ramasFilter, setRamasFilter] = useState([]);
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
-        id: 0,
-        nombre: '',
-        descripcion: '',
-        idRama: 0,
-        nombreRama: '',
-        idGrupo: 0,
-        nombreGrupo: ''
-    });
+    const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialSeccion);
     
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
@@ -97,9 +89,13 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive}) => 
 
     const handleClean = (e) =>{
         e && e.preventDefault();
-        setSeccionActive({});
-        reset();
+        setSeccionActive(initialSeccion);
+        reset(initialSeccion);
     }
+
+    const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
+    const getSelectedRama = (ramaId) =>  formValues && formValues.idRama === ramaId ? 'selected': '';
+
 
     return (
         <form>
@@ -111,13 +107,13 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive}) => 
                             name="idGrupo"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione un grupo</option>
+                            <option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>
                             {                                
                                 grupos && grupos.map(grupo => 
                                                         <option key={grupo.id} 
                                                                 value={grupo.id} 
-                                                                selected={formValues && formValues.idGrupo === grupo.id ? "selected": ""}>
-                                                                    {grupo.nombre}
+                                                                selected={getSelectedGrupo(grupo.id)}>
+                                                            {grupo.nombre}
                                                         </option>)
                             }        
                         </select>  
@@ -128,13 +124,13 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive}) => 
                             name="idRama"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione una rama</option>
+                            <option value="0" selected={getSelectedRama(0)}>Seleccione una rama</option>
                             {                                
                                 ramasFilter && ramasFilter.map(rama => 
                                                         <option key={rama.id} 
                                                                 value={rama.id} 
-                                                                selected={formValues && formValues.idRama === rama.id ? "selected": ""}>
-                                                                    {rama.nombre}
+                                                                selected={getSelectedRama(rama.id)}>
+                                                            {rama.nombre}
                                                         </option>)
                             }        
                         </select>

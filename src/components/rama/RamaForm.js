@@ -10,22 +10,14 @@ import { faHandSparkles, faSave } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingRamas } from '../../actions/ramaAction';
 
-export const RamaForm = ({ setRamas, ramaActive, setRamaActive }) => {
-
+export const RamaForm = ({ setRamas, ramaActive, setRamaActive, initialRama }) => {
+   
     const dispatch = useDispatch();
     const grupos = useSelector( state => state)?.grupoReducer?.grupos;
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
-        id: 0,
-        nombre: '',
-        edadMinima: 0,
-        edadMaxima: 0,
-        descripcion: '',
-        idGrupo: 0,
-        nombreGrupo: ''
-    });
+    const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialRama);
 
     useEffect(() => {
-        if(ramaActive.id){ 
+        if(ramaActive.id){
             handleObjectChange(ramaActive);
         }
     }, [ramaActive]);
@@ -91,10 +83,13 @@ export const RamaForm = ({ setRamas, ramaActive, setRamaActive }) => {
 
     const handleClean = (e) =>{
         e && e.preventDefault();
-        setRamaActive({});
-        reset();
+        setRamaActive(initialRama);
+        reset(initialRama);
     }
 
+    const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
+
+    
     return (
         <form>
             <div className="form-group row">
@@ -105,13 +100,14 @@ export const RamaForm = ({ setRamas, ramaActive, setRamaActive }) => {
                             name="idGrupo"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione un grupo</option>
-                            {                                
+                            { (<option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>) }
+                            {
+                                                                
                                 grupos && grupos.map(grupo => 
                                                         <option key={grupo.id} 
                                                                 value={grupo.id} 
-                                                                selected={formValues && formValues.idGrupo === grupo.id ? "selected": ""}>
-                                                                    {grupo.nombre}
+                                                                selected={getSelectedGrupo(grupo.id)}>
+                                                            {grupo.nombre}
                                                         </option>)
                             }        
                         </select>  

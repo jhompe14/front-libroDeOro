@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
-import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { useDispatch } from 'react-redux';
 import { startLoadingSecciones } from '../../actions/seccionAction';
@@ -13,6 +12,11 @@ import { HOST_URL_BACK,
         API_SECCIONES, 
         METHOD_DELETE,
         TYPE_CARGO_SECCION } from '../../util/constant';
+import { messageLoadingSwal, 
+        messageCloseSwal, 
+        messageErrorSwal, 
+        messageSuccessSwal, 
+        messageConfirmSwal } from '../../util/messages';
 
 
 export const SeccionTableRowForm = ({ seccion, setSecciones, setSeccionActive }) => {
@@ -25,24 +29,26 @@ export const SeccionTableRowForm = ({ seccion, setSecciones, setSeccionActive })
     };
 
     const handleDeleteSeccion = () => {
-        messageLoadingSwal();
-        commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/${seccion.id}`, METHOD_DELETE)
-        .then(response => {
-            if(response.status === StatusCodes.ACCEPTED){
-                setSecciones(secciones => filterDropById(secciones, seccion.id));
-                messageCloseSwal();
-                messageSuccessSwal("Seccion eliminada con exito");
-                dispatch(startLoadingSecciones());                              
-            } else {
-                response.text().then(msg => {
+        messageConfirmSwal(`Quiere eliminar la seccion ${seccion.nombre}`, () =>{
+            messageLoadingSwal();
+            commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/${seccion.id}`, METHOD_DELETE)
+            .then(response => {
+                if(response.status === StatusCodes.ACCEPTED){
+                    setSecciones(secciones => filterDropById(secciones, seccion.id));
                     messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
-            }
-        })
-        .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+                    messageSuccessSwal("Seccion eliminada con exito");
+                    dispatch(startLoadingSecciones());                              
+                } else {
+                    response.text().then(msg => {
+                        messageCloseSwal();
+                        messageErrorSwal(msg);                                       
+                    });                
+                }
+            })
+            .catch(error =>  {
+                messageCloseSwal();
+                messageErrorSwal(error);
+            });
         });
     }
 

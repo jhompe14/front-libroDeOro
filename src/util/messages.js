@@ -22,4 +22,21 @@ export const messageSuccessSwal = (message) => {
 
 export const messageCloseSwal = () => {
     Swal.close();
-};  
+};
+
+export const messageConfirmSwal = (message, funcConfirm) => {
+    Swal.fire({
+        title: '¿Esta seguro?',
+        text: message,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            funcConfirm();
+        }
+      })
+}
