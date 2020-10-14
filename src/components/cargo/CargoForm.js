@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { useForm } from '../../hooks/useForm';
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
-import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faSave, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +13,11 @@ import { HOST_URL_BACK,
         TYPE_CARGO_GRUPO,
         TYPE_CARGO_RAMA,
         TYPE_CARGO_SECCION } from '../../util/constant';
+import { messageLoadingSwal, 
+        messageCloseSwal, 
+        messageErrorSwal, 
+        messageSuccessSwal } from '../../util/messages';
+
 
 export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, typeId, initialCargo }) => {
 
@@ -67,8 +71,7 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                 response.text().then(msg => {
                     messageCloseSwal();
                     messageErrorSwal(msg);                                       
-                });
-                
+                });                
             }
         })
         .catch(error =>  {
