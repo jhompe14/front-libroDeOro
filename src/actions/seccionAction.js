@@ -33,3 +33,7 @@ export const setSecciones = (secciones) => ({
     type: types.seccionesLoad,
     payload: secciones,
 });
+
+export const startRemoveSecciones = () => ({
+    type: types.seccionesRemove,
+});

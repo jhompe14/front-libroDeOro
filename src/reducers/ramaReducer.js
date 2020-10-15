@@ -13,6 +13,9 @@ export const ramaReducer = (state = initialState, action) => {
                 ...state,
                 ramas: [ ...action.payload ]
             }
+        
+        case types.ramasRemove:
+            return {}
 
         default:
             return state

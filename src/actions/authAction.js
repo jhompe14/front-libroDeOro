@@ -2,6 +2,9 @@ import { commandFetch } from "../helpers/commandFetch";
 import { types } from "../types/types";
 import { HOST_URL_BACK, API_AUTH, METHOD_POST } from '../util/constant';
 import { StatusCodes } from 'http-status-codes';
+import { startRemoveGrupos } from "./grupoAction";
+import { startRemoveRamas } from "./ramaAction";
+import { startRemoveSecciones } from "./seccionAction";
 import { messageLoadingSwal, 
     messageCloseSwal, 
     messageErrorSwal } from '../util/messages';
@@ -18,6 +21,7 @@ export const startLoginUser = (usuario, contrasena) =>{
                     response.json().then(auth => {
                         messageCloseSwal();
                         dispatch(setAuth(auth));
+                        setLocalStorageFromAuth(auth);
                     });
                 }
             })
@@ -28,7 +32,50 @@ export const startLoginUser = (usuario, contrasena) =>{
     }
 }
 
-export const setAuth = (auth) => ({
+export const setAuthFromLocalStorage = () => ({
+    type: types.login,
+    payload: {
+        usuario: localStorage.getItem('usuario'),
+        token: localStorage.getItem('token'),
+        tipoUsuario: localStorage.getItem('tipoUsuario'),
+    },    
+});
+
+export const validateLocalStorageAuth = () => {
+    return localStorage.getItem('usuario') && 
+            localStorage.getItem('token') &&
+            localStorage.getItem('tipoUsuario')
+}
+
+export const startLogoutUser = () => {
+    return async(dispatch) => {
+        dispatch(startRemoveGrupos());
+        dispatch(startRemoveRamas());
+        dispatch(startRemoveSecciones());
+        dispatch(setLogoutAuth());
+        removeLocalStorageFromAuth();
+    }
+}
+
+const setLogoutAuth = () => ({    
+    type: types.logout,    
+}); 
+
+const setAuth = (auth) => ({
     type: types.login,
     payload: auth,
 });
+
+const setLocalStorageFromAuth = (auth) => {
+    localStorage.setItem('usuario', auth.usuario);
+    localStorage.setItem('token', auth.token);
+    localStorage.setItem('tipoUsuario', auth.tipoUsuario);
+};
+
+const removeLocalStorageFromAuth = () => {
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('token');
+    localStorage.removeItem('tipoUsuario');
+}
+
+

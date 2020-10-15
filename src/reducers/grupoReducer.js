@@ -16,6 +16,9 @@ export const grupoReducer = (state = initialState, action) => {
                 grupos: [ ...action.payload ]
             }
 
+        case types.gruposRemove:
+            return {}
+
         default:
             return state
     }

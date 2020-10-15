@@ -1,6 +1,5 @@
 
 export const commandFetch= async(url, method, sendObject) => {
-  console.log(sendObject);
   return await fetch(url, {
     method: method,      
     headers: {

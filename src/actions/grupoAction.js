@@ -29,3 +29,7 @@ export const setGrupos = (grupos) => ({
     type: types.gruposLoad,
     payload: grupos,
 });
+
+export const startRemoveGrupos = () => ({
+    type: types.gruposRemove,
+});

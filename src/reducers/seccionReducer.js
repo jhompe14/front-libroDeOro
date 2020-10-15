@@ -13,6 +13,9 @@ export const seccionReducer = (state = initialState, action) => {
                 ...state,
                 secciones: [ ...action.payload ]
             }
+        
+        case types.seccionesRemove:
+            return {}
 
         default:
             return state

@@ -16,3 +16,7 @@ export const API_AUTH = "api/auth";
 export const TYPE_CARGO_GRUPO = "GR";
 export const TYPE_CARGO_RAMA = "RA";
 export const TYPE_CARGO_SECCION = "SE";
+
+//Type Usuario
+export const TYPE_USUARIO_ADMINISTRADOR = "AD";
+export const TYPE_USUARIO_INTEGRANTE = "IN";

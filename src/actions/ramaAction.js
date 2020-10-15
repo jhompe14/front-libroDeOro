@@ -33,3 +33,7 @@ export const setRamas = (ramas) => ({
     type: types.ramasLoad,
     payload: ramas,
 });
+
+export const startRemoveRamas = () => ({
+    type: types.ramasRemove,
+});
