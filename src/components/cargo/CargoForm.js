@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
@@ -15,14 +16,15 @@ import { HOST_URL_BACK,
         TYPE_CARGO_SECCION } from '../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
-        messageErrorSwal, 
         messageSuccessSwal } from '../../util/messages';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 
 
 export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, typeId, initialCargo }) => {
 
     const history= useHistory();
-
+    const dispatch = useDispatch();
+    const { authReducer } = useSelector( state => state);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialCargo);
 
     useEffect(() => {
@@ -47,8 +49,7 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
         }
     }
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
+    const handleSubmit = () =>{
         messageLoadingSwal();
         if(formValues.id === 0){
             createCargo();
@@ -58,7 +59,7 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
     }    
 
     const createCargo = () => {
-        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, METHOD_POST, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, METHOD_POST, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(cargo => {
@@ -68,20 +69,16 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                     handleClean();
                 })                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
+                controlErrorFetch(response, dispatch);                
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
     const updateCargo = (id) => {
-        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${id}`, METHOD_PUT, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${id}`, METHOD_PUT, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(cargo => {
@@ -91,27 +88,22 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                     handleClean();
                 })                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
+                controlErrorFetch(response, dispatch);                
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
-    const handleClean = (e) =>{
-        e && e.preventDefault();
+    const handleClean = () =>{
         setCargoActive(initialCargo);
         reset(initialCargo);        
     }
 
 
     return (
-        <form>
+        <>
             <div className="form-group">
                 
                 <label>Nombre</label> 
@@ -137,6 +129,6 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                 &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>   
             </div>
-        </form>
+        </>
     )
 }

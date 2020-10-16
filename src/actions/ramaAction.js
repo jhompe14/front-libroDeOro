@@ -1,14 +1,22 @@
 import { queryFetch } from "../helpers/queryFetch";
 import { types } from "../types/types";
 import { HOST_URL_BACK, API_RAMAS } from '../util/constant';
+import { StatusCodes } from 'http-status-codes';
+import { controlErrorFetch } from "../helpers/controlErrorFetch";
 
 
-export const startLoadingRamas = () => {
+export const startLoadingRamas = (authReducer) => {
     return async(dispatch) => {
         const ramas = [];
 
-        await queryFetch(`${HOST_URL_BACK}${API_RAMAS}`)
-            .then(resp => resp.json())
+        await queryFetch(`${HOST_URL_BACK}${API_RAMAS}`, authReducer?.token)
+            .then(resp => {
+                if(resp.status === StatusCodes.OK){
+                    return resp.json()
+                }else{
+                    return new Promise((resolve, reject) => reject({status: resp.status}));
+                }
+            })
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(elemnt => {
@@ -23,6 +31,8 @@ export const startLoadingRamas = () => {
                         });
                     });
                 }
+            }).catch(err => {
+                controlErrorFetch(err, dispatch);
             });
 
         dispatch(setRamas(ramas));

@@ -1,28 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { CargoScreen } from '../components/cargo/CargoScreen';
+import { GrupoScreen } from '../components/grupo/GrupoScreen';
+import { RamaScreen } from '../components/rama/RamaScreen';
+import { SeccionScreen } from '../components/seccion/SeccionScreen';
 
-import { Route, Redirect } from 'react-router-dom';
 
-
-export const PrivateRoute = ({
-    isAuthenticated,
-    component: Component,
-    ...rest
-}) => {
+export const PrivateRoute = () => {
 
     return (
-        <Route { ...rest }
-            component={ (props) => (
-                ( isAuthenticated )
-                    ? ( <Component { ...props } /> )
-                    : ( <Redirect to="/login" /> )
-            )}
-        
-        />
+        <>
+            <div className="container mt-2">
+                <Switch>
+                    <Route exact path="/grupo" component={GrupoScreen} />
+                    <Route exact path="/rama" component={RamaScreen} />
+                    <Route exact path="/seccion" component={SeccionScreen} />
+                    <Route exact path="/cargo/type/:typecargo/id/:typeId" component={CargoScreen} />   
+                    <Redirect to="/auth/login" />   
+                </Switch>
+            </div>
+        </>
     )
-}
-
-PrivateRoute.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-    component: PropTypes.func.isRequired
 }

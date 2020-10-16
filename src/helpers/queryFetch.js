@@ -1,8 +1,8 @@
 
-export const queryFetch= async(url) => {
+export const queryFetch= async(url, token) => {
     return await fetch(url, {
       headers: {
-        'Authorization': ''
+        'Authorization': token
       },
     });
   }

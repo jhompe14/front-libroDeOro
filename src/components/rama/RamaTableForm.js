@@ -4,7 +4,7 @@ import { RamaTableRowForm } from './RamaTableRowForm';
 
 export const RamaTableForm = ({ramas, setRamas, setRamaActive}) => {
 
-    const ramaReducer= useSelector( state => state)?.ramaReducer;
+    const { ramaReducer } = useSelector( state => state);
 
     useEffect(() => {
         setRamas(ramaReducer?.ramas);

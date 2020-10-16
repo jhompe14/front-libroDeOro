@@ -3,18 +3,18 @@ import { commandFetch } from '../../helpers/commandFetch';
 import { useForm } from '../../hooks/useForm'
 import { HOST_URL_BACK, METHOD_POST, METHOD_PUT, API_SECCIONES } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
-import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
-import { filterDropById, filterRamasByGrupo } from '../../util/selectors';
+import { messageLoadingSwal, messageCloseSwal, messageSuccessSwal } from '../../util/messages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandSparkles, faSave } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingSecciones } from '../../actions/seccionAction';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
+import { filterRamasByGrupo } from '../../util/selectors';
 
-export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive, initialSeccion}) => {
+export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) => {
 
     const dispatch = useDispatch();
-    const grupos = useSelector( state => state)?.grupoReducer?.grupos;
-    const ramas = useSelector(state => state)?.ramaReducer?.ramas;    
+    const { grupoReducer:{grupos}, ramaReducer:{ramas}, authReducer } = useSelector( state => state);  
     const[ramasFilter, setRamasFilter] = useState([]);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialSeccion);
     
@@ -28,8 +28,7 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive, init
         }
     }, [seccionActive]);
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
+    const handleSubmit = () =>{
         messageLoadingSwal();
         if(formValues.id === 0){
             createSeccion();
@@ -39,56 +38,44 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive, init
     }
 
     const createSeccion = () => {
-        commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/rama/${formValues.idRama}`, METHOD_POST, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/rama/${formValues.idRama}`, METHOD_POST, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
-                response.json().then(seccion => {
-                    setSecciones(secciones => [seccion, ...secciones]);                    
+                response.json().then(() => {                  
                     messageCloseSwal();
                     messageSuccessSwal("Seccion creada con exito");
-                    dispatch(startLoadingSecciones());
+                    dispatch(startLoadingSecciones(authReducer));
                     handleClean();
                 })                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });
-                
+                controlErrorFetch(response, dispatch);                
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
     const updateSeccion = (id) => {
-        commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/${id}`, METHOD_PUT, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/${id}`, METHOD_PUT, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
-                response.json().then(seccion => {
-                    setSecciones(secciones => [seccion, ...filterDropById(secciones, seccion.id)]);                    
+                response.json().then(() => {                   
                     messageCloseSwal();
                     messageSuccessSwal("Seccion actualizada con exito");
-                    dispatch(startLoadingSecciones());
+                    dispatch(startLoadingSecciones(authReducer));
                     handleClean();
                 });                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
+                controlErrorFetch(response, dispatch);                
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
-    const handleClean = (e) =>{
-        e && e.preventDefault();
+    const handleClean = () =>{
         setSeccionActive(initialSeccion);
         reset(initialSeccion);
     }
@@ -98,7 +85,7 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive, init
 
 
     return (
-        <form>
+        <>
             <div className="form-group row">
                 <div className="col-6">
                     <div>
@@ -162,6 +149,6 @@ export const SeccionForm = ({setSecciones, seccionActive, setSeccionActive, init
                 &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
             </div>            
-        </form>
+        </>
     )
 }

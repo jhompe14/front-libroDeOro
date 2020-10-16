@@ -21,7 +21,6 @@ export const SeccionScreen = () => {
             <h1>Secciones</h1>
             <hr/>
             <SeccionForm 
-                setSecciones = { setSecciones } 
                 seccionActive = { seccionActive } 
                 setSeccionActive = {setSeccionActive}
                 initialSeccion = { initialSeccion } />

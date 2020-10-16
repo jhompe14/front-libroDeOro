@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import { GrupoForm } from './GrupoForm'
-import { GrupoTableForm } from './GrupoTableForm'
+import React, {useState} from 'react';
+import { GrupoForm } from './GrupoForm';
+import { GrupoTableForm } from './GrupoTableForm';
 
 export const GrupoScreen = () => {
 
@@ -17,7 +17,6 @@ export const GrupoScreen = () => {
             <h1>Grupos</h1>
             <hr/>
             <GrupoForm 
-                setGrupos = { setGrupos } 
                 grupoActive = { grupoActive } 
                 setGrupoActive = { setGrupoActive } 
                 initialGrupo = {initialGrupo} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenAlt } from '@fortawesome/free-solid-svg-icons';
@@ -9,13 +10,16 @@ import { HOST_URL_BACK,
     METHOD_DELETE } from '../../util/constant';
 import { messageLoadingSwal,
         messageCloseSwal, 
-        messageErrorSwal, 
         messageSuccessSwal,
         messageConfirmSwal } from '../../util/messages';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 
 
 export const CargoTableRowForm = ({ cargo, setCargos, setCargoActive }) => {
     
+    const dispatch = useDispatch();
+    const { authReducer } = useSelector( state => state);
+
     const handleSetCargoActive = () => {
         setCargoActive(cargo);
     };
@@ -23,22 +27,18 @@ export const CargoTableRowForm = ({ cargo, setCargos, setCargoActive }) => {
     const handleDeleteGrupo = () => {
         messageConfirmSwal(`Quiere eliminar el cargo ${cargo.nombre}`, () =>{
             messageLoadingSwal();
-            commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${cargo.id}`, METHOD_DELETE)
+            commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${cargo.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setCargos(cargos => filterDropById(cargos, cargo.id));
                     messageCloseSwal();
                     messageSuccessSwal("Cargo eliminado con exito");                              
                 } else {
-                    response.text().then(msg => {
-                        messageCloseSwal();
-                        messageErrorSwal(msg);                                       
-                    });                
+                    controlErrorFetch(response, dispatch);                
                 }
             })
             .catch(error =>  {
-                messageCloseSwal();
-                messageErrorSwal(error);
+                controlErrorFetch(error, dispatch);
             });
         });
     }

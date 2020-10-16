@@ -21,7 +21,6 @@ export const RamaScreen = () => {
             <h1>Ramas</h1>
             <hr/>
             <RamaForm 
-                setRamas = { setRamas } 
                 ramaActive = { ramaActive } 
                 setRamaActive = {setRamaActive} 
                 initialRama={initialRama} />

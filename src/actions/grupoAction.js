@@ -1,14 +1,21 @@
 import { queryFetch } from "../helpers/queryFetch";
 import { types } from "../types/types";
 import { HOST_URL_BACK, API_GRUPOS } from '../util/constant';
+import { StatusCodes } from 'http-status-codes';
+import { controlErrorFetch } from "../helpers/controlErrorFetch";
 
-
-export const startLoadingGrupos = () => {
+export const startLoadingGrupos = (authReducer) => {
     return async(dispatch) => {
         const grupos = [];
 
-        await queryFetch(`${HOST_URL_BACK}${API_GRUPOS}`)
-            .then(resp => resp.json())
+        await queryFetch(`${HOST_URL_BACK}${API_GRUPOS}`, authReducer?.token)
+            .then(resp => {
+                if(resp.status === StatusCodes.OK){
+                    return resp.json()
+                }else{
+                    return new Promise((resolve, reject) => reject({status: resp.status}));
+                }
+            })
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(elemnt => {
@@ -19,13 +26,15 @@ export const startLoadingGrupos = () => {
                         });
                     });
                 }
+            }).catch(err => {
+                controlErrorFetch(err, dispatch);
             });
-
-        dispatch(setGrupos(grupos));
+        
+        dispatch(startSetGrupos(grupos));
     }
 };
 
-export const setGrupos = (grupos) => ({
+export const startSetGrupos = (grupos) => ({
     type: types.gruposLoad,
     payload: grupos,
 });

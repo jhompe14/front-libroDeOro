@@ -6,7 +6,7 @@ import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-i
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { filterDropById } from '../../util/selectors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingRamas } from '../../actions/ramaAction';
 import { HOST_URL_BACK, 
         API_RAMAS, 
@@ -14,13 +14,14 @@ import { HOST_URL_BACK,
         TYPE_CARGO_RAMA } from '../../util/constant';
 import { messageLoadingSwal,
         messageCloseSwal, 
-        messageErrorSwal, 
         messageSuccessSwal,
         messageConfirmSwal } from '../../util/messages';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 
 export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
     
     const dispatch = useDispatch();
+    const { authReducer }= useSelector( state => state);
     const history= useHistory();
 
     const handleSetRamaActive = () => {
@@ -30,23 +31,19 @@ export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
     const handleDeleteRama = () => {
         messageConfirmSwal(`Quiere eliminar la rama ${rama.nombre}`, () =>{
             messageLoadingSwal();
-            commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${rama.id}`, METHOD_DELETE)
+            commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${rama.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setRamas(ramas => filterDropById(ramas, rama.id));
                     messageCloseSwal();
                     messageSuccessSwal("Rama eliminada con exito");
-                    dispatch(startLoadingRamas());                              
+                    dispatch(startLoadingRamas(authReducer));                              
                 } else {
-                    response.text().then(msg => {
-                        messageCloseSwal();
-                        messageErrorSwal(msg);                                       
-                    });                
+                    controlErrorFetch(response, dispatch);               
                 }
             })
             .catch(error =>  {
-                messageCloseSwal();
-                messageErrorSwal(error);
+                controlErrorFetch(error, dispatch);
             });
         });
     }

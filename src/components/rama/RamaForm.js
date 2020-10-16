@@ -3,17 +3,19 @@ import { commandFetch } from '../../helpers/commandFetch';
 import { useForm } from '../../hooks/useForm'
 import { HOST_URL_BACK, METHOD_POST, METHOD_PUT, API_RAMAS } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
-import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
-import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandSparkles, faSave } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingRamas } from '../../actions/ramaAction';
+import { messageLoadingSwal, 
+        messageCloseSwal,
+        messageSuccessSwal } from '../../util/messages';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 
-export const RamaForm = ({ setRamas, ramaActive, setRamaActive, initialRama }) => {
+export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
    
     const dispatch = useDispatch();
-    const grupos = useSelector( state => state)?.grupoReducer?.grupos;
+    const { grupoReducer:{grupos}, authReducer } = useSelector( state => state);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialRama);
 
     useEffect(() => {
@@ -22,8 +24,7 @@ export const RamaForm = ({ setRamas, ramaActive, setRamaActive, initialRama }) =
         }
     }, [ramaActive]);
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
+    const handleSubmit = () =>{
         messageLoadingSwal();
         if(formValues.id === 0){
             createRama();
@@ -33,56 +34,44 @@ export const RamaForm = ({ setRamas, ramaActive, setRamaActive, initialRama }) =
     }
 
     const createRama = () => {
-        commandFetch(`${HOST_URL_BACK}${API_RAMAS}/grupo/${formValues.idGrupo}`, METHOD_POST, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_RAMAS}/grupo/${formValues.idGrupo}`, METHOD_POST, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
-                response.json().then(rama => {
-                    setRamas(ramas => [rama, ...ramas]);                    
+                response.json().then(() => {
                     messageCloseSwal();
                     messageSuccessSwal("Rama creada con exito");
-                    dispatch(startLoadingRamas());
+                    dispatch(startLoadingRamas(authReducer));
                     handleClean();
                 })                
-            } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });
-                
+            } else {                
+                controlErrorFetch(response, dispatch);  
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
     const updateRama = (id) => {
-        commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${id}`, METHOD_PUT, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${id}`, METHOD_PUT, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
-                response.json().then(rama => {
-                    setRamas(ramas => [rama, ...filterDropById(ramas, rama.id)]);                    
+                response.json().then(() => {
                     messageCloseSwal();
                     messageSuccessSwal("Rama actualizada con exito");
-                    dispatch(startLoadingRamas());
+                    dispatch(startLoadingRamas(authReducer));
                     handleClean();
                 });                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
+                controlErrorFetch(response, dispatch);      
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
-    const handleClean = (e) =>{
-        e && e.preventDefault();
+    const handleClean = () =>{
         setRamaActive(initialRama);
         reset(initialRama);
     }
@@ -91,7 +80,7 @@ export const RamaForm = ({ setRamas, ramaActive, setRamaActive, initialRama }) =
 
     
     return (
-        <form>
+        <>
             <div className="form-group row">
                 <div className="col-6">
                     <div>
@@ -159,6 +148,6 @@ export const RamaForm = ({ setRamas, ramaActive, setRamaActive, initialRama }) =
                 &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
             </div>            
-        </form>
+        </>
     )
 }

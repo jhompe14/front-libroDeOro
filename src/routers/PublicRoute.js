@@ -1,28 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Route, Redirect } from 'react-router-dom';
+import { LoginScreen } from '../components/login/LoginScreen';
 
 
-export const PublicRoute = ({
-    isAuthenticated,
-    component: Component,
-    ...rest
-}) => {
-
+export const PublicRoute = () => {
     return (
-        <Route { ...rest }
-            component={ (props) => (
-                ( isAuthenticated )
-                    ? ( <Redirect to="/" /> )
-                    : ( <Component { ...props } /> )
-            )}
-        
-        />
+        <>
+            <Route exact path="/auth/login" component={LoginScreen} />
+            <Redirect to="/auth/login" />            
+        </>
     )
 }
 
-PublicRoute.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-    component: PropTypes.func.isRequired
-}

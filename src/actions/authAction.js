@@ -5,9 +5,9 @@ import { StatusCodes } from 'http-status-codes';
 import { startRemoveGrupos } from "./grupoAction";
 import { startRemoveRamas } from "./ramaAction";
 import { startRemoveSecciones } from "./seccionAction";
+import { controlErrorFetch } from "../helpers/controlErrorFetch";
 import { messageLoadingSwal, 
-    messageCloseSwal, 
-    messageErrorSwal } from '../util/messages';
+    messageCloseSwal } from '../util/messages';
 
 export const startLoginUser = (usuario, contrasena) =>{
     return async(dispatch) => {
@@ -23,11 +23,12 @@ export const startLoginUser = (usuario, contrasena) =>{
                         dispatch(setAuth(auth));
                         setLocalStorageFromAuth(auth);
                     });
+                } else {
+                    controlErrorFetch(response, dispatch);
                 }
             })
             .catch(error =>  {
-                messageCloseSwal();
-                messageErrorSwal(error);
+                controlErrorFetch(error, dispatch);
             });
     }
 }

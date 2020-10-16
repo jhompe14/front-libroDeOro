@@ -17,7 +17,7 @@ export const grupoReducer = (state = initialState, action) => {
             }
 
         case types.gruposRemove:
-            return {}
+            return {}        
 
         default:
             return state

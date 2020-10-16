@@ -4,15 +4,16 @@ import { useForm } from '../../hooks/useForm'
 import { HOST_URL_BACK, API_GRUPOS, METHOD_POST, METHOD_PUT } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageErrorSwal, messageSuccessSwal } from '../../util/messages';
-import { filterDropById } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
-import { startLoadingGrupos } from '../../actions/grupoAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
+import { startLoadingGrupos, startSetGrupos } from '../../actions/grupoAction';
 
-export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive, initialGrupo }) => {
+export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
 
     const dispatch = useDispatch();
+    const { authReducer }= useSelector( state => state);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialGrupo);
     
     useEffect(() => {
@@ -21,8 +22,7 @@ export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive, initialGrupo
         }
     }, [grupoActive]);
 
-    const handleSubmit = (e) =>{
-        e.preventDefault();
+    const handleSubmit = () =>{
         messageLoadingSwal();
         if(formValues.id === 0){
             createGrupo();
@@ -32,62 +32,50 @@ export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive, initialGrupo
     }
 
     const createGrupo = () => {
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}`, METHOD_POST, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}`, METHOD_POST, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
-                response.json().then(grupo => {
-                    setGrupos(grupos => [grupo, ...grupos]);                    
+                response.json().then(() => {                  
                     messageCloseSwal();
                     messageSuccessSwal("Grupo creado con exito");
-                    dispatch(startLoadingGrupos());
+                    dispatch(startLoadingGrupos(authReducer));
                     handleClean();
                 })                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });
-                
+                controlErrorFetch(response, dispatch);            
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
     const updateGrupo = (id) => {
-        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${id}`, METHOD_PUT, formValues)
+        commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${id}`, METHOD_PUT, formValues, authReducer?.token)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
-                response.json().then(grupo => {
-                    setGrupos(grupos => [grupo, ...filterDropById(grupos, grupo.id)]);                    
+                response.json().then(grupo => {                   
                     messageCloseSwal();
                     messageSuccessSwal("Grupo actualizado con exito");
-                    dispatch(startLoadingGrupos());
+                    dispatch(startLoadingGrupos(authReducer));
                     handleClean();
                 });                
             } else {
-                response.text().then(msg => {
-                    messageCloseSwal();
-                    messageErrorSwal(msg);                                       
-                });                
+                controlErrorFetch(response, dispatch);              
             }
         })
         .catch(error =>  {
-            messageCloseSwal();
-            messageErrorSwal(error);
+            controlErrorFetch(error, dispatch);
         });
     }
 
-    const handleClean = (e) =>{
-        e && e.preventDefault();
+    const handleClean = () =>{
         setGrupoActive(initialGrupo);
         reset(initialGrupo);
     }
 
     return (
-        <form>
+        <>
             <div className="form-group">
                 
                 <label>Nombre</label> 
@@ -110,6 +98,6 @@ export const GrupoForm = ({ setGrupos, grupoActive, setGrupoActive, initialGrupo
                 &nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
             </div>
-        </form>
+        </>
     )
 }

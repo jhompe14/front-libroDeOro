@@ -6,7 +6,7 @@ import { faTrash, faPenAlt, faTruckLoading } from '@fortawesome/free-solid-svg-i
 import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { filterDropById } from '../../util/selectors';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingSecciones } from '../../actions/seccionAction';
 import { HOST_URL_BACK, 
         API_SECCIONES, 
@@ -17,11 +17,13 @@ import { messageLoadingSwal,
         messageErrorSwal, 
         messageSuccessSwal, 
         messageConfirmSwal } from '../../util/messages';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 
 
 export const SeccionTableRowForm = ({ seccion, setSecciones, setSeccionActive }) => {
     
     const dispatch = useDispatch();
+    const { authReducer }= useSelector( state => state);
     const history= useHistory();
 
     const handleSetSeccionActive = () => {
@@ -31,31 +33,26 @@ export const SeccionTableRowForm = ({ seccion, setSecciones, setSeccionActive })
     const handleDeleteSeccion = () => {
         messageConfirmSwal(`Quiere eliminar la seccion ${seccion.nombre}`, () =>{
             messageLoadingSwal();
-            commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/${seccion.id}`, METHOD_DELETE)
+            commandFetch(`${HOST_URL_BACK}${API_SECCIONES}/${seccion.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setSecciones(secciones => filterDropById(secciones, seccion.id));
                     messageCloseSwal();
                     messageSuccessSwal("Seccion eliminada con exito");
-                    dispatch(startLoadingSecciones());                              
+                    dispatch(startLoadingSecciones(authReducer));                              
                 } else {
-                    response.text().then(msg => {
-                        messageCloseSwal();
-                        messageErrorSwal(msg);                                       
-                    });                
+                    controlErrorFetch(response, dispatch);                 
                 }
             })
             .catch(error =>  {
-                messageCloseSwal();
-                messageErrorSwal(error);
+                controlErrorFetch(error, dispatch);
             });
         });
     }
 
     const handleGoCargos = () => {       
         history.replace(`/cargo/type/${TYPE_CARGO_SECCION}/id/${seccion.id}`);   
-    }
-    
+    }    
     
     return (
         <tr>

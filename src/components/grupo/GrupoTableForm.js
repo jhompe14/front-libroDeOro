@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { GrupoTableRowForm } from './GrupoTableRowForm';
 
 export const GrupoTableForm = ({ grupos, setGrupos, setGrupoActive }) => {
 
-    const grupoReducer= useSelector( state => state)?.grupoReducer;
+   const { grupoReducer }= useSelector( state => state);
 
     useEffect(() => {
         setGrupos(grupoReducer?.grupos);

@@ -1,6 +1,5 @@
 import Swal from 'sweetalert2';
 
-
 export const messageLoadingSwal = () => {
     Swal.fire({
         title: 'Cargando...',
@@ -39,4 +38,21 @@ export const messageConfirmSwal = (message, funcConfirm) => {
             funcConfirm();
         }
       })
+}
+
+export const messageWarningFunction = (message, funcWarning) => {   
+    let timerInterval
+    Swal.fire({
+        title: 'Cuidado!',
+        html: message,
+        timer: 3000,
+        timerProgressBar: true,
+        willOpen: () => {
+            Swal.showLoading();            
+        },
+        onClose: () => {
+            funcWarning();
+            clearInterval(timerInterval)
+        }
+    });
 }
