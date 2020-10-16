@@ -16,7 +16,7 @@ export const PrivateRoute = () => {
                     <Route exact path="/rama" component={RamaScreen} />
                     <Route exact path="/seccion" component={SeccionScreen} />
                     <Route exact path="/cargo/type/:typecargo/id/:typeId" component={CargoScreen} />   
-                    <Redirect to="/auth/login" />   
+                    <Redirect to="/" />   
                 </Switch>
             </div>
         </>
