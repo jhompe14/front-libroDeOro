@@ -1,14 +1,18 @@
 import React from 'react';
 
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { LoginScreen } from '../components/login/LoginScreen';
+import { UsuarioScreen } from '../components/usuario/UsuarioScreen';
 
 
 export const PublicRoute = () => {
     return (
         <>
-            <Route exact path="/auth/login" component={LoginScreen} />
-            <Redirect to="/auth/login" />            
+            <Switch>
+                <Route exact path="/auth/login" component={LoginScreen} />
+                <Route exact path="/usuario" component={UsuarioScreen} />
+                <Redirect to="/auth/login" />
+            </Switch>     
         </>
     )
 }

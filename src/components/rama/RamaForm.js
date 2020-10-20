@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { commandFetch } from '../../helpers/commandFetch';
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '../../hooks/useForm';
 import { HOST_URL_BACK, METHOD_POST, METHOD_PUT, API_RAMAS } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
