@@ -10,6 +10,7 @@ import { startLoadingGrupos } from '../actions/grupoAction';
 import { startLoadingRamas } from '../actions/ramaAction';
 import { startLoadingSecciones } from '../actions/seccionAction';
 import { setInactiveWarningFunc } from '../helpers/controlErrorFetch';
+import { startLoadingCargos } from '../actions/cargoAction';
 
 export const AppRouter = () => {
 
@@ -19,16 +20,17 @@ export const AppRouter = () => {
 
     useEffect(() => {
         if(authReducer?.usuario){
-            setIsLoggedIn(true);
-            dispatch(startLoadingGrupos(authReducer));
-            dispatch(startLoadingRamas(authReducer));
-            dispatch(startLoadingSecciones(authReducer));            
+            setIsLoggedIn(true);                        
             setInactiveWarningFunc();
         }else if(validateLocalStorageAuth()){
             dispatch(setAuthFromLocalStorage());
         }else {
             setIsLoggedIn(false); 
         }
+        dispatch(startLoadingGrupos());
+        dispatch(startLoadingRamas());
+        dispatch(startLoadingSecciones());
+        dispatch(startLoadingCargos());
     }, [authReducer, setIsLoggedIn]);
 
     return (

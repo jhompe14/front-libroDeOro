@@ -2,13 +2,18 @@ import React from 'react';
 import { useForm } from '../../hooks/useForm';
 import { TYPE_INTEGRANTE_ACTIVO, TYPE_INTEGRANTE_EX_INTEGRANTE } from '../../util/constant';
 
-export const UsuarioForm = ({setWizard}) => {
-    
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({});
+export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
+        
+    const [formValues, handleInputChange] = useForm(usuario);
 
     const changeWizard = () => {
         setWizard(2);
+        setUsuario({
+            ...formValues
+        });
     }
+
+    const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;
     
     return (
         <div className="content animate__animated animate__slideInLeft">
@@ -22,7 +27,7 @@ export const UsuarioForm = ({setWizard}) => {
                             type="text" 
                             name="nombres" 
                             className="form-control"
-                            value= {formValues.nombre} 
+                            value= {formValues.nombres} 
                             onChange={handleInputChange}/>
                     </div>
                     <div  className="mt-2">               
@@ -55,21 +60,25 @@ export const UsuarioForm = ({setWizard}) => {
                     <div  className="mt-2">
                         <label>Tipo Integrante</label>
                         <div>
-                            <div class="form-check form-check-inline">
+                            <div className="form-check form-check-inline">
                                 <input 
-                                    class="form-check-input" 
+                                    className="form-check-input" 
                                     type="radio" 
                                     name="tipoIntegrante" 
-                                    value={TYPE_INTEGRANTE_ACTIVO}/>
-                                <label class="form-check-label">Activo</label>
+                                    value={TYPE_INTEGRANTE_ACTIVO}
+                                    onChange={handleInputChange}
+                                    checked={checkedTipoIntegrante(TYPE_INTEGRANTE_ACTIVO)} />
+                                <label className="form-check-label">Activo</label>
                             </div>
-                            <div class="form-check form-check-inline">
+                            <div className="form-check form-check-inline">
                                 <input 
-                                    class="form-check-input" 
+                                    className="form-check-input" 
                                     type="radio" 
                                     name="tipoIntegrante" 
-                                    value={TYPE_INTEGRANTE_EX_INTEGRANTE} />
-                                <label class="form-check-label">Ex-integrante</label>
+                                    value={TYPE_INTEGRANTE_EX_INTEGRANTE}
+                                    onChange={handleInputChange}
+                                    checked={checkedTipoIntegrante(TYPE_INTEGRANTE_EX_INTEGRANTE)} />
+                                <label className="form-check-label">Ex-integrante</label>
                             </div>
                         </div>                        
                     </div>

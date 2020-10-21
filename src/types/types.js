@@ -11,4 +11,7 @@ export const types = {
 
     seccionesLoad: '[Secciones] Load secciones',
     seccionesRemove: '[Secciones] Remove secciones',
+
+    cargosLoad: '[Cargos] Load cargos',
+    cargosRemove: '[Cargos] Remove cargos',
 }

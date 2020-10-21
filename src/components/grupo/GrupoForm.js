@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSave, faHandSparkles } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
-import { startLoadingGrupos, startSetGrupos } from '../../actions/grupoAction';
+import { startLoadingGrupos } from '../../actions/grupoAction';
 
 export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
 
@@ -38,7 +38,7 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
                 response.json().then(() => {                  
                     messageCloseSwal();
                     messageSuccessSwal("Grupo creado con exito");
-                    dispatch(startLoadingGrupos(authReducer));
+                    dispatch(startLoadingGrupos());
                     handleClean();
                 })                
             } else {
@@ -57,7 +57,7 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
                 response.json().then(grupo => {                   
                     messageCloseSwal();
                     messageSuccessSwal("Grupo actualizado con exito");
-                    dispatch(startLoadingGrupos(authReducer));
+                    dispatch(startLoadingGrupos());
                     handleClean();
                 });                
             } else {

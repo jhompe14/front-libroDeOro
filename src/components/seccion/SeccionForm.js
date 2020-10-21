@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { commandFetch } from '../../helpers/commandFetch';
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '../../hooks/useForm';
 import { HOST_URL_BACK, METHOD_POST, METHOD_PUT, API_SECCIONES } from '../../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { messageLoadingSwal, messageCloseSwal, messageSuccessSwal } from '../../util/messages';
@@ -44,7 +44,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                 response.json().then(() => {                  
                     messageCloseSwal();
                     messageSuccessSwal("Seccion creada con exito");
-                    dispatch(startLoadingSecciones(authReducer));
+                    dispatch(startLoadingSecciones());
                     handleClean();
                 })                
             } else {
@@ -63,7 +63,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                 response.json().then(() => {                   
                     messageCloseSwal();
                     messageSuccessSwal("Seccion actualizada con exito");
-                    dispatch(startLoadingSecciones(authReducer));
+                    dispatch(startLoadingSecciones());
                     handleClean();
                 });                
             } else {
@@ -106,7 +106,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                         </select>  
                     </div>                    
                     <div  className="mt-2">               
-                    <label>Rama</label>
+                        <label>Rama</label>
                         <select                            
                             name="idRama"  
                             className="form-control"

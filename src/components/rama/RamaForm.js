@@ -40,7 +40,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                 response.json().then(() => {
                     messageCloseSwal();
                     messageSuccessSwal("Rama creada con exito");
-                    dispatch(startLoadingRamas(authReducer));
+                    dispatch(startLoadingRamas());
                     handleClean();
                 })                
             } else {                
@@ -59,7 +59,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                 response.json().then(() => {
                     messageCloseSwal();
                     messageSuccessSwal("Rama actualizada con exito");
-                    dispatch(startLoadingRamas(authReducer));
+                    dispatch(startLoadingRamas());
                     handleClean();
                 });                
             } else {
@@ -77,7 +77,6 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
     }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
-
     
     return (
         <>

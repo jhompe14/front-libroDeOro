@@ -1,15 +1,14 @@
 import { queryFetch } from "../helpers/queryFetch";
 import { types } from "../types/types";
-import { HOST_URL_BACK, API_RAMAS } from '../util/constant';
+import { HOST_URL_BACK, API_CARGOS } from '../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { controlErrorFetch } from "../helpers/controlErrorFetch";
 
-
-export const startLoadingRamas = () => {
+export const startLoadingCargos = () => {
     return async(dispatch) => {
-        const ramas = [];
+        const cargos = [];
 
-        await queryFetch(`${HOST_URL_BACK}${API_RAMAS}`)
+        await queryFetch(`${HOST_URL_BACK}${API_CARGOS}`)
             .then(resp => {
                 if(resp.status === StatusCodes.OK){
                     return resp.json()
@@ -20,30 +19,29 @@ export const startLoadingRamas = () => {
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(elemnt => {
-                        ramas.push({
+                        cargos.push({
                             id: elemnt.id,
                             nombre: elemnt.nombre,
-                            edadMinima: elemnt.edadMinima,
-                            edadMaxima: elemnt.edadMaxima,
                             descripcion: elemnt.descripcion,
                             idGrupo: elemnt.grupo?.id,
-                            nombreGrupo: elemnt.grupo?.nombre,
+                            idRama: elemnt.rama?.id,
+                            idSeccion: elemnt.seccion?.id,
                         });
                     });
                 }
             }).catch(err => {
                 controlErrorFetch(err, dispatch);
             });
-
-        dispatch(setRamas(ramas));
+        
+        dispatch(startSetCargos(cargos));
     }
 };
 
-export const setRamas = (ramas) => ({
-    type: types.ramasLoad,
-    payload: ramas,
+export const startSetCargos = (cargos) => ({
+    type: types.cargosLoad,
+    payload: cargos,
 });
 
-export const startRemoveRamas = () => ({
-    type: types.ramasRemove,
+export const startRemoveCargos = () => ({
+    type: types.cargosRemove,
 });

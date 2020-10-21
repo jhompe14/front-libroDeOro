@@ -39,7 +39,7 @@ export const SeccionTableRowForm = ({ seccion, setSecciones, setSeccionActive })
                     setSecciones(secciones => filterDropById(secciones, seccion.id));
                     messageCloseSwal();
                     messageSuccessSwal("Seccion eliminada con exito");
-                    dispatch(startLoadingSecciones(authReducer));                              
+                    dispatch(startLoadingSecciones());                              
                 } else {
                     controlErrorFetch(response, dispatch);                 
                 }

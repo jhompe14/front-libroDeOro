@@ -4,10 +4,10 @@ import { HOST_URL_BACK, API_SECCIONES } from '../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { controlErrorFetch } from "../helpers/controlErrorFetch";
 
-export const startLoadingSecciones = (authReducer) => {
+export const startLoadingSecciones = () => {
     return async(dispatch) => {
         const secciones = [];
-        await queryFetch(`${HOST_URL_BACK}${API_SECCIONES}`, authReducer?.token)
+        await queryFetch(`${HOST_URL_BACK}${API_SECCIONES}`)
             .then(resp => {
                 if(resp.status === StatusCodes.OK){
                     return resp.json()

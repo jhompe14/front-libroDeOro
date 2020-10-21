@@ -37,7 +37,7 @@ export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
                     setRamas(ramas => filterDropById(ramas, rama.id));
                     messageCloseSwal();
                     messageSuccessSwal("Rama eliminada con exito");
-                    dispatch(startLoadingRamas(authReducer));                              
+                    dispatch(startLoadingRamas());                              
                 } else {
                     controlErrorFetch(response, dispatch);               
                 }

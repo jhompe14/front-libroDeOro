@@ -4,11 +4,11 @@ import { HOST_URL_BACK, API_GRUPOS } from '../util/constant';
 import { StatusCodes } from 'http-status-codes';
 import { controlErrorFetch } from "../helpers/controlErrorFetch";
 
-export const startLoadingGrupos = (authReducer) => {
+export const startLoadingGrupos = () => {
     return async(dispatch) => {
         const grupos = [];
 
-        await queryFetch(`${HOST_URL_BACK}${API_GRUPOS}`, authReducer?.token)
+        await queryFetch(`${HOST_URL_BACK}${API_GRUPOS}`)
             .then(resp => {
                 if(resp.status === StatusCodes.OK){
                     return resp.json()

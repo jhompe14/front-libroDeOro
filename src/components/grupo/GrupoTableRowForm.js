@@ -37,7 +37,7 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
                     setGrupos(grupos => filterDropById(grupos, grupo.id));
                     messageCloseSwal();
                     messageSuccessSwal("Grupo eliminado con exito");
-                    dispatch(startLoadingGrupos(authReducer));                              
+                    dispatch(startLoadingGrupos());                              
                 } else {
                     controlErrorFetch(response, dispatch);        
                 }
