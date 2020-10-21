@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { filterRamasByGrupo, 
         filterSeccionesByRama, 
         filterCargosByGrupoRamaSeccion,
@@ -138,7 +140,7 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria }) 
             </div>
             <div className="row mt-2">
                 &nbsp;&nbsp;&nbsp;
-                <button onClick={handleAddTrayectoria} className="btn btn-primary">Agregar</button>   
+                <button onClick={handleAddTrayectoria} className="btn btn-primary"><FontAwesomeIcon icon={faPlusSquare}/> Agregar</button>   
             </div>
         </>
     )

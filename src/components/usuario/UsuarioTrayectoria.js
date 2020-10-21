@@ -1,9 +1,25 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { UsuarioTrayectoriaForm } from './UsuarioTrayectoriaForm';
 import { UsuarioTrayectoriaTable } from './UsuarioTrayectoriaTable';
+import { commandFetch } from '../../helpers/commandFetch';
+import { StatusCodes } from 'http-status-codes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faSave } from '@fortawesome/free-solid-svg-icons';
+import { HOST_URL_BACK, 
+    API_USUARIOS, 
+    METHOD_POST,
+    TYPE_USUARIO_INTEGRANTE } from '../../util/constant';
+import { messageLoadingSwal, 
+        messageCloseSwal, 
+        messageSuccessSwalWithFunction } from '../../util/messages';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 
 export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, usuario }) => {
         
+    const history= useHistory();
+    const dispatch = useDispatch();
     const changeWizard = () => {
         setWizard(1);
     }
@@ -23,9 +39,29 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
     };
 
     const handleFinalizarUsuario = () =>{
-        console.log({
+        messageLoadingSwal();
+        
+        const objSendUsuario ={
             ...usuario,
+            tipoUsuario: TYPE_USUARIO_INTEGRANTE,
             trayectoria: trayectorias,
+        };        
+
+        commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_POST, objSendUsuario)
+        .then(response => {
+            if(response.status === StatusCodes.CREATED){
+                response.json().then(() => {
+                    messageCloseSwal();
+                    messageSuccessSwalWithFunction("Usuario creado con exito, intente ingresar desde la pantalla login.", () => {
+                        history.replace(`/auth/login`);
+                    });                    
+                })                
+            } else {
+                controlErrorFetch(response, dispatch);                
+            }
+        })
+        .catch(error =>  {
+            controlErrorFetch(error, dispatch);
         });
     }
     
@@ -41,9 +77,9 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
                 trayectorias={trayectorias} 
                 setTrayectorias = {setTrayectorias}/>
 
-            <button onClick={changeWizard} className="btn btn-primary">Anterior</button>
+            <button onClick={changeWizard} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Anterior</button>
             &nbsp;&nbsp;&nbsp;
-            <button onClick={handleFinalizarUsuario} className="btn btn-primary">Finalizar</button>
+            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Finalizar</button>
         </div>
     )
 }

@@ -1,10 +1,12 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import { useForm } from '../../hooks/useForm';
 import { useDispatch } from 'react-redux';
 import { startLoginUser } from '../../actions/authAction';
 
 export const LoginForm = () => {
 
+    const history= useHistory();
     const dispatch = useDispatch();
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
         usuario: '',
@@ -14,6 +16,10 @@ export const LoginForm = () => {
     const handleLogin = (e) =>{
         e.preventDefault();
         dispatch(startLoginUser(formValues.usuario, formValues.contrasena));
+    }
+
+    const handleRedirectUsuario = () => {
+        history.replace("/usuario");
     }
 
     return (
@@ -44,7 +50,7 @@ export const LoginForm = () => {
                         <button onClick={handleLogin} className="btn btn-lg btn-primary btn-block"> Acceder </button>                        
                     </form>
                     
-                    <a href="#" className="text-center new-account">Crear un Usuario </a>
+                    <a onClick={handleRedirectUsuario} className="text-center new-account">Crear un Usuario </a>
                 
                 </div>                
             </div>

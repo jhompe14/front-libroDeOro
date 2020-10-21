@@ -1,9 +1,13 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import { useForm } from '../../hooks/useForm';
 import { TYPE_INTEGRANTE_ACTIVO, TYPE_INTEGRANTE_EX_INTEGRANTE } from '../../util/constant';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
         
+    const history= useHistory();
     const [formValues, handleInputChange] = useForm(usuario);
 
     const changeWizard = () => {
@@ -14,6 +18,8 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
     }
 
     const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;
+
+    const goLogin = () => history.replace("/auth/login");
     
     return (
         <div className="content animate__animated animate__slideInLeft">
@@ -131,7 +137,9 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
                     </div>
                 </div>
             </div>
-            <button onClick={changeWizard} className="btn btn-primary">Siguiente</button>
+            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Login</button>
+            &nbsp;&nbsp;&nbsp;
+            <button onClick={changeWizard} className="btn btn-primary">Siguiente <FontAwesomeIcon icon={faForward}/></button>
         </div>
     )
 }

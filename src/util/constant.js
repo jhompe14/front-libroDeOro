@@ -11,6 +11,8 @@ export const API_CARGOS = "api/cargo";
 export const API_RAMAS = "api/rama";
 export const API_SECCIONES = "api/seccion";
 export const API_AUTH = "api/auth";
+export const API_USUARIOS = "api/usuario";
+
 
 //Type Cargo
 export const TYPE_CARGO_GRUPO = "GR";
