@@ -1,3 +1,4 @@
+import { HOST } from "./host";
 
 //Method HTTP
 export const METHOD_POST = "POST";
@@ -5,7 +6,7 @@ export const METHOD_PUT = "PUT";
 export const METHOD_DELETE = "DELETE";
 
 //URL
-export const HOST_URL_BACK= "http://localhost:8080/";
+export const HOST_URL_BACK= HOST;
 export const API_GRUPOS = "api/grupo";
 export const API_CARGOS = "api/cargo"; 
 export const API_RAMAS = "api/rama";
