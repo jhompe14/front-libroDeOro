@@ -1,4 +1,4 @@
-import { commandFetch } from "../helpers/commandFetch";
+
 import { types } from "../types/types";
 import { HOST_URL_BACK, API_AUTH, METHOD_POST } from '../util/constant';
 import { StatusCodes } from 'http-status-codes';
@@ -8,6 +8,7 @@ import { startRemoveSecciones } from "./seccionAction";
 import { controlErrorFetch } from "../helpers/controlErrorFetch";
 import { messageLoadingSwal, 
     messageCloseSwal } from '../util/messages';
+import { commandFetch } from "../helpers/commandFetch";
 
 export const startLoginUser = (usuario, contrasena) =>{
     return async(dispatch) => {

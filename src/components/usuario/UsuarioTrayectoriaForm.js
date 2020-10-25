@@ -7,6 +7,7 @@ import { filterRamasByGrupo,
         filterSeccionesByRama, 
         filterCargosByGrupoRamaSeccion,
         filterById } from '../../util/selectors';
+import { messageErrorSwal } from '../../util/messages';
 
 export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria }) => {
 
@@ -32,18 +33,30 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria }) 
     }, [formValues.seccion]);
 
     const handleAddTrayectoria = () => {
-        setTrayectorias(trayectorias => [
-             {
-                ...formValues,
-                id: (trayectorias.length + 1),
-                nombreGrupo: filterById(grupos, formValues.grupo)[0]?.nombre,
-                nombreRama: filterById(ramas, formValues.rama)[0]?.nombre,
-                nombreSeccion: filterById(secciones, formValues.seccion)[0]?.nombre,
-                nombreCargo: filterById(cargos, formValues.cargo)[0]?.nombre,
-            }, 
-            ...trayectorias]);
-        reset(initialTrayectoria);
+        if(validateRequiredTrayectoria()){
+            setTrayectorias(trayectorias => [
+                {
+                    ...formValues,
+                    id: (trayectorias.length + 1),
+                    nombreGrupo: filterById(grupos, formValues.grupo)[0]?.nombre,
+                    nombreRama: filterById(ramas, formValues.rama)[0]?.nombre,
+                    nombreSeccion: filterById(secciones, formValues.seccion)[0]?.nombre,
+                    nombreCargo: filterById(cargos, formValues.cargo)[0]?.nombre,
+                }, 
+                ...trayectorias]);
+            reset(initialTrayectoria);
+        }
     };
+
+    const validateRequiredTrayectoria = () =>{
+        if(formValues.grupo == undefined || formValues.cargo == undefined || 
+            formValues.anioIngreso == undefined || formValues.anioIngreso == 0){
+            messageErrorSwal("El grupo, el cargo y el a\u00F1o ingreso son obligatorios.");
+            return false;
+        }
+
+        return true;
+    }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.grupo === grupoId ? 'selected': '';
 

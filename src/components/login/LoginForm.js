@@ -8,7 +8,7 @@ export const LoginForm = () => {
 
     const history= useHistory();
     const dispatch = useDispatch();
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
+    const [formValues, handleInputChange] = useForm({
         usuario: '',
         contrasena: '',
     });

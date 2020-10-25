@@ -37,6 +37,24 @@ export const NavbarOptions = ({authReducer}) => {
                             </div>
                         </li>
                 }
+
+                {
+                    authReducer.tipoUsuario === TYPE_USUARIO_INTEGRANTE &&                   
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administracion de Anecdotas
+                        </a>
+                        <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
+                            <NavLink 
+                                activeClassName="active"
+                                className="nav-item nav-link" 
+                                exact
+                                to="/anecdota">
+                                    Creacion de Anecdotas
+                            </NavLink>                            
+                        </div>
+                    </li>
+                }
             </ul>
         </div>
     )
