@@ -13,6 +13,7 @@ export const API_RAMAS = "api/rama";
 export const API_SECCIONES = "api/seccion";
 export const API_AUTH = "api/auth";
 export const API_USUARIOS = "api/usuario";
+export const API_ANECDOTA = "api/anecdota";
 
 
 //Type Cargo
