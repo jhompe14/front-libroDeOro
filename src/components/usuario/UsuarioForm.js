@@ -1,25 +1,12 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
 import { useForm } from '../../hooks/useForm';
 import { TYPE_INTEGRANTE_ACTIVO, TYPE_INTEGRANTE_EX_INTEGRANTE } from '../../util/constant';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import { UsuarioFormCreateBottons } from './usuario-create/UsuarioFormCreateBottons';
 
-export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
-        
-    const history= useHistory();
+export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {        
+    
     const [formValues, handleInputChange] = useForm(usuario);
-
-    const changeWizard = () => {
-        setWizard(2);
-        setUsuario({
-            ...formValues
-        });
-    }
-
-    const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;
-
-    const goLogin = () => history.replace("/auth/login");
+    const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;   
     
     return (
         <div className="content animate__animated animate__slideInLeft">
@@ -137,9 +124,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
                     </div>
                 </div>
             </div>
-            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Login</button>
-            &nbsp;&nbsp;&nbsp;
-            <button onClick={changeWizard} className="btn btn-primary">Siguiente <FontAwesomeIcon icon={faForward}/></button>
+            <UsuarioFormCreateBottons formValues={formValues}/>            
         </div>
     )
 }

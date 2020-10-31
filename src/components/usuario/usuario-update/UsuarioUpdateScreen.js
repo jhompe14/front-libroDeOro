@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import { UsuarioForm } from './UsuarioForm';
-import { UsuarioTrayectoria } from './UsuarioTrayectoria';
+import { UsuarioForm } from '../UsuarioForm';
+import { UsuarioTrayectoria } from '../UsuarioTrayectoria';
 
 
-export const UsuarioScreen = () => {
+export const UsuarioCreateScreen = () => {
        
     const[trayectorias, setTrayectorias] = useState([]);    
     const[wizard, setWizard] = useState(1);

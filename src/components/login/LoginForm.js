@@ -19,7 +19,7 @@ export const LoginForm = () => {
     }
 
     const handleRedirectUsuario = () => {
-        history.replace("/usuario");
+        history.replace("/usuario-create");
     }
 
     return (
