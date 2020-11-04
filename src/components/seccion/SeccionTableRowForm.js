@@ -13,8 +13,7 @@ import { HOST_URL_BACK,
         METHOD_DELETE,
         TYPE_CARGO_SECCION } from '../../util/constant';
 import { messageLoadingSwal, 
-        messageCloseSwal, 
-        messageErrorSwal, 
+        messageCloseSwal,  
         messageSuccessSwal, 
         messageConfirmSwal } from '../../util/messages';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';

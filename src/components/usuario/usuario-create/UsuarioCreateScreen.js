@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { TYPE_BUTTONS_CREATE, TYPE_FORM_CREATE } from '../../../util/constant';
 import { UsuarioForm } from '../UsuarioForm';
-
+import { TYPE_USUARIO_INTEGRANTE } from '../../../util/constant';
 
 export const UsuarioCreateScreen = () => {
      
@@ -15,16 +16,14 @@ export const UsuarioCreateScreen = () => {
         telefono: "",
         direccion: "",
         ciudad: "",
-        tipoUsuario: ""
+        tipoUsuario: TYPE_USUARIO_INTEGRANTE
     }  
-    const[usuario, setUsuario] = useState(initialUsuario); 
 
     return (
         <div className="container mt-2">            
             <UsuarioForm 
-                usuario={usuario} 
-                setUsuario={setUsuario} />           
-             
+                usuario={initialUsuario} 
+                formType={TYPE_FORM_CREATE} />
         </div>
     )
 }

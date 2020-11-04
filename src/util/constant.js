@@ -29,3 +29,6 @@ export const TYPE_USUARIO_INTEGRANTE = "IN";
 export const TYPE_INTEGRANTE_ACTIVO = "AC";
 export const TYPE_INTEGRANTE_EX_INTEGRANTE = "EX";
 
+//Type Buttons usuario
+export const TYPE_FORM_CREATE="CR";
+export const TYPE_FORM_UPDATE="UP";

@@ -1,16 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import { useForm } from '../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import { useForm } from '../../../hooks/useForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { commandFetch } from '../../../helpers/commandFetch';
+import { messageLoadingSwal, messageCloseSwal } from '../../../util/messages';
+import { StatusCodes } from 'http-status-codes';
+import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { filterRamasByGrupo, 
         filterSeccionesByRama, 
         filterCargosByGrupoRamaSeccion,
-        filterById } from '../../util/selectors';
-import { messageErrorSwal } from '../../util/messages';
+        filterById } from '../../../util/selectors';
+import { HOST_URL_BACK, 
+        API_USUARIOS, 
+        METHOD_POST } from '../../../util/constant';
 
-export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria }) => {
 
+export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria, authReducer }) => {
+
+    const dispatch = useDispatch();
     const { grupoReducer:{grupos}, ramaReducer:{ramas}, 
             seccionReducer:{secciones}, cargoReducer:{cargos} } = useSelector( state => state);
     const[ramasFilter, setRamasFilter] = useState([]);
@@ -33,29 +42,36 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria }) 
     }, [formValues.seccion]);
 
     const handleAddTrayectoria = () => {
-        if(validateRequiredTrayectoria()){
-            setTrayectorias(trayectorias => [
-                {
-                    ...formValues,
-                    id: (trayectorias.length + 1),
-                    nombreGrupo: filterById(grupos, formValues.grupo)[0]?.nombre,
-                    nombreRama: filterById(ramas, formValues.rama)[0]?.nombre,
-                    nombreSeccion: filterById(secciones, formValues.seccion)[0]?.nombre,
-                    nombreCargo: filterById(cargos, formValues.cargo)[0]?.nombre,
-                }, 
-                ...trayectorias]);
-            reset(initialTrayectoria);
-        }
+        messageLoadingSwal();
+
+        commandFetch(`${HOST_URL_BACK}${API_USUARIOS}/trayectoria/validate`, METHOD_POST, formValues, authReducer?.token)
+        .then(response => {
+            if(response.status === StatusCodes.OK){
+                response.json().then(() => {
+                    messageCloseSwal();
+                    addTrayectoria();              
+                })                
+            } else {
+                controlErrorFetch(response, dispatch);                
+            }
+        })
+        .catch(error =>  {
+            controlErrorFetch(error, dispatch);
+        });
     };
 
-    const validateRequiredTrayectoria = () =>{
-        if(formValues.grupo == undefined || formValues.cargo == undefined || 
-            formValues.anioIngreso == undefined || formValues.anioIngreso == 0){
-            messageErrorSwal("El grupo, el cargo y el a\u00F1o ingreso son obligatorios.");
-            return false;
-        }
-
-        return true;
+    const addTrayectoria = () =>{
+        setTrayectorias(trayectorias => [
+            {
+                ...formValues,
+                id: (trayectorias.length + 1),
+                nombreGrupo: filterById(grupos, formValues.grupo)[0]?.nombre,
+                nombreRama: filterById(ramas, formValues.rama)[0]?.nombre,
+                nombreSeccion: filterById(secciones, formValues.seccion)[0]?.nombre,
+                nombreCargo: filterById(cargos, formValues.cargo)[0]?.nombre,
+            }, 
+            ...trayectorias]);
+        reset(initialTrayectoria);
     }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.grupo === grupoId ? 'selected': '';

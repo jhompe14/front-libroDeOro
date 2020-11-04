@@ -6,29 +6,23 @@ import { useDispatch } from 'react-redux';
 import { StatusCodes } from 'http-status-codes';
 import { HOST_URL_BACK, 
     API_USUARIOS, 
-    METHOD_POST,
-    TYPE_USUARIO_INTEGRANTE } from '../../../util/constant';
+    METHOD_POST } from '../../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
         messageSuccessSwalWithFunction } from '../../../util/messages';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { commandFetch } from '../../../helpers/commandFetch';
 
-export const UsuarioFormCreateBottons = ({formValues}) => {
+export const UsuarioFormCreateButtons = ({formValues}) => {
 
     const history= useHistory();
     const dispatch = useDispatch();
     const goLogin = () => history.replace("/auth/login");
 
     const handleFinalizarUsuario = () =>{
-        messageLoadingSwal();
+        messageLoadingSwal();  
         
-        const objSendUsuario ={
-            ...formValues,
-            tipoUsuario: TYPE_USUARIO_INTEGRANTE,
-        };        
-
-        commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_POST, objSendUsuario)
+        commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_POST, formValues)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
