@@ -1,22 +1,21 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { UsuarioTrayectoriaForm } from './UsuarioTrayectoriaForm';
-import { UsuarioTrayectoriaTable } from './UsuarioTrayectoriaTable';
-import { commandFetch } from '../../helpers/commandFetch';
 import { StatusCodes } from 'http-status-codes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faSave } from '@fortawesome/free-solid-svg-icons';
+import { UsuarioTrayectoriaForm } from './UsuarioTrayectoriaForm';
+import { UsuarioTrayectoriaTable } from './UsuarioTrayectoriaTable';
+import { commandFetch } from '../../../helpers/commandFetch';
 import { HOST_URL_BACK, 
     API_USUARIOS, 
-    METHOD_POST,
-    TYPE_USUARIO_INTEGRANTE } from '../../util/constant';
+    METHOD_PUT} from '../../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
-        messageSuccessSwalWithFunction } from '../../util/messages';
-import { controlErrorFetch } from '../../helpers/controlErrorFetch';
+        messageSuccessSwalWithFunction } from '../../../util/messages';
+import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 
-export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, usuario }) => {
+export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, usuario, authReducer }) => {
         
     const history= useHistory();
     const dispatch = useDispatch();
@@ -43,17 +42,16 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
         
         const objSendUsuario ={
             ...usuario,
-            tipoUsuario: TYPE_USUARIO_INTEGRANTE,
             trayectoria: trayectorias,
         };        
 
-        commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_POST, objSendUsuario)
+        commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_PUT, objSendUsuario, authReducer?.token)
         .then(response => {
-            if(response.status === StatusCodes.CREATED){
+            if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Usuario creado con exito, intente ingresar desde la pantalla login.", () => {
-                        history.replace(`/auth/login`);
+                    messageSuccessSwalWithFunction("Usuario modificado con exito", () => {
+                        history.replace(`/`);
                     });                    
                 })                
             } else {
@@ -71,7 +69,8 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
             
             <UsuarioTrayectoriaForm 
                 setTrayectorias = {setTrayectorias} 
-                initialTrayectoria={initialTrayectoria} />
+                initialTrayectoria={initialTrayectoria}
+                authReducer = {authReducer} />
             
             <UsuarioTrayectoriaTable 
                 trayectorias={trayectorias} 

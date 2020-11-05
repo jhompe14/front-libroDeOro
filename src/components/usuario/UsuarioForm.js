@@ -1,26 +1,17 @@
-import React from 'react';
-import { useHistory } from "react-router-dom";
+import React, {useEffect} from 'react';
 import { useForm } from '../../hooks/useForm';
-import { TYPE_INTEGRANTE_ACTIVO, TYPE_INTEGRANTE_EX_INTEGRANTE } from '../../util/constant';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
+import { UsuarioFormCreateButtons } from './usuario-create/UsuarioFormCreateButtons';
+import { UsuarioFormUpdateButtons } from './usuario-update/UsuarioFormUpdateButtons';
+import { TYPE_FORM_CREATE, 
+        TYPE_FORM_UPDATE, 
+        TYPE_INTEGRANTE_ACTIVO, 
+        TYPE_INTEGRANTE_EX_INTEGRANTE } from '../../util/constant';
 
-export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
-        
-    const history= useHistory();
-    const [formValues, handleInputChange] = useForm(usuario);
-
-    const changeWizard = () => {
-        setWizard(2);
-        setUsuario({
-            ...formValues
-        });
-    }
-
-    const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;
-
-    const goLogin = () => history.replace("/auth/login");
+export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReducer}) => {        
     
+    const [formValues, handleInputChange] = useForm(usuario);
+    const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;
+        
     return (
         <div className="content animate__animated animate__slideInLeft">
             <h1>Informacion General</h1>
@@ -108,38 +99,53 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario}) => {
                             value= {formValues.ciudad} 
                             onChange={handleInputChange}/>
                     </div>
-                    <div  className="mt-2">               
-                        <label>Usuario</label> 
-                        <input 
-                            type="text" 
-                            name="usuario" 
-                            className="form-control"
-                            value= {formValues.usuario} 
-                            onChange={handleInputChange}/>
-                    </div>
-                    <div  className="mt-2">               
-                        <label>Contraseña</label> 
-                        <input 
-                            type="password" 
-                            name="contrasena" 
-                            className="form-control"
-                            value= {formValues.contrasena} 
-                            onChange={handleInputChange}/>
-                    </div>
-                    <div  className="mt-2">               
-                        <label>Confirmar Contraseña</label> 
-                        <input 
-                            type="password" 
-                            name="confirmContrasena" 
-                            className="form-control"
-                            value= {formValues.confirmContrasena} 
-                            onChange={handleInputChange}/>
-                    </div>
+                    {
+                        formType === TYPE_FORM_CREATE &&
+                            <>
+                                <div  className="mt-2">               
+                                    <label>Usuario</label> 
+                                    <input 
+                                        type="text" 
+                                        name="usuario" 
+                                        className="form-control"
+                                        value= {formValues.usuario} 
+                                        onChange={handleInputChange}/>
+                                </div>
+                                <div  className="mt-2">               
+                                    <label>Contraseña</label> 
+                                    <input 
+                                        type="password" 
+                                        name="contrasena" 
+                                        className="form-control"
+                                        value= {formValues.contrasena} 
+                                        onChange={handleInputChange}/>
+                                </div>
+                                <div  className="mt-2">               
+                                    <label>Confirmar Contraseña</label> 
+                                    <input 
+                                        type="password" 
+                                        name="confirmContrasena" 
+                                        className="form-control"
+                                        value= {formValues.confirmContrasena} 
+                                        onChange={handleInputChange}/>
+                                </div>
+                            </>
+                    }                    
                 </div>
             </div>
-            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Login</button>
-            &nbsp;&nbsp;&nbsp;
-            <button onClick={changeWizard} className="btn btn-primary">Siguiente <FontAwesomeIcon icon={faForward}/></button>
+            {
+                formType === TYPE_FORM_CREATE &&
+                    <UsuarioFormCreateButtons formValues={formValues}/>
+            }
+            {
+                formType === TYPE_FORM_UPDATE &&
+                    <UsuarioFormUpdateButtons 
+                        setWizard={setWizard} 
+                        setUsuario={setUsuario} 
+                        formValues={formValues}
+                        authReducer={authReducer} />
+            }
+                        
         </div>
     )
 }

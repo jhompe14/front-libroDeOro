@@ -8,7 +8,7 @@ export const LoginForm = () => {
 
     const history= useHistory();
     const dispatch = useDispatch();
-    const [formValues, handleInputChange, handleObjectChange, reset] = useForm({
+    const [formValues, handleInputChange] = useForm({
         usuario: '',
         contrasena: '',
     });
@@ -19,7 +19,7 @@ export const LoginForm = () => {
     }
 
     const handleRedirectUsuario = () => {
-        history.replace("/usuario");
+        history.replace("/usuario-create");
     }
 
     return (
