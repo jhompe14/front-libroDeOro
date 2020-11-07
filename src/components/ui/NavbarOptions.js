@@ -48,25 +48,36 @@ export const NavbarOptions = ({authReducer}) => {
                                 to="/usuario-update">
                                    Usuario
                             </NavLink>
-                        </li>
-                        
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Administracion de Anecdotas
-                            </a>
-                            <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
-                                <NavLink 
-                                    activeClassName="active"
-                                    className="nav-item nav-link" 
-                                    exact
-                                    to="/anecdota">
-                                        Creacion de Anecdotas
-                                </NavLink>                            
-                            </div>
-                        </li>
-                        
+                        </li> 
                     </>                  
                 }
+
+                <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Administracion de Anecdotas
+                    </a>
+                    <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
+                        {
+                           authReducer.tipoUsuario === TYPE_USUARIO_INTEGRANTE &&
+                           <NavLink 
+                                activeClassName="active"
+                                className="nav-item nav-link" 
+                                exact
+                                to="/anecdota">
+                                    Creacion de Anecdotas
+                            </NavLink>
+                        }
+
+                        <NavLink 
+                            activeClassName="active"
+                            className="nav-item nav-link" 
+                            exact
+                            to="/anecdota-listado">
+                            Listado de Anecdotas
+                        </NavLink>
+                                                            
+                    </div>
+                </li>
             </ul>
         </div>
     )
