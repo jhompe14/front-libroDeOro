@@ -1,37 +1,64 @@
-import React, {useState} from 'react'
-import Pagination from "react-js-pagination";
+import React, {useState, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { AnecdotaListadoTable } from './AnecdotaListadoTable';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
+import { StatusCodes } from 'http-status-codes';
+import { queryFetch } from '../../helpers/queryFetch';
+import { HOST_URL_BACK, API_ANECDOTA } from '../../util/constant';
+import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 
 
 export const AnecdotaListadoScreen = () => {
+  
+    const dispatch = useDispatch();
+    const { authReducer }= useSelector( state => state);
 
-    const[products, setProductos] = useState([
-        { id: 1, name: 'George', animal: 'Monkey' },
-        { id: 2, name: 'Jeffrey', animal: 'Giraffe' },
-        { id: 3, name: 'Alice', animal: 'Giraffe' },
-        { id: 4, name: 'Alice', animal: 'Tiger' },
-        { id: 5, name: 'George', animal: 'Monkey' },
-    ]);
-        
-    
-    const handlePageChange = (pageNumber) =>{
-        alert("hola"+pageNumber);
+    const[page, setPage] = useState(1);
+    const[totalItems, setTotalItems] = useState(0);
+    const[anecdotas, setAnecdotas] = useState([]);
+
+    useEffect(() => {
+      loadAnecdotas();
+    }, [page]);
+
+
+    const buildPathFilter = () =>{
+      let path = `?usuarioOwner=${authReducer?.usuario}&typeUsuarioOwner=${authReducer?.tipoUsuario}&page=${page}`;
+      return path;
     }
 
-      
+    const loadAnecdotas = async() => {
+      messageLoadingSwal();
+      await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}${buildPathFilter()}`, authReducer?.token)
+            .then(resp => {
+                if(resp.status === StatusCodes.OK){
+                    return resp.json()
+                }else{
+                    return new Promise((resolve, reject) => reject({status: resp.status}));
+                }
+            })
+            .then(data =>{
+                messageCloseSwal();
+                if(data.totalItems > 0){
+                  setAnecdotas(data.dataGrid);
+                  setTotalItems(data.totalItems);
+                }          
+            })
+            .catch(err => {            
+                controlErrorFetch(err, dispatch);            
+            });
+    };
+
     
-      return (
-        <div className="App">
-          <h5>React Bootstrap Table Next with Sorting</h5>
-    
-          <Pagination
-            itemClass="page-item"
-            linkClass="page-link"
-            activePage={1}
-            itemsCountPerPage={5}
-            totalItemsCount={1500}
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}
-            /> 
-        </div>
-      );
+    return (
+      <div className="content animate__animated animate__slideInLeft">
+        <h1>Listado de Anecdotas</h1>
+        <hr/>
+        <AnecdotaListadoTable 
+            page={page}
+            setPage={setPage} 
+            totalItems={totalItems} 
+            anecdotas={anecdotas}/>           
+      </div>
+    );
 }
