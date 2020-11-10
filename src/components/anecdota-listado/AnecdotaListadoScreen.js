@@ -34,7 +34,6 @@ export const AnecdotaListadoScreen = () => {
 
     const buildPathFilter = () =>{
       let path = `?usuarioOwner=${authReducer?.usuario}&typeUsuarioOwner=${authReducer?.tipoUsuario}&page=${page}`;
-      console.log(filtros);
       filtros.idGrupo &&
                   path.concat("&idGrupo="+filtros.idGrupo);
       filtros.idRama && 
@@ -50,9 +49,6 @@ export const AnecdotaListadoScreen = () => {
       filtros.usuarioFilter && 
                   path.concat("&usuarioFilter="+filtros.usuarioFilter); 
                   
-      console.log(filtros.estado);
-      console.log(path);
-
       return path;
     }
 
