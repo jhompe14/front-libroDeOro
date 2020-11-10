@@ -24,7 +24,7 @@ export const AnecdotaForm = () => {
                 seccionReducer:{secciones}, authReducer:{usuario, token} } = useSelector( state => state);
     const[ramasFilter, setRamasFilter] = useState([]);
     const[seccionesFilter, setSeccionesFilter] = useState([]);
-    const [formValues, handleInputChange, reset] = useForm({});
+    const [formValues, handleInputChange] = useForm({});
 
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.grupo));
