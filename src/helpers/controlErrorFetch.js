@@ -14,7 +14,7 @@ export const controlErrorFetch = (err, dispatch) => {
                     dispatch(startLogoutUser());
                     setInactiveWarningFunc();
                 });
-        }else if(err.status != StatusCodes.INTERNAL_SERVER_ERROR){
+        }else if(err.status != undefined && err.status != StatusCodes.INTERNAL_SERVER_ERROR){
             err.text().then(msg => {
                 messageErrorFetch(msg);                                     
             });            
