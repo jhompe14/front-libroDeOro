@@ -14,16 +14,19 @@ export const controlErrorFetch = (err, dispatch) => {
                     dispatch(startLogoutUser());
                     setInactiveWarningFunc();
                 });
-        }else if(err.status){
+        }else if(err.status != undefined && err.status != StatusCodes.INTERNAL_SERVER_ERROR){
             err.text().then(msg => {
-                messageErrorSwal(msg);
-                setInactiveWarningFunc();                                       
-            });
+                messageErrorFetch(msg);                                     
+            });            
         } else {
-            messageErrorSwal(err);
-            setInactiveWarningFunc();
+            messageErrorFetch("Ha ocurrido un error interno por favor comuniquese con el administrador");
         }
     } 
+}
+
+const messageErrorFetch = (msg) => {
+    messageErrorSwal(msg);
+    setInactiveWarningFunc();
 }
 
 const validateExecControlErrorFetch = () =>{

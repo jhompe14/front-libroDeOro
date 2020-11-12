@@ -27,7 +27,7 @@ export const CargoScreen = () => {
 
     useEffect(() => {
         const grupos = grupoReducer?.grupos
-        if(grupos.length > 0 && typecargo===TYPE_CARGO_GRUPO){
+        if(grupos?.length > 0 && typecargo===TYPE_CARGO_GRUPO){
             setHeadDescriptTypeCargo("Cargos del grupo: ");
             setDescripTypeCargo(filterById(grupos, typeId)[0]);
         }        
@@ -35,7 +35,7 @@ export const CargoScreen = () => {
 
     useEffect(() => {
         const ramas = ramasReducer?.ramas;
-        if(ramas.length > 0 && typecargo===TYPE_CARGO_RAMA){
+        if(ramas?.length > 0 && typecargo===TYPE_CARGO_RAMA){
             setHeadDescriptTypeCargo("Cargos de la rama: ");
             setDescripTypeCargo(filterById(ramas, typeId)[0]);
         }
@@ -43,7 +43,7 @@ export const CargoScreen = () => {
 
     useEffect(() => {
         const secciones = seccionesReducer?.secciones
-        if(secciones.length > 0 && typecargo===TYPE_CARGO_SECCION){
+        if(secciones?.length > 0 && typecargo===TYPE_CARGO_SECCION){
             setHeadDescriptTypeCargo("Cargos de la seccion: ");
             setDescripTypeCargo(filterById(secciones, typeId)[0]);
         }

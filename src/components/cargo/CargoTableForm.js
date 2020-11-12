@@ -5,6 +5,7 @@ import { HOST_URL_BACK, API_CARGOS } from '../../util/constant';
 import { CargoTableRowForm } from './CargoTableRowForm';
 import { StatusCodes } from 'http-status-codes';
 import { queryFetch } from '../../helpers/queryFetch';
+import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 
 
 export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, typeId }) => {
@@ -13,6 +14,7 @@ export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, t
     const { authReducer }= useSelector( state => state);
 
     const loadCargos = async() => {
+        messageLoadingSwal();
         await queryFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, authReducer?.token)
             .then(resp => {
                 if(resp.status === StatusCodes.OK){
@@ -22,6 +24,7 @@ export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, t
                 }
             })
             .then(data =>{
+                messageCloseSwal();
                 if(data.length > 0){
                     setCargos(data);
                 }          
