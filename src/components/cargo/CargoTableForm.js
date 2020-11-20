@@ -16,13 +16,6 @@ export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, t
     const loadCargos = async() => {
         messageLoadingSwal();
         await queryFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, authReducer?.token)
-            .then(resp => {
-                if(resp.status === StatusCodes.OK){
-                    return resp.json()
-                }else{
-                    return new Promise((resolve, reject) => reject({status: resp.status}));
-                }
-            })
             .then(data =>{
                 messageCloseSwal();
                 if(data.length > 0){

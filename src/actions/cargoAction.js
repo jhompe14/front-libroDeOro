@@ -9,13 +9,6 @@ export const startLoadingCargos = () => {
         const cargos = [];
 
         await queryFetch(`${HOST_URL_BACK}${API_CARGOS}`)
-            .then(resp => {
-                if(resp.status === StatusCodes.OK){
-                    return resp.json()
-                }else{
-                    return new Promise((resolve, reject) => reject({status: resp.status}));
-                }
-            })
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(elemnt => {

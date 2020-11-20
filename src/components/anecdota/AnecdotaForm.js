@@ -38,7 +38,8 @@ export const AnecdotaForm = () => {
         messageLoadingSwal();
         const objSendAnecdota ={
             ...formValues,
-            fecha: moment(formValues.fecha).format("DD/MM/YYYY"),
+            fecha: formValues.fecha ? 
+                    moment(formValues.fecha).format("DD/MM/YYYY"): null,
             usuario: usuario,
         };
         
@@ -47,7 +48,7 @@ export const AnecdotaForm = () => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado <b>PENDIENTE DE APROBACION</b>", 
+                    messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE DE APROBACION", 
                     () => {
                         history.replace(`/`);
                     });                    

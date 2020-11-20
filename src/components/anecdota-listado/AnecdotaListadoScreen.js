@@ -2,9 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AnecdotaListadoTable } from './AnecdotaListadoTable';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
-import { StatusCodes } from 'http-status-codes';
 import { queryFetch } from '../../helpers/queryFetch';
-import { HOST_URL_BACK, API_ANECDOTA } from '../../util/constant';
+import { HOST_URL_BACK, API_ANECDOTA, TYPE_USUARIO_INTEGRANTE } from '../../util/constant';
 import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 import { AnecdotaListadoFilter } from './AnecdotaListadoFilter';
 
@@ -33,35 +32,29 @@ export const AnecdotaListadoScreen = () => {
 
 
     const buildPathFilter = () =>{
-      let path = `?usuarioOwner=${authReducer?.usuario}&typeUsuarioOwner=${authReducer?.tipoUsuario}&page=${page}`;
-      filtros.idGrupo &&
-                  path.concat("&idGrupo="+filtros.idGrupo);
-      filtros.idRama && 
-                  path.concat("&idRama="+filtros.idRama);
-      filtros.idSeccion && 
-                  path.concat("&idSeccion="+filtros.idRama);
-      filtros.fechaInicioAnecdota && 
-                  path.concat("&fechaInicioAnecdota="+filtros.fechaInicioAnecdota);
-      filtros.fechaFinAnecdota && 
-                  path.concat("&fechaFinAnecdota="+filtros.fechaFinAnecdota);
-      if(filtros.estado) 
-        path+="&estado="+filtros.estado;
-      filtros.usuarioFilter && 
-                  path.concat("&usuarioFilter="+filtros.usuarioFilter); 
+      let path = `?page=${page}&usuarioOwner=${authReducer?.usuario}&typeUsuarioOwner=${authReducer?.tipoUsuario}`;
+
+      if(filtros.idGrupo && filtros.idGrupo != 0)
+            path+="&idGrupo="+filtros.idGrupo;
+      if(filtros.idRama && filtros.idRama != 0) 
+            path+="&idRama="+filtros.idRama;
+      if(filtros.idSeccion && filtros.idSeccion != 0) 
+            path+="&idSeccion="+filtros.idSeccion;
+      if(filtros.fechaInicioAnecdota) 
+            path+="&fechaInicioAnecdota="+filtros.fechaInicioAnecdota;
+      if(filtros.fechaFinAnecdota)
+            path+="&fechaFinAnecdota="+filtros.fechaFinAnecdota;
+      if(filtros.estado && filtros.estado != 0) 
+            path+="&estado="+filtros.estado;
+      if(filtros.usuarioFilter)
+            path+="&usuarioFilter="+filtros.usuarioFilter; 
                   
       return path;
     }
 
     const loadAnecdotas = async() => {
       messageLoadingSwal();
-      await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}${buildPathFilter()}`, authReducer?.token)
-            .then(resp => {
-                if(resp.status === StatusCodes.OK){
-                    return resp.json()
-                }else{
-                    return new Promise((resolve, reject) => reject({status: resp.status}));
-                }
-            })
+      await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}${buildPathFilter()}`, authReducer?.token)            
             .then(data =>{
                 messageCloseSwal();
                 setAnecdotas(data.dataGrid);
@@ -74,19 +67,21 @@ export const AnecdotaListadoScreen = () => {
 
     
     return (
-      <div className="content animate__animated animate__slideInLeft">
+      <div className="animate__animated animate__slideInLeft">
         <h1>Listado de Anecdotas</h1>
         <hr/>
 
         <AnecdotaListadoFilter 
             setAplicacionFiltros={setAplicacionFiltros}
-            setFiltros={setFiltros}/>
+            setFiltros={setFiltros} 
+            authReducer={authReducer} />
 
         <AnecdotaListadoTable 
             page={page}
             setPage={setPage} 
             totalItems={totalItems} 
-            anecdotas={anecdotas}/>           
-      </div>
+            anecdotas={anecdotas}/>
+                   
+      </div>      
     );
 }

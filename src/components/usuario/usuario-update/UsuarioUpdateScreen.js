@@ -5,7 +5,6 @@ import { UsuarioForm } from '../UsuarioForm';
 import { UsuarioTrayectoria } from './UsuarioTrayectoria';
 import { HOST_URL_BACK, API_USUARIOS } from '../../../util/constant';
 import { queryFetch } from '../../../helpers/queryFetch';
-import { StatusCodes } from 'http-status-codes';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { messageLoadingSwal, messageCloseSwal } from '../../../util/messages';
 
@@ -24,27 +23,20 @@ export const UsuarioUpdateScreen = () => {
     const loadUsuario = async() => {
         messageLoadingSwal();
         await queryFetch(`${HOST_URL_BACK}${API_USUARIOS}/${authReducer?.usuario}`, authReducer?.token)
-            .then(resp => {
-                messageCloseSwal();
-                if(resp.status === StatusCodes.OK){
-                    return resp.json()
-                }else{
-                    return new Promise((resolve, reject) => reject({status: resp.status}));
-                }
-            })
             .then(data => {
+                messageCloseSwal();
                 if(data != undefined ){
                     setUsuario(data);
                     setTrayectorias(data.trayectoria);
                 }
             })
-            .catch(err => {            
+            .catch(err => {           
                 controlErrorFetch(err, dispatch);            
             });
     }
 
     return (
-        <div className="container mt-2">
+        <div className="content mt-2">
             {
                 wizard===1 && usuario != undefined && 
                     <UsuarioForm 

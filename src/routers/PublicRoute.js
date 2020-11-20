@@ -7,13 +7,13 @@ import { UsuarioCreateScreen } from '../components/usuario/usuario-create/Usuari
 
 export const PublicRoute = () => {
     return (
-        <>
+        <div className="container-fluid mt-2">
             <Switch>
                 <Route exact path="/auth/login" component={LoginScreen} />
                 <Route exact path="/usuario-create" component={UsuarioCreateScreen} />
                 <Redirect to="/auth/login" />
             </Switch>     
-        </>
+        </div>
     )
 }
 

@@ -20,7 +20,7 @@ export const UsuarioCreateScreen = () => {
     }  
 
     return (
-        <div className="container mt-2">            
+        <div className="content mt-2">            
             <UsuarioForm 
                 usuario={initialUsuario} 
                 formType={TYPE_FORM_CREATE} />

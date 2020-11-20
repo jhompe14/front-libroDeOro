@@ -5,7 +5,7 @@ import { AnecdotaListadoTableRow } from './AnecdotaListadoTableRow';
 
 export const AnecdotaListadoTable = ({page, setPage, totalItems, anecdotas}) => {
     
-    const PAGE_SIZE = 4;
+    const PAGE_SIZE = 6;
 
     const handlePageChange = (pageNumber) =>{
         setPage(pageNumber);

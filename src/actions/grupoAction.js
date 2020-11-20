@@ -9,13 +9,6 @@ export const startLoadingGrupos = () => {
         const grupos = [];
 
         await queryFetch(`${HOST_URL_BACK}${API_GRUPOS}`)
-            .then(resp => {
-                if(resp.status === StatusCodes.OK){
-                    return resp.json()
-                }else{
-                    return new Promise((resolve, reject) => reject({status: resp.status}));
-                }
-            })
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(elemnt => {

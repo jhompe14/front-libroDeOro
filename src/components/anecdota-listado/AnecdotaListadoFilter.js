@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { TYPE_ESTADO_ANECDOTA_APROBADO, 
     TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION, 
     TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION, 
-    TYPE_ESTADO_ANECDOTA_RECHAZADO } from '../../util/constant';
+    TYPE_ESTADO_ANECDOTA_RECHAZADO, 
+    TYPE_USUARIO_ADMINISTRADOR,
+    TYPE_USUARIO_INTEGRANTE} from '../../util/constant';
 import { filterRamasByGrupo, filterSeccionesByRama } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros}) => {
+export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authReducer}) => {
 
     const { grupoReducer:{grupos}, ramaReducer:{ramas}, seccionReducer:{secciones} } = useSelector( state => state);
     const[ramasFilter, setRamasFilter] = useState([]);
@@ -17,17 +20,21 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros}) => {
     const [formValues, handleInputChange, reset] = useForm({});
 
     useEffect(() => {
-        setRamasFilter(filterRamasByGrupo(ramas, formValues.grupo));
-    }, [formValues.grupo]);
+        setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
+    }, [formValues.idGrupo]);
 
     useEffect(() => {
-        setSeccionesFilter(filterSeccionesByRama(secciones, formValues.rama));
-    }, [formValues.rama]);
+        setSeccionesFilter(filterSeccionesByRama(secciones, formValues.idRama));
+    }, [formValues.idRama]);
 
     const handleFilter = () =>{
         setAplicacionFiltros(true);
         setFiltros({
-            ...formValues
+            ...formValues,
+            fechaInicioAnecdota: formValues.fechaInicioAnecdota ? 
+                moment(formValues.fechaInicioAnecdota).format("DD/MM/YYYY"): undefined,
+            fechaFinAnecdota: formValues.fechaFinAnecdota ? 
+                moment(formValues.fechaFinAnecdota).format("DD/MM/YYYY"): undefined,
         });
     }
 
@@ -98,7 +105,7 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros}) => {
                                 type="date" 
                                 name="fechaInicioAnecdota" 
                                 className="form-control"
-                                value= {formValues.fecha} 
+                                value= {formValues.fechaInicioAnecdota} 
                                 onChange={handleInputChange}/>
                         </div>
                         <div className="col-6">
@@ -107,13 +114,13 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros}) => {
                                     type="date" 
                                     name="fechaFinAnecdota" 
                                     className="form-control"
-                                    value= {formValues.fecha} 
+                                    value= {formValues.fechaFinAnecdota} 
                                     onChange={handleInputChange}/>
                         </div>
                     </div>
                 </div>
                 <div className="col-4">
-                <label>Estado Anecdota</label>
+                    <label>Estado Anecdota</label>
                     <select                            
                         name="estado"  
                         className="form-control"
@@ -127,20 +134,23 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros}) => {
                 </div>
                 <div className="col-4">
                     <div className="form-group row">
-                        <div className="col-6">
-                            <label>Usuario</label> 
-                            <input 
-                                type="text" 
-                                name="usuarioFilter" 
-                                className="form-control"
-                                value= {formValues.fecha} 
-                                onChange={handleInputChange}/>
-                        </div>
+                        {
+                            authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR &&                                    
+                                <div className="col-6">
+                                    <label>Usuario</label> 
+                                    <input 
+                                        type="text" 
+                                        name="usuarioFilter" 
+                                        className="form-control"
+                                        value= {formValues.usuarioFilter} 
+                                        onChange={handleInputChange}/>
+                                </div>                                            
+                        }
                         <div className="col-6">
                             <button onClick={handleFilter} className="btn btn-primary mt-4"><FontAwesomeIcon icon={faSearch}/> Buscar</button>
-                        </div>
+                        </div> 
                     </div>
-                </div>
+                </div>                              
             </div>
         </>
     )
