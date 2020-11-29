@@ -6,8 +6,7 @@ import { TYPE_ESTADO_ANECDOTA_APROBADO,
     TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION, 
     TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION, 
     TYPE_ESTADO_ANECDOTA_RECHAZADO, 
-    TYPE_USUARIO_ADMINISTRADOR,
-    TYPE_USUARIO_INTEGRANTE} from '../../util/constant';
+    TYPE_USUARIO_ADMINISTRADOR } from '../../util/constant';
 import { filterRamasByGrupo, filterSeccionesByRama } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
