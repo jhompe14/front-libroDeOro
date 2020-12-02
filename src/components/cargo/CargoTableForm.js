@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 import { HOST_URL_BACK, API_CARGOS } from '../../util/constant';
 import { CargoTableRowForm } from './CargoTableRowForm';
-import { StatusCodes } from 'http-status-codes';
 import { queryFetch } from '../../helpers/queryFetch';
 import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 

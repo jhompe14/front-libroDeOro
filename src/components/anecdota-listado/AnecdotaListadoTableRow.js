@@ -1,12 +1,21 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTools } from '@fortawesome/free-solid-svg-icons';
-import { TYPE_USUARIO_ADMINISTRADOR } from '../../util/constant';
+import { faTools, faEye, faPenAlt } from '@fortawesome/free-solid-svg-icons';
+import { TYPE_USUARIO_ADMINISTRADOR, 
+    TYPE_USUARIO_INTEGRANTE,
+    TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION,
+    TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION 
+} from '../../util/constant';
 
 export const AnecdotaListadoTableRow = ({anecdota}) => {
 
+    const history= useHistory();
     const { authReducer } = useSelector( state => state);
+
+    const handleGoAnecdotaView = () => history.replace(`/anecdota/view/${anecdota.idAnecdota}`);
+    const handleGoAnecdotaEdit = () => history.replace(`/anecdota/edit/${anecdota.idAnecdota}`);   
 
     return (
         <tr>
@@ -16,13 +25,22 @@ export const AnecdotaListadoTableRow = ({anecdota}) => {
             <td>{anecdota.nombreSuceso}</td>
             <td>{anecdota.fechaSuceso}</td>
             <td>{anecdota.usuarioRegistro}</td>
-            <td>{anecdota.estado}</td>
+            <td>{anecdota.descripcionEstado}</td>
             <td>{anecdota.usuarioGestion}</td>
             <td>
                 <div className="row">
                     {
                         authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
-                            <div className="col-2" title="Administrar Anecdota"><FontAwesomeIcon icon={faTools}/></div>
+                            <div className="col-2" title="Administrar Anecdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faTools}/></div>
+                    }
+                    {
+                        authReducer?.tipoUsuario == TYPE_USUARIO_INTEGRANTE &&
+                            <div className="col-2" title="Ver Anecdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faEye}/></div>
+                    }
+                    {
+                        authReducer?.tipoUsuario == TYPE_USUARIO_INTEGRANTE && 
+                            (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION || anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION) &&
+                            <div className="col-2" title="Modificar Anecdota" onClick={handleGoAnecdotaEdit}><FontAwesomeIcon icon={faPenAlt}/></div>
                     }                    
                 </div>
             </td>

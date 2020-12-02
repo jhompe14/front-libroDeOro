@@ -25,7 +25,7 @@ export const UsuarioUpdateScreen = () => {
         await queryFetch(`${HOST_URL_BACK}${API_USUARIOS}/${authReducer?.usuario}`, authReducer?.token)
             .then(data => {
                 messageCloseSwal();
-                if(data != undefined ){
+                if(data != null && data != undefined ){
                     setUsuario(data);
                     setTrayectorias(data.trayectoria);
                 }

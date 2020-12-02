@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { TYPE_CARGO_GRUPO, TYPE_CARGO_RAMA, TYPE_CARGO_SECCION } from '../../util/constant';
-import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { CargoForm } from './CargoForm';
 import { CargoTableForm } from './CargoTableForm';
 import { filterById } from '../../util/selectors';
+import { TYPE_CARGO_GRUPO, TYPE_CARGO_RAMA, TYPE_CARGO_SECCION } from '../../util/constant';
 
 export const CargoScreen = () => {
 

@@ -63,7 +63,7 @@ export const NavbarOptions = ({authReducer}) => {
                                 activeClassName="active"
                                 className="nav-item nav-link" 
                                 exact
-                                to="/anecdota">
+                                to="/anecdota/create">
                                     Creacion de Anecdotas
                             </NavLink>
                         }

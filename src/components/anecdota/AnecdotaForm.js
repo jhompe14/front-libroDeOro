@@ -16,23 +16,24 @@ import { messageLoadingSwal,
     messageCloseSwal, 
     messageSuccessSwalWithFunction } from '../../util/messages';
 
-export const AnecdotaForm = () => {
+export const AnecdotaForm = ({anecdotaEdit, edit}) => {
 
     const history= useHistory();
     const dispatch = useDispatch();
     const { grupoReducer:{grupos}, ramaReducer:{ramas}, 
                 seccionReducer:{secciones}, authReducer:{usuario, token} } = useSelector( state => state);
+                
     const[ramasFilter, setRamasFilter] = useState([]);
     const[seccionesFilter, setSeccionesFilter] = useState([]);
-    const [formValues, handleInputChange] = useForm({});
+    const [formValues, handleInputChange] = useForm(anecdotaEdit);
 
     useEffect(() => {
-        setRamasFilter(filterRamasByGrupo(ramas, formValues.grupo));
-    }, [formValues.grupo]);
+        setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
+    }, [formValues.idGrupo]);
 
     useEffect(() => {
-        setSeccionesFilter(filterSeccionesByRama(secciones, formValues.rama));
-    }, [formValues.rama]);
+        setSeccionesFilter(filterSeccionesByRama(secciones, formValues.idRama));
+    }, [formValues.idRama]);
 
     const handleSubmit = () => {
         messageLoadingSwal();
@@ -50,7 +51,7 @@ export const AnecdotaForm = () => {
                     messageCloseSwal();
                     messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE DE APROBACION", 
                     () => {
-                        history.replace(`/`);
+                        history.replace(`/anecdota-listado`);
                     });                    
                 })                
             } else {
@@ -62,7 +63,9 @@ export const AnecdotaForm = () => {
         });
     }
 
-    const getSelectedGrupo = (grupoId) =>  formValues && formValues.grupo === grupoId ? 'selected': '';
+    const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
+    const getSelectedRama = (ramaId) => formValues && formValues.idRama === ramaId ? 'selected': '';
+    const getSelectedSeccion = (seccionId) => formValues && formValues.idSeccion === seccionId ? 'selected': '';
 
     return (
         <>
@@ -93,12 +96,13 @@ export const AnecdotaForm = () => {
                             name="rama"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione una rama</option>
+                            <option value="0" selected={getSelectedRama(0)}>Seleccione una rama</option>
                             {                                
                                 ramasFilter && ramasFilter.map(rama => 
                                                             <option key={rama.id} 
-                                                                    value={rama.id} >
-                                                                {rama.nombre}
+                                                                    value={rama.id} 
+                                                                    selected={getSelectedRama(rama.id)}>
+                                                                    {rama.nombre}
                                                             </option>)
                             }        
                         </select>
@@ -111,11 +115,12 @@ export const AnecdotaForm = () => {
                             name="seccion"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione una seccion</option>
+                            <option value="0" selected={getSelectedSeccion(0)}>Seleccione una seccion</option>
                             {                                
                                 seccionesFilter && seccionesFilter.map(seccion => 
                                                         <option key={seccion.id} 
-                                                                value={seccion.id} >
+                                                                value={seccion.id} 
+                                                                selected={getSelectedSeccion(seccion.id)}>
                                                                 {seccion.nombre}
                                                         </option>)
                             }        

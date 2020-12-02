@@ -1,14 +1,12 @@
 import React from 'react'
-import { AnecdotaForm } from './AnecdotaForm'
+import { AnecdotaForm } from '../AnecdotaForm'
 
-export const AnecdotaScreen = () => {
-
-
+export const AnecdotaCreateScreen = () => {
     return (
         <div className="content animate__animated animate__slideInLeft">
             <h1>Anecdota</h1>
             <hr/>
-            <AnecdotaForm />
+            <AnecdotaForm anecdotaEdit={{}} edit={false}/>
         </div>
     )
 }
