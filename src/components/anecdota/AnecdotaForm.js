@@ -39,6 +39,7 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
     }, [formValues.idRama]);
 
     const handleSubmit = () => {
+        messageLoadingSwal();
         if(edit){
             updateAnecdota();
         }else{
@@ -51,9 +52,7 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
             ...formValues,
             fecha: formatDateCalendar(formValues.fecha),
             usuario: usuario,
-        };
-
-        messageLoadingSwal();
+        };       
         commandFetch(`${HOST_URL_BACK}${API_ANECDOTA}`, METHOD_POST, objSendAnecdota, token)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
