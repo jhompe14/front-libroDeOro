@@ -94,9 +94,9 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
                     onChange={handleInputChange}/>                           
             </div>
             <div className="mt-2">
-                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/>&nbsp;&nbsp;Limpiar</button>
                 &nbsp;&nbsp;
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
             </div>
         </>
     )

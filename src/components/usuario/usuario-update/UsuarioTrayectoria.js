@@ -76,9 +76,9 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
                 trayectorias={trayectorias} 
                 setTrayectorias = {setTrayectorias}/>
 
-            <button onClick={changeWizard} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Anterior</button>
+            <button onClick={changeWizard} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anterior</button>
             &nbsp;&nbsp;&nbsp;
-            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Finalizar</button>
+            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Finalizar</button>
         </div>
     )
 }

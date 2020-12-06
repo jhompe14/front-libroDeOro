@@ -169,7 +169,7 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria, au
             </div>
             <div className="row mt-2">
                 &nbsp;&nbsp;&nbsp;
-                <button onClick={handleAddTrayectoria} className="btn btn-primary"><FontAwesomeIcon icon={faPlusSquare}/> Agregar</button>   
+                <button onClick={handleAddTrayectoria} className="btn btn-primary"><FontAwesomeIcon icon={faPlusSquare}/>&nbsp;&nbsp;Agregar</button>   
             </div>
         </>
     )

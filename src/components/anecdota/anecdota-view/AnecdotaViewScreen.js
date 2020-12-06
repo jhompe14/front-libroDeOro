@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { AnecdotaView } from './AnecdotaView';
 import { useParams } from 'react-router-dom';
@@ -6,6 +7,9 @@ import { queryFetch } from '../../../helpers/queryFetch';
 import { messageLoadingSwal, messageCloseSwal } from '../../../util/messages';
 import { HOST_URL_BACK, API_ANECDOTA } from '../../../util/constant';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackward, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { TYPE_USUARIO_ADMINISTRADOR } from '../../../util/constant';
 
 export const AnecdotaViewScreen = () => {
 
@@ -13,6 +17,10 @@ export const AnecdotaViewScreen = () => {
     const dispatch = useDispatch();
     const { authReducer }= useSelector( state => state);
     const[anecdota, setAnecdota] = useState({});
+    const[wizard, setWizard] = useState(1);
+
+    const history= useHistory();
+    const goListadoAnecdotas = () => history.replace("/anecdota-listado");
 
     useEffect(() => {
         loadAnecdota();     
@@ -34,8 +42,21 @@ export const AnecdotaViewScreen = () => {
 
     return (
         <div className="content animate__animated animate__slideInLeft">
-            <h1>Anecdota</h1>
-            <hr/>
+            <div className="row">
+                <div className="col-6">
+                    <h1>Anecdota</h1>
+                </div>
+                <div className="col-6 d-flex">
+                    <div className="ml-auto">
+                        <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>&nbsp;&nbsp;&nbsp;
+                        {
+                            authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
+                                <button className="btn btn-primary"><FontAwesomeIcon icon={faTasks}/>&nbsp;&nbsp;Gestionar</button>
+                        }
+                    </div>                    
+                </div>                     
+            </div>
+            <hr/>            
             <AnecdotaView anecdota={anecdota} authReducer={authReducer} />
         </div>
     )

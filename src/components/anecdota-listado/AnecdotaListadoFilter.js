@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { TYPE_ESTADO_ANECDOTA_APROBADO, 
@@ -10,13 +9,14 @@ import { TYPE_ESTADO_ANECDOTA_APROBADO,
 import { filterRamasByGrupo, filterSeccionesByRama } from '../../util/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { formatDateCalendar } from '../../util/date';
 
 export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authReducer}) => {
 
     const { grupoReducer:{grupos}, ramaReducer:{ramas}, seccionReducer:{secciones} } = useSelector( state => state);
     const[ramasFilter, setRamasFilter] = useState([]);
     const[seccionesFilter, setSeccionesFilter] = useState([]);
-    const [formValues, handleInputChange, reset] = useForm({});
+    const [formValues, handleInputChange] = useForm({});
 
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
@@ -30,10 +30,8 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
         setAplicacionFiltros(true);
         setFiltros({
             ...formValues,
-            fechaInicioAnecdota: formValues.fechaInicioAnecdota ? 
-                moment(formValues.fechaInicioAnecdota).format("DD/MM/YYYY"): undefined,
-            fechaFinAnecdota: formValues.fechaFinAnecdota ? 
-                moment(formValues.fechaFinAnecdota).format("DD/MM/YYYY"): undefined,
+            fechaInicioAnecdota: formatDateCalendar(formValues.fechaInicioAnecdota),
+            fechaFinAnecdota: formatDateCalendar(formValues.fechaFinAnecdota),
         });
     }
 
@@ -146,7 +144,7 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                                 </div>                                            
                         }
                         <div className="col-6">
-                            <button onClick={handleFilter} className="btn btn-primary mt-4"><FontAwesomeIcon icon={faSearch}/> Buscar</button>
+                            <button onClick={handleFilter} className="btn btn-primary mt-4"><FontAwesomeIcon icon={faSearch}/>&nbsp;&nbsp;Buscar</button>
                         </div> 
                     </div>
                 </div>                              

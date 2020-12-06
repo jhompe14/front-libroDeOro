@@ -1,13 +1,6 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faTasks } from '@fortawesome/free-solid-svg-icons';
-import { TYPE_USUARIO_ADMINISTRADOR } from '../../../util/constant';
 
-export const AnecdotaView = ({ anecdota, authReducer }) => {
-
-    const history= useHistory();
-    const goListadoAnecdotas = () => history.replace("/anecdota-listado");
+export const AnecdotaView = ({ anecdota }) => {    
 
     return (
         <>
@@ -48,16 +41,7 @@ export const AnecdotaView = ({ anecdota, authReducer }) => {
                     <label><b>Descripcion</b></label>
                     <p>{anecdota.descripcion}</p>
                 </div>
-            </div>
-            <div>
-                <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Listado Anecdotas</button>
-                &nbsp;&nbsp;&nbsp;
-                {
-                    authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
-                        <button className="btn btn-primary"><FontAwesomeIcon icon={faTasks}/>&nbsp;&nbsp;Gestionar</button>
-                }
-                
-            </div>  
+            </div>             
         </>
     )
 }

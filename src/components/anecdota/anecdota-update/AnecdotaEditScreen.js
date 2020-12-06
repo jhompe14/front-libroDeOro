@@ -6,6 +6,7 @@ import { messageLoadingSwal, messageCloseSwal } from '../../../util/messages';
 import { HOST_URL_BACK, API_ANECDOTA } from '../../../util/constant';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { AnecdotaForm } from '../AnecdotaForm'
+import { formatDateInput } from '../../../util/date';
 
 export const AnecdotaEditScreen = () => {
 
@@ -23,8 +24,11 @@ export const AnecdotaEditScreen = () => {
         await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}/${idAnecdota}`, authReducer?.token)
             .then(data =>{
                 messageCloseSwal();
-                if(data != null && data != undefined ){
-                    setAnecdota(data);
+                if(data != null && data != undefined ){                    
+                    setAnecdota(() => {
+                        data.fecha = formatDateInput(data.fecha);
+                        return data;
+                    });
                 }          
             })
             .catch(err => {            

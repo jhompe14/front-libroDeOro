@@ -43,9 +43,9 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
 
     return (
         <div>
-            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Login</button>
+            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Login</button>
             &nbsp;&nbsp;&nbsp;
-            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
         </div>
     )
 }

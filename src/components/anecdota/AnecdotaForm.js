@@ -2,19 +2,20 @@ import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { useHistory } from "react-router-dom";
-import moment from 'moment';
 import { commandFetch } from '../../helpers/commandFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StatusCodes } from 'http-status-codes';
 import { filterRamasByGrupo, filterSeccionesByRama } from '../../util/selectors';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faBackward } from '@fortawesome/free-solid-svg-icons';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 import { HOST_URL_BACK, 
     API_ANECDOTA, 
-    METHOD_POST } from '../../util/constant';
+    METHOD_POST, 
+    METHOD_PUT} from '../../util/constant';
 import { messageLoadingSwal, 
     messageCloseSwal, 
     messageSuccessSwalWithFunction } from '../../util/messages';
+import { formatDateCalendar } from '../../util/date';
 
 export const AnecdotaForm = ({anecdotaEdit, edit}) => {
 
@@ -27,6 +28,8 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
     const[seccionesFilter, setSeccionesFilter] = useState([]);
     const [formValues, handleInputChange] = useForm(anecdotaEdit);
 
+    const goListadoAnecdotas = () => history.replace("/anecdota-listado");
+
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
     }, [formValues.idGrupo]);
@@ -36,20 +39,51 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
     }, [formValues.idRama]);
 
     const handleSubmit = () => {
-        messageLoadingSwal();
+        if(edit){
+            updateAnecdota();
+        }else{
+            saveAnecdota();
+        }       
+    }
+
+    const saveAnecdota = () => {
         const objSendAnecdota ={
             ...formValues,
-            fecha: formValues.fecha ? 
-                    moment(formValues.fecha).format("DD/MM/YYYY"): null,
+            fecha: formatDateCalendar(formValues.fecha),
             usuario: usuario,
         };
-        
+
+        messageLoadingSwal();
         commandFetch(`${HOST_URL_BACK}${API_ANECDOTA}`, METHOD_POST, objSendAnecdota, token)
         .then(response => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
                     messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE DE APROBACION", 
+                    () => {
+                        history.replace(`/anecdota-listado`);
+                    });                    
+                })                
+            } else {
+                controlErrorFetch(response, dispatch);                
+            }
+        })
+        .catch(error =>  {
+            controlErrorFetch(error, dispatch);
+        });
+    }
+
+    const updateAnecdota = () => {
+        const objSendAnecdota ={
+            ...formValues,
+            fecha: formatDateCalendar(formValues.fecha),
+        };
+        commandFetch(`${HOST_URL_BACK}${API_ANECDOTA}/${objSendAnecdota.id}`, METHOD_PUT, objSendAnecdota, token)
+        .then(response => {
+            if(response.status === StatusCodes.ACCEPTED){
+                response.json().then(() => {
+                    messageCloseSwal();
+                    messageSuccessSwalWithFunction("Anecdota modificada exitosamente.", 
                     () => {
                         history.replace(`/anecdota-listado`);
                     });                    
@@ -74,7 +108,7 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
                     <div>
                         <label>Grupo</label>
                         <select
-                            name="grupo"  
+                            name="idGrupo"  
                             className="form-control"
                             onChange={handleInputChange}>
                             <option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>
@@ -93,7 +127,7 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
                     <div>               
                         <label>Rama</label>
                         <select                            
-                            name="rama"  
+                            name="idRama"  
                             className="form-control"
                             onChange={handleInputChange}>
                             <option value="0" selected={getSelectedRama(0)}>Seleccione una rama</option>
@@ -112,7 +146,7 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
                     <div>               
                         <label>Seccion</label>
                         <select                            
-                            name="seccion"  
+                            name="idSeccion"  
                             className="form-control"
                             onChange={handleInputChange}>
                             <option value="0" selected={getSelectedSeccion(0)}>Seleccione una seccion</option>
@@ -157,7 +191,11 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
                 </div>
             </div>
             <div className="mt-2">
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+                {
+                    edit &&
+                    <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>
+                }
+                &nbsp;&nbsp;&nbsp;<button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>                
             </div>
         </>
     )

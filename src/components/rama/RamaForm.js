@@ -143,9 +143,9 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
             </div>
             <div className="row mt-2">
                 &nbsp;&nbsp;&nbsp;
-                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/>&nbsp;&nbsp;Limpiar</button>
                 &nbsp;&nbsp;
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
             </div>            
         </>
     )

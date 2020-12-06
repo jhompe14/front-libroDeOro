@@ -41,7 +41,7 @@ export const UsuarioFormUpdateButtons = ({setWizard, setUsuario, formValues, aut
 
     return (
         <div>
-          <button onClick={changeWizard} className="btn btn-primary">Siguiente <FontAwesomeIcon icon={faForward}/></button>  
+          <button onClick={changeWizard} className="btn btn-primary">Siguiente&nbsp;&nbsp;<FontAwesomeIcon icon={faForward}/></button>  
         </div>
     )
 }
