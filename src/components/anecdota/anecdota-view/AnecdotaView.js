@@ -3,7 +3,7 @@ import React from 'react';
 export const AnecdotaView = ({ anecdota }) => {    
 
     return (
-        <>
+        <div className="content animate__animated animate__slideInLeft">
             <div className="form-group row">
                 <div className="col-3">
                     <label><b>Grupo</b></label>
@@ -42,6 +42,6 @@ export const AnecdotaView = ({ anecdota }) => {
                     <p>{anecdota.descripcion}</p>
                 </div>
             </div>             
-        </>
+        </div>
     )
 }

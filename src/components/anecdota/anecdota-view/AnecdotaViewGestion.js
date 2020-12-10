@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTasks, faBackward } from '@fortawesome/free-solid-svg-icons';
@@ -22,22 +22,50 @@ import {
     METHOD_PUT
 } from '../../../util/constant';
 
-export const AnecdotaViewGestion = ({ anecdota }) => {
+export const AnecdotaViewGestion = ({ anecdota, setWizard }) => {
 
-    const [formValues, handleInputChange] = useForm({
-        estado: anecdota.estado,
-        usuarioModificacion: undefined,
-        visualizacion: anecdota.visualizacion,
-    });
-    const { authReducer:{token} } = useSelector( state => state);
+    const { authReducer:{usuario, token} } = useSelector( state => state);
     const dispatch = useDispatch();
     const history= useHistory();
+    const [formValues, handleInputChange] = useForm({
+        estado: "",
+        usuarioModificacion: "",
+        visualizacion: anecdota.visualizacion,
+    });
+
+    useEffect(() => {
+        validEstadoActual();
+    }, []);
     
-    const getSelectedVisualizacion = (visualizacionId) =>  formValues && formValues.visualizacion === visualizacionId ? 'selected': '';
+    const[validAprobado, setValidAprobado] = useState(false);
+    const[validPendienteModificacion, setValidPendienteModificacion] = useState(false);
+    const[validRechazado, setValidRechazado] = useState(false);
+    
+    const validEstadoActual = () => {
+        if(anecdota.estado != TYPE_ESTADO_ANECDOTA_APROBADO && 
+            anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION) {
+                setValidAprobado(true);
+        }
+
+        if(anecdota.estado != TYPE_ESTADO_ANECDOTA_RECHAZADO && 
+            anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION) {
+                setValidRechazado(true);
+        }
+
+        if(anecdota.estado != TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION &&
+            anecdota.estado == TYPE_ESTADO_ANECDOTA_APROBADO){
+                setValidPendienteModificacion(true);
+        }
+    }
 
     const handleEstadoAnecdota = () => {
+        const objSendEstadoVisualizacion ={
+            ...formValues,
+            usuario: usuario,
+        };
+
         messageLoadingSwal();        
-        commandFetch(`${HOST_URL_BACK}${API_ANECDOTA}/estado/${anecdota.id}`, METHOD_PUT, formValues, token)
+        commandFetch(`${HOST_URL_BACK}${API_ANECDOTA}/estado/visualizacion/${anecdota.id}`, METHOD_PUT, objSendEstadoVisualizacion, token)
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
@@ -56,9 +84,11 @@ export const AnecdotaViewGestion = ({ anecdota }) => {
         });
     }
 
+    const goAnecdotaView = () => setWizard(1);
+    const getSelectedVisualizacion = (visualizacionId) =>  formValues && formValues.visualizacion === visualizacionId ? 'selected': '';
 
     return (
-        <div>
+        <div className="content animate__animated animate__slideInLeft">
             <h1>Gestion Anecdota</h1>
             <hr/>
             <div className="row m-15 justify-content-center align-items-center">
@@ -76,23 +106,19 @@ export const AnecdotaViewGestion = ({ anecdota }) => {
                             className="form-control"
                             onChange={handleInputChange}>
                             <option value="0">Seleccione un estado</option>
+                            
                             {
-                                anecdota.estado != TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION &&
-                                    <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION}>Pendiente de aprobaci&oacute;n</option>
-                            }
-
-                            {
-                                anecdota.estado != TYPE_ESTADO_ANECDOTA_APROBADO &&
+                                validAprobado &&
                                     <option value={TYPE_ESTADO_ANECDOTA_APROBADO}>Aprobada</option>
                             }
 
                             {
-                                anecdota.estado != TYPE_ESTADO_ANECDOTA_RECHAZADO &&
+                                validRechazado &&
                                     <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazada</option>
                             }
                             
                             {
-                                anecdota.estado != TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION &&
+                                validPendienteModificacion &&
                                     <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente de modificaci&oacute;n</option>
                             }      
                         </select>
@@ -103,7 +129,7 @@ export const AnecdotaViewGestion = ({ anecdota }) => {
                     {
                         formValues.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION &&
                             <div className="form-group row">
-                                <label>Usuario</label> 
+                                <label>Usuario a modificar</label> 
                                 <input 
                                     type="text" 
                                     name="usuarioModificacion" 
@@ -136,7 +162,7 @@ export const AnecdotaViewGestion = ({ anecdota }) => {
                     </div>
 
                     <div className="form-group row">                        
-                        <button onClick="" className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Volver </button>
+                        <button onClick={goAnecdotaView} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Volver </button>
                         &nbsp;&nbsp;&nbsp;                        
                         <button onClick={handleEstadoAnecdota} className="btn btn-primary"><FontAwesomeIcon icon={faTasks} />&nbsp;&nbsp;Actualizar </button>
                     </div> 

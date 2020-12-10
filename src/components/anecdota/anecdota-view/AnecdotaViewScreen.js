@@ -5,7 +5,7 @@ import { AnecdotaView } from './AnecdotaView';
 import { useParams } from 'react-router-dom';
 import { queryFetch } from '../../../helpers/queryFetch';
 import { messageLoadingSwal, messageCloseSwal } from '../../../util/messages';
-import { HOST_URL_BACK, API_ANECDOTA } from '../../../util/constant';
+import { HOST_URL_BACK, API_ANECDOTA, TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION, TYPE_ESTADO_ANECDOTA_APROBADO } from '../../../util/constant';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faTasks } from '@fortawesome/free-solid-svg-icons';
@@ -42,7 +42,7 @@ export const AnecdotaViewScreen = () => {
     }
 
     return (
-        <div className="content animate__animated animate__slideInLeft">
+        <div className="content mt-2">
             {
                 wizard===1 && anecdota != undefined &&
                     <>
@@ -55,6 +55,7 @@ export const AnecdotaViewScreen = () => {
                                     <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>&nbsp;&nbsp;&nbsp;
                                     {
                                         authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
+                                            (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION || anecdota.estado == TYPE_ESTADO_ANECDOTA_APROBADO) &&
                                             <button className="btn btn-primary" onClick={() => setWizard(2)}><FontAwesomeIcon icon={faTasks}/>&nbsp;&nbsp;Gestionar</button>
                                     }
                                 </div>                    
@@ -67,7 +68,7 @@ export const AnecdotaViewScreen = () => {
 
             {
                 wizard===2 && anecdota != undefined &&
-                    <AnecdotaViewGestion anecdota={anecdota} />
+                    <AnecdotaViewGestion anecdota={anecdota} setWizard={setWizard} />
             }
             
         </div>
