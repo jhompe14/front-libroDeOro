@@ -39,7 +39,8 @@ export const AnecdotaListadoTableRow = ({anecdota}) => {
                     }
                     {
                         authReducer?.tipoUsuario == TYPE_USUARIO_INTEGRANTE && 
-                            (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION || anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION) &&
+                            (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION || 
+                                (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION && authReducer?.usuario == anecdota.usuarioGestion)) &&
                             <div className="col-2" title="Modificar Anecdota" onClick={handleGoAnecdotaEdit}><FontAwesomeIcon icon={faPenAlt}/></div>
                     }                    
                 </div>

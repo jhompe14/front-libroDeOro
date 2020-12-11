@@ -123,10 +123,10 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                         className="form-control"
                         onChange={handleInputChange}>
                         <option value="0">Seleccione una seccion</option>
-                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION}>Pendiente aprobacion</option>
+                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION}>Pendiente aprobaci&oacute;n</option>
                         <option value={TYPE_ESTADO_ANECDOTA_APROBADO}>Aprobado</option>
                         <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazado</option>
-                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente de modificacion</option>       
+                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente de modificaci&oacute;n</option>       
                     </select>
                 </div>
                 <div className="col-4">

@@ -114,12 +114,12 @@ export const AnecdotaViewGestion = ({ anecdota, setWizard }) => {
 
                             {
                                 validRechazado &&
-                                    <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazada</option>
+                                    <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazado</option>
                             }
                             
                             {
                                 validPendienteModificacion &&
-                                    <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente de modificaci&oacute;n</option>
+                                    <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente modificaci&oacute;n</option>
                             }      
                         </select>
                                            

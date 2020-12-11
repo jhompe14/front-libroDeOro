@@ -11,10 +11,12 @@ import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 import { HOST_URL_BACK, 
     API_ANECDOTA, 
     METHOD_POST, 
-    METHOD_PUT} from '../../util/constant';
+    METHOD_PUT,
+    TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION} from '../../util/constant';
 import { messageLoadingSwal, 
     messageCloseSwal, 
-    messageSuccessSwalWithFunction } from '../../util/messages';
+    messageSuccessSwalWithFunction,
+    messageConfirmSwal } from '../../util/messages';
 import { formatDateCalendar } from '../../util/date';
 
 export const AnecdotaForm = ({anecdotaEdit, edit}) => {
@@ -41,7 +43,13 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
     const handleSubmit = () => {
         messageLoadingSwal();
         if(edit){
-            updateAnecdota();
+            if(formValues.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION){
+                messageConfirmSwal(`Al guardar los cambios la anecdota pasara a estado PENDIENTE APROBACI\u00D3N`, () =>{
+                    updateAnecdota();
+                });
+            }else {
+                updateAnecdota();
+            }            
         }else{
             saveAnecdota();
         }       
@@ -58,7 +66,7 @@ export const AnecdotaForm = ({anecdotaEdit, edit}) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE DE APROBACION", 
+                    messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE APROBACI\u00D3N", 
                     () => {
                         history.replace(`/anecdota-listado`);
                     });                    
