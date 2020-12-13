@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from '../../../hooks/useForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,7 +43,6 @@ export const ContrasenaUpdateForm = () => {
                 messageSuccessSwalWithFunction("La contrase\u00F1a ha sido modificada con exito.", 
                 () => {
                     dispatch(startLogoutUser());
-                    //history.replace(`/anecdota-listado`);
                 });               
             } else {
                 controlErrorFetch(response, dispatch);                
