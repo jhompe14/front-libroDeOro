@@ -19,6 +19,7 @@ export const AnecdotaListadoTableRow = ({anecdota}) => {
 
     return (
         <tr>
+            <td>{anecdota.idAnecdota}</td>
             <td>{anecdota.nombreGrupo}</td>
             <td>{anecdota.nombreRama}</td>
             <td>{anecdota.nombreSeccion}</td>

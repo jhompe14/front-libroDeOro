@@ -40,15 +40,28 @@ export const NavbarOptions = ({authReducer}) => {
 
                 {
                     authReducer.tipoUsuario === TYPE_USUARIO_INTEGRANTE &&
-                    <>                   
+                    <>
                         <li className="nav-item dropdown">
-                            <NavLink 
-                                className="nav-item nav-link"
-                                exact
-                                to="/usuario-update">
-                                   Usuario
-                            </NavLink>
-                        </li> 
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Usuario
+                            </a>
+                            <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
+                                <NavLink 
+                                    activeClassName="active"
+                                    className="nav-item nav-link" 
+                                    exact
+                                    to="/usuario-update">
+                                        Informaci&oacute;n b&aacute;sica
+                                </NavLink>
+                                <NavLink 
+                                    activeClassName="active"
+                                    className="nav-item nav-link" 
+                                    exact
+                                    to="/contrasena-update">
+                                        Contrase&ntilde;a
+                                </NavLink>
+                            </div>
+                        </li>
                     </>                  
                 }
 

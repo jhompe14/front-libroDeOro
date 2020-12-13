@@ -112,7 +112,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                                         onChange={handleInputChange}/>
                                 </div>
                                 <div  className="mt-2">               
-                                    <label>Contraseña</label> 
+                                    <label>Contrase&ntilde;a</label> 
                                     <input 
                                         type="password" 
                                         name="contrasena" 
@@ -121,7 +121,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                                         onChange={handleInputChange}/>
                                 </div>
                                 <div  className="mt-2">               
-                                    <label>Confirmar Contraseña</label> 
+                                    <label>Confirmar Contrase&ntilde;a</label> 
                                     <input 
                                         type="password" 
                                         name="confirmContrasena" 

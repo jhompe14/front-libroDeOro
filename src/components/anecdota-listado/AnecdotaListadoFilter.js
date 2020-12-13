@@ -38,7 +38,7 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
     return (
         <>
             <div className="form-group row">
-                <div className="col-4">
+                <div className="col-3">
                     <div>
                         <label>Grupo</label>
                         <select
@@ -56,7 +56,7 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                         </select>
                     </div>
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <div>               
                         <label>Rama</label>
                         <select                            
@@ -74,7 +74,7 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                         </select>
                     </div>
                 </div>
-                <div className="col-4">
+                <div className="col-3">
                     <div>               
                         <label>Seccion</label>
                         <select                            
@@ -91,6 +91,19 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                             }        
                         </select>
                     </div>
+                </div>
+                <div className="col-3">
+                    <label>Estado Anecdota</label>
+                    <select                            
+                        name="estado"  
+                        className="form-control"
+                        onChange={handleInputChange}>
+                        <option value="0">Seleccione una seccion</option>
+                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION}>Pendiente aprobaci&oacute;n</option>
+                        <option value={TYPE_ESTADO_ANECDOTA_APROBADO}>Aprobado</option>
+                        <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazado</option>
+                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente de modificaci&oacute;n</option>       
+                    </select>
                 </div>
             </div>
             <div className="form-group row">
@@ -115,34 +128,33 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                                     onChange={handleInputChange}/>
                         </div>
                     </div>
-                </div>
-                <div className="col-4">
-                    <label>Estado Anecdota</label>
-                    <select                            
-                        name="estado"  
-                        className="form-control"
-                        onChange={handleInputChange}>
-                        <option value="0">Seleccione una seccion</option>
-                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION}>Pendiente aprobaci&oacute;n</option>
-                        <option value={TYPE_ESTADO_ANECDOTA_APROBADO}>Aprobado</option>
-                        <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazado</option>
-                        <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION}>Pendiente de modificaci&oacute;n</option>       
-                    </select>
-                </div>
+                </div> 
+                
+                {
+                    authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR &&                                    
+                        <div className="col-3">
+                            <label>Usuario</label> 
+                            <input 
+                                type="text" 
+                                name="usuarioFilter" 
+                                className="form-control"
+                                value= {formValues.usuarioFilter} 
+                                onChange={handleInputChange}/>
+                        </div>
+                                                                     
+                }                
+
                 <div className="col-4">
                     <div className="form-group row">
-                        {
-                            authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR &&                                    
-                                <div className="col-6">
-                                    <label>Usuario</label> 
-                                    <input 
-                                        type="text" 
-                                        name="usuarioFilter" 
-                                        className="form-control"
-                                        value= {formValues.usuarioFilter} 
-                                        onChange={handleInputChange}/>
-                                </div>                                            
-                        }
+                        <div className="col-6">
+                            <label>C&oacute;digo</label> 
+                            <input 
+                                type="number" 
+                                name="codigoAnecdota" 
+                                className="form-control"
+                                value= {formValues.codigoAnecdota} 
+                                onChange={handleInputChange}/>
+                        </div>                        
                         <div className="col-6">
                             <button onClick={handleFilter} className="btn btn-primary mt-4"><FontAwesomeIcon icon={faSearch}/>&nbsp;&nbsp;Buscar</button>
                         </div> 

@@ -48,6 +48,8 @@ export const AnecdotaListadoScreen = () => {
             path+="&estado="+filtros.estado;
       if(filtros.usuarioFilter)
             path+="&usuarioFilter="+filtros.usuarioFilter; 
+      if(filtros.codigoAnecdota)
+            path+="&codigoAnecdota="+filtros.codigoAnecdota;
                   
       return path;
     }

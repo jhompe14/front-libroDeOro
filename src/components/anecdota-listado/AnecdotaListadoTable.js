@@ -16,6 +16,7 @@ export const AnecdotaListadoTable = ({page, setPage, totalItems, anecdotas}) => 
              <table className="table table-sm">
                 <thead>
                     <tr className="background_libro_oro">
+                        <th scope="col">C&oacute;digo</th>
                         <th scope="col">Grupo</th>
                         <th scope="col">Rama</th>
                         <th scope="col">Seccion</th>
