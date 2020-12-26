@@ -29,7 +29,7 @@ export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
     };
 
     const handleDeleteRama = () => {
-        messageConfirmSwal(`Quiere eliminar la rama ${rama.nombre}`, () =>{
+        messageConfirmSwal("¿Esta seguro?", `Quiere eliminar la rama ${rama.nombre}`, () =>{
             messageLoadingSwal();
             commandFetch(`${HOST_URL_BACK}${API_RAMAS}/${rama.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {

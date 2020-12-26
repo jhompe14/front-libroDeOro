@@ -14,9 +14,11 @@ export const AnecdotaEditScreen = () => {
     const dispatch = useDispatch();
     const { authReducer }= useSelector( state => state);
     const[anecdota, setAnecdota] = useState();
+    const[enlaces, setEnlaces] = useState();
 
     useEffect(() => {
-        loadAnecdota();     
+        loadAnecdota();
+        loadEnlacesAnecdota();     
     }, []);
 
     const loadAnecdota = async() => {
@@ -36,13 +38,25 @@ export const AnecdotaEditScreen = () => {
             });
     }
 
+    const loadEnlacesAnecdota = async() => {
+        await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}/enlace/${idAnecdota}`, authReducer?.token)
+            .then(data =>{
+                if(data != null && data != undefined ){                    
+                    setEnlaces(data); 
+                }          
+            })
+            .catch(err => {            
+                controlErrorFetch(err, dispatch);            
+            });
+    }
+
     return (
         <div className="content animate__animated animate__slideInLeft">
             <h1>Modificar Anecdota</h1>
             <hr/>
             {
-                anecdota != undefined && 
-                    <AnecdotaForm anecdotaEdit={anecdota} edit={true} />
+                anecdota != undefined &&  enlaces != null &&
+                    <AnecdotaForm anecdotaEdit={anecdota} edit={true} enlaces={enlaces} setEnlaces={setEnlaces} />
             }            
         </div>
     )

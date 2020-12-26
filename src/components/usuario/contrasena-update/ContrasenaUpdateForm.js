@@ -24,7 +24,7 @@ export const ContrasenaUpdateForm = () => {
     const [formValues, handleInputChange] = useForm();
     
     const handleUpdateContrasena = () => {
-        messageConfirmSwal(`Esta seguro que desea cambiar su contrase\u00F1a?`, () =>{
+        messageConfirmSwal("¿Esta seguro?" , `Que desea cambiar su contrase\u00F1a?`, () =>{
             updateContrasena();
         });
     }

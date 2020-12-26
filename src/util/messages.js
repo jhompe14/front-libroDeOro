@@ -19,6 +19,14 @@ export const messageSuccessSwal = (message) => {
     Swal.fire('Éxito', message, 'success');
 }
 
+export const messageWarningSwal = (message) => {
+    Swal.fire('Cuidado', message, 'warning');
+}
+
+export const messageCloseSwal = () => {
+    Swal.close();
+};
+
 export const messageSuccessSwalWithFunction = (message, funcOk) => {
     Swal.fire({
       title: 'Éxito',
@@ -34,13 +42,9 @@ export const messageSuccessSwalWithFunction = (message, funcOk) => {
     })
 }
 
-export const messageCloseSwal = () => {
-    Swal.close();
-};
-
-export const messageConfirmSwal = (message, funcConfirm) => {
+export const messageConfirmSwal = (title, message, funcConfirm) => {
     Swal.fire({
-        title: '¿Esta seguro?',
+        title: title,
         text: message,
         icon: 'warning',
         showCancelButton: true,

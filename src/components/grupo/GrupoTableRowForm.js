@@ -29,7 +29,7 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
     };
 
     const handleDeleteGrupo = () => {
-        messageConfirmSwal(`Quiere eliminar el grupo ${grupo.nombre}`, () =>{
+        messageConfirmSwal("¿Esta seguro?", `Quiere eliminar el grupo ${grupo.nombre}`, () =>{
             messageLoadingSwal();
             commandFetch(`${HOST_URL_BACK}${API_GRUPOS}/${grupo.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {

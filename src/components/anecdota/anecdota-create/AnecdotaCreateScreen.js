@@ -6,7 +6,7 @@ export const AnecdotaCreateScreen = () => {
         <div className="content animate__animated animate__slideInLeft">
             <h1>Anecdota</h1>
             <hr/>
-            <AnecdotaForm anecdotaEdit={{}} edit={false}/>
+            <AnecdotaForm anecdotaEdit={{}} edit={false} enlaces={[]} />
         </div>
     )
 }

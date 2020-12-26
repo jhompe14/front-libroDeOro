@@ -25,7 +25,7 @@ export const CargoTableRowForm = ({ cargo, setCargos, setCargoActive }) => {
     };
 
     const handleDeleteGrupo = () => {
-        messageConfirmSwal(`Quiere eliminar el cargo ${cargo.nombre}`, () =>{
+        messageConfirmSwal("¿Esta seguro?", `Quiere eliminar el cargo ${cargo.nombre}`, () =>{
             messageLoadingSwal();
             commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${cargo.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {
