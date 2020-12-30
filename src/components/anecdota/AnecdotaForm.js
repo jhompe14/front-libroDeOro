@@ -246,26 +246,32 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
             </div>
             <div className="form-group row">
                 <div className="col-6">
-                    <label>Nombre</label> 
-                    <input 
-                        type="text" 
-                        name="nombre" 
-                        className="form-control"
-                        value= {formValues.nombre} 
-                        onChange={handleInputChange}/>
-
-                    <label>Fecha</label> 
-                    <input 
-                        type="date" 
-                        name="fecha" 
-                        className="form-control"
-                        value= {formValues.fecha} 
-                        onChange={handleInputChange}/>   
+                    <div className="row">
+                        <div className="col-6">
+                            <label>Nombre</label> 
+                            <input 
+                                type="text" 
+                                name="nombre" 
+                                className="form-control"
+                                value= {formValues.nombre} 
+                                onChange={handleInputChange}/>
+                        </div>
+                        <div className="col-6">
+                            <label>Fecha</label> 
+                            <input 
+                                type="date" 
+                                name="fecha" 
+                                className="form-control"
+                                value= {formValues.fecha} 
+                                onChange={handleInputChange}/>
+                        </div>                        
+                    </div> 
 
                     <label>Descripcion</label>  
                     <textarea 
                         name="descripcion" 
-                        className="form-control" 
+                        className="form-control"
+                        rows="6" 
                         value={formValues.descripcion}
                         onChange={handleInputChange}/>
                 </div>
@@ -285,22 +291,27 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                         {
                             edit && 
                             <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <div className="mt-2">                        
-                                    <ul className="list-group list-group-flush">
-                                    {
-                                        enlaces && enlaces.length > 0 && enlaces.map((element, index) => 
-                                            <li key={index+"-enlace-image"} className="list-group-item">
-                                                <div className="row">
-                                                    <div className="col-10">{element.nombre}</div>                                                
-                                                    <div className="col-2">
-                                                        <FontAwesomeIcon icon={faEye} title="ver imagen" onClick={() => handleViewEnlace(element.url)}/>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <FontAwesomeIcon icon={faTrash} title="eliminar imagen" onClick={() => handleDeleteEnlace(element)}/></div>
-                                                </div>
-                                            </li>
-                                        )                           
-                                    }
-                                    </ul>
+                                <div className="mt-2">
+                                    <div>                     
+                                        <ul className="list-group list-group-flush" style={{maxHeight: "13.3em", overflowY: "auto"}}>
+                                        {
+                                            enlaces && enlaces.length > 0 && enlaces.map((element, index) => 
+                                                <li key={index+"-enlace"} className="list-group-item" 
+                                                    style={{fontSize: "1.1em", 
+                                                            padding: ".40em 1.1em",
+                                                            lineHeight: "1.1em"}}>
+                                                    <div className="row">
+                                                        <div className="col-10">{element.nombre}</div>                                                
+                                                        <div className="col-2">
+                                                            <FontAwesomeIcon icon={faEye} title="ver enlace" onClick={() => handleViewEnlace(element.url)}/>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <FontAwesomeIcon icon={faTrash} title="eliminar enlace" onClick={() => handleDeleteEnlace(element)}/></div>
+                                                    </div>
+                                                </li>
+                                            )                           
+                                        }
+                                        </ul>
+                                    </div>   
                                 </div>
                             </div>
                         }
@@ -309,10 +320,13 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                             <button type="button" onClick={handleAttachedFiles} className="btn btn-success mt-2"><FontAwesomeIcon icon={faCloudUploadAlt}/>&nbsp;&nbsp;Adjuntos</button> 
                             <input type="file" onChange={handleFileChange} id="attachedFiles" name="attachedFiles" accept="image/x-png,image/jpeg,image/jpg" style={{display:'none'}} multiple/>                    
                             <div className="mt-2">                        
-                                <ul className="list-group list-group-flush">
+                                <ul className="list-group list-group-flush" style={{maxHeight: "9.3em", overflowY: "auto"}}>
                                 {
                                     attachedFiles && attachedFiles.length > 0 && Array.from(attachedFiles).map((element, index) => 
-                                        <li key={index+"-attached-image"} className="list-group-item">{element.name}</li>
+                                        <li key={index+"-attached-image"} className="list-group-item" 
+                                            style={{fontSize: "1.1em", 
+                                                    padding: ".40em 1.1em",
+                                                    lineHeight: "1.1em"}}>{element.name}</li>
                                     )                           
                                 }
                                 </ul>
@@ -320,7 +334,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                         </div>
 
                         <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                            <div className="mt-4">
+                            <div className="mt-2">
                                 <div className="form-group row">
                                     <div className="col-4">
                                         <input 
@@ -350,10 +364,13 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                                     </div>
                                 </div>
                                 <div>                        
-                                    <ul className="list-group list-group-flush">
+                                    <ul className="list-group list-group-flush" style={{maxHeight: "9.3em", overflowY: "auto"}}>
                                     {
                                         videos && videos.length > 0 && videos.map((element, index) => 
-                                            <li key={index+"-videos"} className="list-group-item">
+                                            <li key={index+"-videos"} className="list-group-item"
+                                                style={{fontSize: "1.1em", 
+                                                    padding: ".40em 1.1em",
+                                                    lineHeight: "1.1em"}}>
                                                 <div className="row">
                                                     <div className="col-10">{element.nombreVideo}</div>                                                
                                                     <div className="col-2">
@@ -370,7 +387,6 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                         </div>
                     </div>
                 </div>
-
             </div>
             <div className="mt-2">
                 {

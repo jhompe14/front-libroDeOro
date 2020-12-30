@@ -45,3 +45,5 @@ export const TYPE_CHANGE_CONTRASENA_MODIFICATION = "MO";
 export const TYPE_CHANGE_CONTRASENA_RECOVERED = "RC";
 
 export const SEPARATED_VIDEOS_ANECDOTA = ";;;";
+export const TYPE_ENLACE_IMAGEN = "IM";
+export const TYPE_ENLACE_VIDEO = "VI";

@@ -18,13 +18,15 @@ export const AnecdotaViewScreen = () => {
     const dispatch = useDispatch();
     const { authReducer }= useSelector( state => state);
     const[anecdota, setAnecdota] = useState({});
+    const[enlaces, setEnlaces] = useState();
     const[wizard, setWizard] = useState(1);
 
     const history= useHistory();
     const goListadoAnecdotas = () => history.replace("/anecdota-listado");
 
     useEffect(() => {
-        loadAnecdota();     
+        loadAnecdota();
+        loadEnlacesAnecdota();     
     }, []);
 
     const loadAnecdota = async() => {
@@ -41,14 +43,35 @@ export const AnecdotaViewScreen = () => {
             });
     }
 
+    const loadEnlacesAnecdota = async() => {
+        await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}/enlace/${idAnecdota}`, authReducer?.token)
+            .then(data =>{
+                if(data != null && data != undefined ){                    
+                    setEnlaces(data); 
+                }          
+            })
+            .catch(err => {            
+                controlErrorFetch(err, dispatch);            
+            });
+    }
+
     return (
         <div className="content mt-2">
             {
-                wizard===1 && anecdota != undefined &&
+                wizard===1 && anecdota != undefined && enlaces != null &&
                     <>
                         <div className="row">
                             <div className="col-6">
-                                <h1>Anecdota</h1>
+                                <h1>
+                                    {
+                                        anecdota.nombre != undefined && anecdota.nombre != null && anecdota.nombre != "" && 
+                                            anecdota.nombre
+                                    }
+                                    {
+                                        anecdota.nombre == undefined || anecdota.nombre == null || anecdota.nombre == "" && 
+                                            "Anecdota"
+                                    }
+                                </h1>
                             </div>
                             <div className="col-6 d-flex">
                                 <div className="ml-auto">
@@ -61,8 +84,9 @@ export const AnecdotaViewScreen = () => {
                                 </div>                    
                             </div>                     
                         </div>
-                        <hr/>            
-                        <AnecdotaView anecdota={anecdota} authReducer={authReducer} />
+                        <hr/> 
+
+                        <AnecdotaView anecdota={anecdota} authReducer={authReducer} enlaces={enlaces} />
                     </> 
             }
 
