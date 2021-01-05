@@ -12,8 +12,8 @@ export const PublicRoute = () => {
         <div className="container-fluid mt-2">
             <Switch>
                 <Route exact path="/auth/login" component={LoginScreen} />
-                <Route exact path="/usuario-create" component={UsuarioCreateScreen} />
-                <Route exact path="/contrasena-usuario" component={ContrasenaGetUsuarioScreen} />
+                <Route exact path="/usuario/create" component={UsuarioCreateScreen} />
+                <Route exact path="/contrasena/usuario" component={ContrasenaGetUsuarioScreen} />
                 <Route exact path="/contrasena/:idRecovered" component={ContrasenaRecoveredScreen} />
                 <Redirect to="/auth/login" />
             </Switch>     

@@ -38,7 +38,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
     const[formValues, handleInputChange] = useForm(anecdotaEdit);
     const[formVideos, handleInputVideosChange, _, resetVideos] = useForm({});  
 
-    const goListadoAnecdotas = () => history.replace("/anecdota-listado");
+    const goListadoAnecdotas = () => history.replace("/anecdota/listado");
 
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
@@ -78,7 +78,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                     messageCloseSwal();
                     messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE APROBACI\u00D3N", 
                     () => {
-                        history.replace(`/anecdota-listado`);
+                        history.replace(`/anecdota/listado`);
                     });                    
                 })                
             } else {
@@ -103,7 +103,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                     messageCloseSwal();
                     messageSuccessSwalWithFunction("Anecdota modificada exitosamente.", 
                     () => {
-                        history.replace(`/anecdota-listado`);
+                        history.replace(`/anecdota/listado`);
                     });                    
                 })                
             } else {

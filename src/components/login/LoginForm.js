@@ -18,9 +18,9 @@ export const LoginForm = () => {
         dispatch(startLoginUser(formValues.usuario, formValues.contrasena));
     }
 
-    const handleRedirectUsuario = () =>  history.replace("/usuario-create");
+    const handleRedirectUsuario = () =>  history.replace("/usuario/create");
 
-    const handleRedirectContrasenaUsuario = () => history.replace("/contrasena-usuario");
+    const handleRedirectContrasenaUsuario = () => history.replace("/contrasena/usuario");
 
     return (
         <div className="row m-5 justify-content-center align-items-center">

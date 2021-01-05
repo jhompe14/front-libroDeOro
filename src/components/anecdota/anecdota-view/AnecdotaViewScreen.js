@@ -22,7 +22,7 @@ export const AnecdotaViewScreen = () => {
     const[wizard, setWizard] = useState(1);
 
     const history= useHistory();
-    const goListadoAnecdotas = () => history.replace("/anecdota-listado");
+    const goListadoAnecdotas = () => history.replace("/anecdota/listado");
 
     useEffect(() => {
         loadAnecdota();

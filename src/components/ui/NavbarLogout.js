@@ -1,3 +1,5 @@
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { startLogoutUser } from '../../actions/authAction';
@@ -18,7 +20,7 @@ export const NavbarLogout = () => {
                 <button
                     onClick={ handleLogout } 
                     className="nav-item nav-link btn">
-                    Cerrar Sesion
+                    CERRAR SESI&Oacute;N &nbsp; <FontAwesomeIcon icon={faSignOutAlt}></FontAwesomeIcon>
                 </button>
             </ul>
         </div>

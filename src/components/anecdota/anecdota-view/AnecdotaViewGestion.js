@@ -72,7 +72,7 @@ export const AnecdotaViewGestion = ({ anecdota, setWizard }) => {
                     messageCloseSwal();
                     messageSuccessSwalWithFunction("El estado de la anecdota ha sido modificado con exito.", 
                     () => {
-                        history.replace(`/anecdota-listado`);
+                        history.replace(`/anecdota/listado`);
                     });                    
                 })                
             } else {
