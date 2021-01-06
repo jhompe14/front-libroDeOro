@@ -1,83 +1,31 @@
 import React from 'react'
 
-export const AnecdotaLibroRow = () => {
+export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
     return (
-        <>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Quote
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </div>
-                        <div class="card-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante dfdsfdsfdsfdf dfdfdsfdsfsd dsfsdfdsfdsfds dfdsfdfdfdsfdf.</p>
-                        </div>
+
+        arrayAnecdotas.map(anecdota => 
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        {
+                            anecdota.nombreSuceso != undefined && anecdota.nombreSuceso != null ?
+                                anecdota.nombreSuceso : "Anecdota"
+                        }
+                        <footer class="blockquote-footer">
+                            {anecdota.nombreUsuario} ({anecdota.usuario}) 
+                            {
+                              anecdota.fechaSuceso != "" &&
+                              <cite title="Source Title"> - {anecdota.fechaSuceso}</cite>  
+                            } 
+                        </footer>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Quote
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </div>
-                        <div class="card-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante dfdsfdsfdsfdf dfdfdsfdsfsd dsfsdfdsfdsfds dfdsfdfdfdsfdf.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Quote
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </div>
-                        <div class="card-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante dfdsfdsfdsfdf dfdfdsfdsfsd dsfsdfdsfdsfds dfdsfdfdfdsfdf.</p>
-                        </div>
+                    <div class="card-body">
+                        <p>{anecdota.descripcionSuceso}</p>
+                        <footer class="blockquote-footer">Codigo Anecdota: {anecdota.idAnecdota}</footer>
                     </div>
                 </div>
             </div>
-
-            <div className="row" style={{height: "15px"}}></div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Quote
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </div>
-                        <div class="card-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante dfdsfdsfdsfdf dfdfdsfdsfsd dsfsdfdsfdsfds dfdsfdfdfdsfdf.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Quote
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </div>
-                        <div class="card-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante dfdsfdsfdsfdf dfdfdsfdsfsd dsfsdfdsfdsfds dfdsfdfdfdsfdf.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Quote
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                        </div>
-                        <div class="card-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante dfdsfdsfdsfdf dfdfdsfdsfsd dsfsdfdsfdsfds dfdsfdfdfdsfdf.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-
+        ) 
          
     )
 }

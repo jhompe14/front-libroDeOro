@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AnecdotaListadoTable } from './AnecdotaListadoTable';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 import { queryFetch } from '../../helpers/queryFetch';
-import { HOST_URL_BACK, API_ANECDOTA, TYPE_USUARIO_INTEGRANTE } from '../../util/constant';
+import { HOST_URL_BACK, API_ANECDOTA } from '../../util/constant';
 import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 import { AnecdotaListadoFilter } from './AnecdotaListadoFilter';
 
