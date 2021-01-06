@@ -11,6 +11,10 @@ export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
                             anecdota.nombreSuceso != undefined && anecdota.nombreSuceso != null ?
                                 anecdota.nombreSuceso : "Anecdota"
                         }
+                        <footer class="blockquote-footer">Codigo Anecdota: {anecdota.idAnecdota}</footer>                        
+                    </div>
+                    <div class="card-body">
+                        <p>{anecdota.descripcionSuceso}</p>
                         <footer class="blockquote-footer">
                             {anecdota.nombreUsuario} ({anecdota.usuario}) 
                             {
@@ -18,10 +22,6 @@ export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
                               <cite title="Source Title"> - {anecdota.fechaSuceso}</cite>  
                             } 
                         </footer>
-                    </div>
-                    <div class="card-body">
-                        <p>{anecdota.descripcionSuceso}</p>
-                        <footer class="blockquote-footer">Codigo Anecdota: {anecdota.idAnecdota}</footer>
                     </div>
                 </div>
             </div>
