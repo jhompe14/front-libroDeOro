@@ -20,7 +20,7 @@ export const AnecdotaView = ({ anecdota, enlaces }) => {
             const roundsImages = Math.ceil(arrayImages.length / GROUP_IMAGES_ROW);
             var indexInferior= 0;
             var auxMatrizImages = new Array();
-            for (var i=0; i <= roundsImages; i++){
+            for (var i=0; i < roundsImages; i++){
                 auxMatrizImages.push(arrayImages.slice(indexInferior, (indexInferior + GROUP_IMAGES_ROW)));
                 indexInferior = indexInferior + GROUP_IMAGES_ROW;      
             }
@@ -63,7 +63,9 @@ export const AnecdotaView = ({ anecdota, enlaces }) => {
                     <div className="form-group row">
                         <div className="col-12">
                             <label><b>Descripcion</b></label>
-                            <p style={{maxHeight: "10.3em", overflowY: "auto"}}>{anecdota.descripcion}</p>
+                            <p style={{maxHeight: "10.3em", overflowY: "auto", whiteSpace: "pre-line" , textAlign: "justify"}}>
+                                {anecdota.descripcion}
+                            </p>
                         </div>
                     </div>
                 </div>

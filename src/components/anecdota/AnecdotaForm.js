@@ -340,20 +340,20 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                                         <input 
                                             type="text" 
                                             placeholder="Nombre" 
-                                            class="form-control" 
+                                            className="form-control" 
                                             name="nombreVideo"
                                             value={formVideos.nombreVideo}
                                             onChange={handleInputVideosChange}/>
                                     </div>
                                     <div className="col-6">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon3">http</span>
+                                        <div className="input-group">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text" id="basic-addon3">http</span>
                                             </div>
                                             <input 
                                                 type="text" 
                                                 placeholder="URL" 
-                                                class="form-control" 
+                                                className="form-control" 
                                                 name="urlVideo"
                                                 value={formVideos.urlVideo}
                                                 onChange={handleInputVideosChange}/>

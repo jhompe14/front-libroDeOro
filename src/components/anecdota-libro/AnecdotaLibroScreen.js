@@ -9,8 +9,8 @@ import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 
 export const AnecdotaLibroScreen = () => {
 
-    const PAGE_SIZE_CATALOG = 6;
-    const GROUP_ANECDOTAS_ROW = 3;
+    const PAGE_SIZE_CATALOG = 8;
+    const GROUP_ANECDOTAS_ROW = 4;
 
     const dispatch = useDispatch();
     const { authReducer }= useSelector( state => state);
@@ -41,7 +41,7 @@ export const AnecdotaLibroScreen = () => {
             const roundsAnecdotas = Math.ceil(dataGrid.length / GROUP_ANECDOTAS_ROW);
             var indexInferior= 0;
             var auxMatrizAnecdotas = new Array();
-            for (var i=0; i <= roundsAnecdotas; i++){
+            for (var i=0; i < roundsAnecdotas; i++){
                 auxMatrizAnecdotas.push(dataGrid.slice(indexInferior, (indexInferior + GROUP_ANECDOTAS_ROW)));
                 indexInferior = indexInferior + GROUP_ANECDOTAS_ROW;      
             }
@@ -59,17 +59,10 @@ export const AnecdotaLibroScreen = () => {
             <hr/>
 
             {
-                anecdotas.length > 0 && anecdotas.map(arrayAnecdotas => 
-                    <>
-                        <div class="row">
-                            <AnecdotaLibroRow arrayAnecdotas = {arrayAnecdotas} />
-                        </div>
-                        <div className="row" style={{height: "15px"}}></div>
-                    </>
+                anecdotas.length > 0 && anecdotas.map((arrayAnecdotas, index) =>
+                    <AnecdotaLibroRow key={index+"-row-anecdota"} arrayAnecdotas = {arrayAnecdotas} />
                 )
-            }
-
-            <div className="row" style={{height: "15px"}}></div>            
+            }            
 
             <Pagination
                 itemClass="page-item"
