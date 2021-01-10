@@ -48,8 +48,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
         setSeccionesFilter(filterSeccionesByRama(secciones, formValues.idRama));
     }, [formValues.idRama]);
 
-    const handleSubmit = () => {
-        messageLoadingSwal();
+    const handleSubmit = () => {       
         if(edit){
             if(formValues.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION){
                 messageConfirmSwal("Recuerde", `Al guardar los cambios la anecdota pasara a estado PENDIENTE APROBACI\u00D3N`, () =>{
@@ -64,6 +63,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
     }
 
     const saveAnecdota = () => {
+        messageLoadingSwal();
         const objSendAnecdota ={
             ...formValues,
             fecha: returnFechaFormValid(),
@@ -91,6 +91,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
     }
 
     const updateAnecdota = () => {
+        messageLoadingSwal();
         const objSendAnecdota ={
             ...formValues,
             fecha: returnFechaFormValid(),

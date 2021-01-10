@@ -6,6 +6,7 @@ import { HOST_URL_BACK, API_ANECDOTA } from '../../util/constant';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 import { queryFetch } from '../../helpers/queryFetch';
 import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
+import { AnecdotaLibroFilter } from './AnecdotaLibroFilter';
 
 export const AnecdotaLibroScreen = () => {
 
@@ -19,13 +20,34 @@ export const AnecdotaLibroScreen = () => {
     const[totalItems, setTotalItems] = useState(0);
     const[anecdotas, setAnecdotas] = useState([]);
 
+    const[filtros, setFiltros] = useState({});
+    const[aplicacionFiltros, setAplicacionFiltros] = useState(false);
+
     useEffect(() => {
         loadCatalogAnecdotas();
     }, [page]);
 
+    useEffect(() => {
+        if(aplicacionFiltros){        
+           loadCatalogAnecdotas();
+           setAplicacionFiltros(false);
+        }      
+    }, [aplicacionFiltros]);
+
+    const buildPathFilter = () =>{
+        let path = `?page=${page}&usuario=${authReducer?.usuario}`;
+  
+        if(filtros.fechaInicioAnecdota) 
+              path+="&fechaInicioAnecdota="+filtros.fechaInicioAnecdota;
+        if(filtros.fechaFinAnecdota)
+              path+="&fechaFinAnecdota="+filtros.fechaFinAnecdota;        
+                    
+        return path;
+      }
+
     const loadCatalogAnecdotas = async() => {
         messageLoadingSwal();
-        await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}/catalog?usuario=${authReducer?.usuario}&page=${page}`, authReducer?.token)            
+        await queryFetch(`${HOST_URL_BACK}${API_ANECDOTA}/catalog${buildPathFilter()}`, authReducer?.token)            
                 .then(data =>{
                     messageCloseSwal();
                     setAnecdotasGroup(data.dataGrid);
@@ -50,7 +72,7 @@ export const AnecdotaLibroScreen = () => {
     }
 
     const handlePageChange = (pageNumber) =>{
-        console.log(pageNumber)
+        setPage(pageNumber);
     }
 
     return (
@@ -58,9 +80,15 @@ export const AnecdotaLibroScreen = () => {
             <h1>Libro de Oro</h1>
             <hr/>
 
+            <AnecdotaLibroFilter 
+                setAplicacionFiltros={setAplicacionFiltros}
+                setFiltros={setFiltros} />
+
             {
                 anecdotas.length > 0 && anecdotas.map((arrayAnecdotas, index) =>
-                    <AnecdotaLibroRow key={index+"-row-anecdota"} arrayAnecdotas = {arrayAnecdotas} />
+                    <AnecdotaLibroRow 
+                        key={index+"-row-anecdota"} 
+                        arrayAnecdotas = {arrayAnecdotas} />
                 )
             }            
 

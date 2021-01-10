@@ -80,10 +80,8 @@ export const AnecdotaView = ({ anecdota, enlaces }) => {
                         <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <div className="col-12 mt-2" style={{maxHeight: "20.3em", overflowY: "auto"}}>                      
                                 {
-                                    images.length > 0 && images.map(arrayImages => 
-                                        <div className="row">
-                                            <AnecdotaViewImages arrayImages={arrayImages} handleViewEnlace={handleViewEnlace} />
-                                        </div>    
+                                    images.length > 0 && images.map(arrayImages =>                                        
+                                        <AnecdotaViewImages arrayImages={arrayImages} handleViewEnlace={handleViewEnlace} />  
                                     )
                                 }
                             </div>

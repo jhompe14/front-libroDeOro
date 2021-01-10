@@ -37,7 +37,7 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
         anioRetiro: 0
     };
 
-    const handleFinalizarUsuario = () =>{
+    const handleFinalizarUsuario = () => {
         messageLoadingSwal();
         
         const objSendUsuario ={
