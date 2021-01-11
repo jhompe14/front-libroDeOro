@@ -68,6 +68,8 @@ export const AnecdotaLibroScreen = () => {
                 indexInferior = indexInferior + GROUP_ANECDOTAS_ROW;      
             }
             setAnecdotas(auxMatrizAnecdotas);
+        } else {
+            setAnecdotas([]);
         }
     }
 

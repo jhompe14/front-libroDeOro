@@ -14,7 +14,7 @@ import { AnecdotaViewGestion } from './AnecdotaViewGestion';
 
 export const AnecdotaViewScreen = () => {
 
-    const { idAnecdota }= useParams();
+    const { idAnecdota, from }= useParams();
     const dispatch = useDispatch();
     const { authReducer }= useSelector( state => state);
     const[anecdota, setAnecdota] = useState({});
@@ -23,6 +23,7 @@ export const AnecdotaViewScreen = () => {
 
     const history= useHistory();
     const goListadoAnecdotas = () => history.replace("/anecdota/listado");
+    const goLibroOroAnecdotas = () => history.replace("/anecdota/libro")
 
     useEffect(() => {
         loadAnecdota();
@@ -75,7 +76,17 @@ export const AnecdotaViewScreen = () => {
                             </div>
                             <div className="col-6 d-flex">
                                 <div className="ml-auto">
-                                    <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>&nbsp;&nbsp;&nbsp;
+                                    {
+                                        from === "listado" &&
+                                            <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>
+                                    }
+
+                                    {
+                                        from === "libro" &&
+                                            <button onClick={goLibroOroAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Libro de oro</button>
+                                    }
+
+                                    &nbsp;&nbsp;&nbsp;
                                     {
                                         authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
                                             (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION || anecdota.estado == TYPE_ESTADO_ANECDOTA_APROBADO) &&

@@ -14,7 +14,7 @@ export const AnecdotaListadoTableRow = ({anecdota}) => {
     const history= useHistory();
     const { authReducer } = useSelector( state => state);
 
-    const handleGoAnecdotaView = () => history.replace(`/anecdota/view/${anecdota.idAnecdota}`);
+    const handleGoAnecdotaView = () => history.replace(`/anecdota/view/${anecdota.idAnecdota}/from/listado`);
     const handleGoAnecdotaEdit = () => history.replace(`/anecdota/edit/${anecdota.idAnecdota}`);   
 
     return (

@@ -28,7 +28,7 @@ export const PrivateRoute = () => {
                 <Route exact path="/anecdota/listado" component={AnecdotaListadoScreen} />
                 <Route exact path="/anecdota/create" component={AnecdotaCreateScreen} />
                 <Route exact path="/anecdota/libro" component={AnecdotaLibroScreen} />
-                <Route exact path="/anecdota/view/:idAnecdota" component={AnecdotaViewScreen}/>
+                <Route exact path="/anecdota/view/:idAnecdota/from/:from" component={AnecdotaViewScreen}/>
                 <Route exact path="/anecdota/edit/:idAnecdota" component={AnecdotaEditScreen}/>
                 <Route exact path="/" component={InicioScreen} />   
                 <Redirect to="/" />   
