@@ -30,7 +30,7 @@ export const messageCloseSwal = () => {
 export const messageSuccessSwalWithFunction = (message, funcOk) => {
     Swal.fire({
       title: 'Éxito',
-      text: message,
+      html: message,
       icon: 'success',
       showCancelButton: false,
       confirmButtonColor: '#3085d6',
@@ -45,7 +45,7 @@ export const messageSuccessSwalWithFunction = (message, funcOk) => {
 export const messageConfirmSwal = (title, message, funcConfirm) => {
     Swal.fire({
         title: title,
-        text: message,
+        html: message,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

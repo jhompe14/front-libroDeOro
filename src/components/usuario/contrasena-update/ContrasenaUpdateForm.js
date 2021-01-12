@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from '../../../hooks/useForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -19,6 +20,7 @@ import { API_USUARIOS,
 
 export const ContrasenaUpdateForm = () => {
 
+    const history= useHistory();
     const dispatch = useDispatch();
     const { authReducer:{usuario, token} } = useSelector( state => state);
     const [formValues, handleInputChange] = useForm();
@@ -43,6 +45,7 @@ export const ContrasenaUpdateForm = () => {
                 messageSuccessSwalWithFunction("La contrase\u00F1a ha sido modificada con exito.", 
                 () => {
                     dispatch(startLogoutUser());
+                    history.replace(`/auth/login`);                    
                 });               
             } else {
                 controlErrorFetch(response, dispatch);                

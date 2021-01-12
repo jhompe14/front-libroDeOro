@@ -12,7 +12,8 @@ import { HOST_URL_BACK,
     METHOD_PUT} from '../../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
-        messageSuccessSwalWithFunction } from '../../../util/messages';
+        messageSuccessSwalWithFunction,
+        messageConfirmSwal } from '../../../util/messages';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 
 export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, usuario, authReducer }) => {
@@ -38,6 +39,14 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
     };
 
     const handleFinalizarUsuario = () => {
+        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados esten correctos, recuerde que al correo 
+                                            <b>${usuario.correo}</b> se enviaran todas las notificaciones de cambio de estado 
+                                            de anecdotas y recuperacion de contraseña`, () => {
+            updateUsuario();
+        });
+    }
+
+    const updateUsuario = () => {
         messageLoadingSwal();
         
         const objSendUsuario ={

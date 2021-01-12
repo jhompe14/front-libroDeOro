@@ -1,12 +1,52 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { commandFetch } from '../../helpers/commandFetch';
+import { controlErrorFetch } from '../../helpers/controlErrorFetch';
+import { StatusCodes } from 'http-status-codes';
+import { HOST_URL_BACK, 
+    API_ANECDOTA, 
+    METHOD_POST} from '../../util/constant';
+import { messageLoadingSwal, 
+    messageCloseSwal, 
+    messageConfirmSwal, 
+    messageSuccessSwal } from '../../util/messages';
 
 export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
 
     const history= useHistory();
+    const dispatch = useDispatch();
+    const { authReducer:{ usuario, token } } = useSelector( state => state);
+
     const handleGoAnecdotaView = (idAnecdota) => history.replace(`/anecdota/view/${idAnecdota}/from/libro`);
+    const handleModificationRequest = (anecdota) =>{
+        messageConfirmSwal("¿Esta seguro?", `De solicitar la modificacion de la anecdota <br><br>${anecdota.idAnecdota}
+                                - ${anecdota.nombreSuceso != "" ? anecdota.nombreSuceso : "Anecdota"}`, () =>{            
+            sendNotification(anecdota.idAnecdota);
+        });
+    }
+
+    const sendNotification = (idAnecdota) => {
+        messageLoadingSwal();
+        const sendObject = {
+            idAnecdota: idAnecdota,
+            usuario: usuario,
+        }
+        commandFetch(`${HOST_URL_BACK}${API_ANECDOTA}/notification/estado`, METHOD_POST, sendObject, token)
+        .then(response => {
+            if(response.status === StatusCodes.ACCEPTED){
+                messageCloseSwal();
+                messageSuccessSwal("La solicitud ha sido enviada correctamente al administrador, espere la respuesta en los proximos dias.");        
+            } else {
+                controlErrorFetch(response, dispatch);                
+            }
+        })
+        .catch(error =>  {
+            controlErrorFetch(error, dispatch);
+        });
+    }
 
     return (
         <>
@@ -25,7 +65,7 @@ export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
                                         </div>
                                         <div className="col-2">
                                             <div className="row">
-                                                <div title="Solicitar Modificaci&oacute;n"><FontAwesomeIcon icon={faEnvelope}/></div>
+                                                <div onClick = {() => handleModificationRequest(anecdota)} title="Solicitar Modificaci&oacute;n"><FontAwesomeIcon icon={faEnvelope}/></div>
                                                 &nbsp;&nbsp;&nbsp;
                                                 <div onClick={() => handleGoAnecdotaView(anecdota.idAnecdota)} title="Ver Anecdota"><FontAwesomeIcon icon={faPlus}/></div>
                                             </div>

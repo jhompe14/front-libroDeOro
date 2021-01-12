@@ -9,7 +9,8 @@ import { HOST_URL_BACK,
     METHOD_POST } from '../../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
-        messageSuccessSwalWithFunction } from '../../../util/messages';
+        messageSuccessSwalWithFunction, 
+        messageConfirmSwal} from '../../../util/messages';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { commandFetch } from '../../../helpers/commandFetch';
 
@@ -20,6 +21,14 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
     const goLogin = () => history.replace("/auth/login");
 
     const handleFinalizarUsuario = () =>{
+        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados esten correctos, al correo 
+                                            <b>${formValues.correo}</b> se enviaran todas las notificaciones de 
+                                            cambio de estado de anecdotas y recuperacion de contraseña`, () => {
+            createUsuario();
+        });
+    }
+
+    const createUsuario = () => {
         messageLoadingSwal();  
         
         commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_POST, formValues)
@@ -28,7 +37,7 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
                 response.json().then(() => {
                     messageCloseSwal();
                     messageSuccessSwalWithFunction("Usuario creado con exito, intente ingresar desde la pantalla login.", () => {
-                        history.replace(`/auth/login`);
+                        goLogin();
                     });                    
                 })                
             } else {
