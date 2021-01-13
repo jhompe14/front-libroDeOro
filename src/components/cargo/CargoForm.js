@@ -65,7 +65,7 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                 response.json().then(cargo => {
                     setCargos(cargos => [cargo, ...cargos]);                   
                     messageCloseSwal();
-                    messageSuccessSwal("Cargo creado con exito");
+                    messageSuccessSwal("Cargo creado con \u00E9xito");
                     handleClean();
                 })                
             } else {
@@ -84,7 +84,7 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                 response.json().then(cargo => {
                     setCargos(cargos => [cargo, ...filterDropById(cargos, cargo.id)]);                    
                     messageCloseSwal();
-                    messageSuccessSwal("Cargo actualizado con exito");
+                    messageSuccessSwal("Cargo actualizado con \u00E9xito");
                     handleClean();
                 })                
             } else {
@@ -114,7 +114,7 @@ export const CargoForm = ({ setCargos, cargoActive, setCargoActive, typecargo, t
                     value= {formValues.nombre} 
                     onChange={handleInputChange}/>  
 
-                <label>Descripcion</label>  
+                <label>Descripci&oacute;n</label>  
                 <textarea 
                     name="descripcion" 
                     className="form-control" 

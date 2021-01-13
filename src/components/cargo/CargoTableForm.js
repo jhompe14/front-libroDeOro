@@ -36,7 +36,7 @@ export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, t
                 <thead>
                     <tr className="background_libro_oro">
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Descripci&oacute;n</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

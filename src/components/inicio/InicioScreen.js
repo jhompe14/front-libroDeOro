@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { StatusCodes } from 'http-status-codes';
 import { HOST_URL_BACK, API_AUTH } from '../../util/constant';
 import { queryFetch } from '../../helpers/queryFetch';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';

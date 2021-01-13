@@ -32,7 +32,7 @@ export const CargoTableRowForm = ({ cargo, setCargos, setCargoActive }) => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setCargos(cargos => filterDropById(cargos, cargo.id));
                     messageCloseSwal();
-                    messageSuccessSwal("Cargo eliminado con exito");                              
+                    messageSuccessSwal("Cargo eliminado con \u00E9xito");                              
                 } else {
                     controlErrorFetch(response, dispatch);                
                 }

@@ -22,8 +22,8 @@ export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
 
     const handleGoAnecdotaView = (idAnecdota) => history.replace(`/anecdota/view/${idAnecdota}/from/libro`);
     const handleModificationRequest = (anecdota) =>{
-        messageConfirmSwal("¿Esta seguro?", `De solicitar la modificacion de la anecdota <br><br>${anecdota.idAnecdota}
-                                - ${anecdota.nombreSuceso != "" ? anecdota.nombreSuceso : "Anecdota"}`, () =>{            
+        messageConfirmSwal("¿Esta seguro?", `De solicitar la modificaci\u00F3n de la an\u00E9cdota <br><br>${anecdota.idAnecdota}
+                                - ${anecdota.nombreSuceso != "" ? anecdota.nombreSuceso : "An\u00E9cdota"}`, () =>{            
             sendNotification(anecdota.idAnecdota);
         });
     }
@@ -38,7 +38,7 @@ export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
                 messageCloseSwal();
-                messageSuccessSwal("La solicitud ha sido enviada correctamente al administrador, espere la respuesta en los proximos dias.");        
+                messageSuccessSwal("La solicitud ha sido enviada correctamente al administrador, espere la respuesta en los pr\u00F3ximos d\u00EDas.");        
             } else {
                 controlErrorFetch(response, dispatch);                
             }
@@ -59,15 +59,15 @@ export const AnecdotaLibroRow = ({arrayAnecdotas}) => {
                                     <div className="row">
                                         <div className="col-10">
                                             {
-                                                anecdota.nombreSuceso != "" ? anecdota.nombreSuceso : "Anecdota"
+                                                anecdota.nombreSuceso != "" ? anecdota.nombreSuceso : "An\u00E9cdota"
                                             }
-                                            <footer className="blockquote-footer">Codigo Anecdota: {anecdota.idAnecdota}</footer>
+                                            <footer className="blockquote-footer">C&oacute;digo An&eacute;cdota: {anecdota.idAnecdota}</footer>
                                         </div>
                                         <div className="col-2">
                                             <div className="row">
                                                 <div onClick = {() => handleModificationRequest(anecdota)} title="Solicitar Modificaci&oacute;n"><FontAwesomeIcon icon={faEnvelope}/></div>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <div onClick={() => handleGoAnecdotaView(anecdota.idAnecdota)} title="Ver Anecdota"><FontAwesomeIcon icon={faPlus}/></div>
+                                                <div onClick={() => handleGoAnecdotaView(anecdota.idAnecdota)} title="Ver An&eacute;cdota"><FontAwesomeIcon icon={faPlus}/></div>
                                             </div>
                                         </div>
                                     </div>                                   

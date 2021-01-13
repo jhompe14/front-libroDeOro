@@ -14,7 +14,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
         
     return (
         <div className="content animate__animated animate__slideInLeft">
-            <h1>Informacion General</h1>
+            <h1>Informaci&oacute;n General</h1>
             <hr/>
             <div className="form-group row">
                 <div className="col-6">
@@ -46,7 +46,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                             onChange={handleInputChange}/>
                     </div>
                     <div  className="mt-2">               
-                        <label>Telefono</label> 
+                        <label>Tel&eacute;fono</label> 
                         <input 
                             type="text" 
                             name="telefono" 
@@ -82,7 +82,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                 </div>
                 <div className="col-6">
                     <div  className="mt-2">               
-                        <label>Direccion</label> 
+                        <label>Direcci&oacute;n</label> 
                         <input 
                             type="text" 
                             name="direccion" 

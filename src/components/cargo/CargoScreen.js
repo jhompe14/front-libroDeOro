@@ -44,7 +44,7 @@ export const CargoScreen = () => {
     useEffect(() => {
         const secciones = seccionesReducer?.secciones
         if(secciones?.length > 0 && typecargo===TYPE_CARGO_SECCION){
-            setHeadDescriptTypeCargo("Cargos de la seccion: ");
+            setHeadDescriptTypeCargo("Cargos de la secci\u00F3n: ");
             setDescripTypeCargo(filterById(secciones, typeId)[0]);
         }
     }, [seccionesReducer])

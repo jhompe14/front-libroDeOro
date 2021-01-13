@@ -76,12 +76,12 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                 </div>
                 <div className="col-3">
                     <div>               
-                        <label>Seccion</label>
+                        <label>Secci&oacute;n</label>
                         <select                            
                             name="idSeccion"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione una seccion</option>
+                            <option value="0">Seleccione una secci&oacute;n</option>
                             {                                
                                 seccionesFilter && seccionesFilter.map(seccion => 
                                                         <option key={seccion.id} 
@@ -93,12 +93,12 @@ export const AnecdotaListadoFilter = ({setAplicacionFiltros, setFiltros, authRed
                     </div>
                 </div>
                 <div className="col-3">
-                    <label>Estado Anecdota</label>
+                    <label>Estado An&eacute;cdota</label>
                     <select                            
                         name="estado"  
                         className="form-control"
                         onChange={handleInputChange}>
-                        <option value="0">Seleccione una seccion</option>
+                        <option value="0">Seleccione un estado</option>
                         <option value={TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION}>Pendiente aprobaci&oacute;n</option>
                         <option value={TYPE_ESTADO_ANECDOTA_APROBADO}>Aprobado</option>
                         <option value={TYPE_ESTADO_ANECDOTA_RECHAZADO}>Rechazado</option>

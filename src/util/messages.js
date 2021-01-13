@@ -16,11 +16,11 @@ export const messageErrorSwal = (message) => {
 };
 
 export const messageSuccessSwal = (message) => {
-    Swal.fire('Éxito', message, 'success');
+    Swal.fire('\u00C9xito', message, 'success');
 }
 
 export const messageWarningSwal = (message) => {
-    Swal.fire('Cuidado', message, 'warning');
+    Swal.fire('Cuidado!', message, 'warning');
 }
 
 export const messageCloseSwal = () => {
@@ -29,7 +29,7 @@ export const messageCloseSwal = () => {
 
 export const messageSuccessSwalWithFunction = (message, funcOk) => {
     Swal.fire({
-      title: 'Éxito',
+      title: '\u00C9xito',
       html: message,
       icon: 'success',
       showCancelButton: false,

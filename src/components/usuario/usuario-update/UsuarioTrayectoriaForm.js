@@ -114,12 +114,12 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria, au
                         </select>
                     </div>
                     <div  className="mt-2">               
-                        <label>Seccion</label>
+                        <label>Secci&oacute;n</label>
                         <select                            
                             name="seccion"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione una seccion</option>
+                            <option value="0">Seleccione una secci&oacute;n</option>
                             {                                
                                 seccionesFilter && seccionesFilter.map(seccion => 
                                                             <option key={seccion.id} 
@@ -137,7 +137,7 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria, au
                             name="cargo"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0">Seleccione un grupo</option>
+                            <option value="0">Seleccione un cargo</option>
                             {                                
                                 cargosFilter && cargosFilter.map(cargo => 
                                         <option key={cargo.id} 

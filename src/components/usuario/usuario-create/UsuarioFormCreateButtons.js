@@ -21,9 +21,9 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
     const goLogin = () => history.replace("/auth/login");
 
     const handleFinalizarUsuario = () =>{
-        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados esten correctos, al correo 
+        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados est\u00E9n correctos, al correo 
                                             <b>${formValues.correo}</b> se enviaran todas las notificaciones de 
-                                            cambio de estado de anecdotas y recuperacion de contraseña`, () => {
+                                            cambio de estado de an\u00E9cdotas y recuperaci\u00F3n de contrase\u00F1a`, () => {
             createUsuario();
         });
     }
@@ -36,7 +36,7 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Usuario creado con exito, intente ingresar desde la pantalla login.", () => {
+                    messageSuccessSwalWithFunction("Usuario creado con \u00E9xito, intente ingresar desde la pantalla login.", () => {
                         goLogin();
                     });                    
                 })                

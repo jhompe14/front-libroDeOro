@@ -9,7 +9,7 @@ export const UsuarioTrayectoriaTable = ({ trayectorias, setTrayectorias }) => {
                     <tr className="background_libro_oro">
                         <th scope="col">Grupo</th>
                         <th scope="col">Rama</th>
-                        <th scope="col">Seccion</th>
+                        <th scope="col">Secci&oacute;n</th>
                         <th scope="col">Cargo</th>
                         <th scope="col">A&ntilde;o Ingreso</th>
                         <th scope="col">A&ntilde;o Retiro</th>                        

@@ -36,7 +36,7 @@ export const GrupoTableRowForm = ({grupo, setGrupos, setGrupoActive}) => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setGrupos(grupos => filterDropById(grupos, grupo.id));
                     messageCloseSwal();
-                    messageSuccessSwal("Grupo eliminado con exito");
+                    messageSuccessSwal("Grupo eliminado con \u00E9xito");
                     dispatch(startLoadingGrupos());                              
                 } else {
                     controlErrorFetch(response, dispatch);        

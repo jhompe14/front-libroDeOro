@@ -43,7 +43,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {                  
                     messageCloseSwal();
-                    messageSuccessSwal("Seccion creada con exito");
+                    messageSuccessSwal("Secci\u00F3n creada con \u00E9xito");
                     dispatch(startLoadingSecciones());
                     handleClean();
                 })                
@@ -62,7 +62,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {                   
                     messageCloseSwal();
-                    messageSuccessSwal("Seccion actualizada con exito");
+                    messageSuccessSwal("Secci\u00F3n actualizada con \u00E9xito");
                     dispatch(startLoadingSecciones());
                     handleClean();
                 });                
@@ -134,7 +134,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                             onChange={handleInputChange}/>
                     </div>
                     <div className="mt-2">
-                        <label>Descripcion</label>  
+                        <label>Descripci&oacute;n</label>  
                         <textarea 
                             name="descripcion" 
                             className="form-control" 

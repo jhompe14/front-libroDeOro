@@ -39,7 +39,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwal("Rama creada con exito");
+                    messageSuccessSwal("Rama creada con \u00E9xito");
                     dispatch(startLoadingRamas());
                     handleClean();
                 })                
@@ -58,7 +58,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwal("Rama actualizada con exito");
+                    messageSuccessSwal("Rama actualizada con \u00E9xito");
                     dispatch(startLoadingRamas());
                     handleClean();
                 });                
@@ -113,7 +113,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                 <div className="col-6">
                     <div className="row">
                         <div className="col-3">
-                            <label>Edad Minima</label> 
+                            <label>Edad M&iacute;nima</label> 
                             <input 
                                 type="number" 
                                 name="edadMinima" 
@@ -122,7 +122,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                                 onChange={handleInputChange}/>
                         </div>
                         <div className="col-3">
-                            <label>Edad Maxima</label> 
+                            <label>Edad M&aacute;xima</label> 
                             <input 
                                 type="number" 
                                 name="edadMaxima" 
@@ -132,7 +132,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <label>Descripcion</label>  
+                        <label>Descripci&oacute;n</label>  
                         <textarea 
                             name="descripcion" 
                             className="form-control" 

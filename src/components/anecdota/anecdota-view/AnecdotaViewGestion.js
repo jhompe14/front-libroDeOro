@@ -70,7 +70,7 @@ export const AnecdotaViewGestion = ({ anecdota, setWizard }) => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("El estado de la anecdota ha sido modificado con exito.", 
+                    messageSuccessSwalWithFunction("El estado de la an\u00E9cdota ha sido modificado con \u00E9xito.", 
                     () => {
                         history.replace(`/anecdota/listado`);
                     });                    
@@ -89,7 +89,7 @@ export const AnecdotaViewGestion = ({ anecdota, setWizard }) => {
 
     return (
         <div className="content animate__animated animate__slideInLeft">
-            <h1>Gestion Anecdota</h1>
+            <h1>Gesti&oacute;n An&eacute;cdota</h1>
             <hr/>
             <div className="row m-15 justify-content-center align-items-center">
                 <div className="col-sm-6 col-md-4 col-md-offset-4">
@@ -100,7 +100,7 @@ export const AnecdotaViewGestion = ({ anecdota, setWizard }) => {
                     <hr/>
 
                     <div className="form-group row">
-                        <label>Estado Anecdota</label> 
+                        <label>Estado An&eacute;cdota</label> 
                         <select                            
                             name="estado"  
                             className="form-control"

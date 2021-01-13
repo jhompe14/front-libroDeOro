@@ -36,7 +36,7 @@ export const RamaTableRowForm = ({ rama, setRamas, setRamaActive }) => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setRamas(ramas => filterDropById(ramas, rama.id));
                     messageCloseSwal();
-                    messageSuccessSwal("Rama eliminada con exito");
+                    messageSuccessSwal("Rama eliminada con \u00C9xito");
                     dispatch(startLoadingRamas());                              
                 } else {
                     controlErrorFetch(response, dispatch);               

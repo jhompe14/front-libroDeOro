@@ -70,7 +70,7 @@ export const AnecdotaViewScreen = () => {
                                     }
                                     {
                                         anecdota.nombre == undefined || anecdota.nombre == null || anecdota.nombre == "" && 
-                                            "Anecdota"
+                                            "An\u00E9cdota"
                                     }
                                 </h1>
                             </div>
@@ -78,7 +78,7 @@ export const AnecdotaViewScreen = () => {
                                 <div className="ml-auto">
                                     {
                                         from === "listado" &&
-                                            <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>
+                                            <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;An&eacute;cdotas</button>
                                     }
 
                                     {

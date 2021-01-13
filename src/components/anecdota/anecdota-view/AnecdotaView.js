@@ -42,7 +42,7 @@ export const AnecdotaView = ({ anecdota, enlaces }) => {
                             <p>{anecdota.nombreRama}</p>
                         </div>
                         <div className="col-4">
-                            <label><b>Seccion</b></label>
+                            <label><b>Secci&oacute;n</b></label>
                             <p>{anecdota.nombreSeccion}</p>
                         </div>                       
                     </div>
@@ -62,7 +62,7 @@ export const AnecdotaView = ({ anecdota, enlaces }) => {
                     </div>
                     <div className="form-group row">
                         <div className="col-12">
-                            <label><b>Descripcion</b></label>
+                            <label><b>Descripci&oacute;n</b></label>
                             <p style={{maxHeight: "10.3em", overflowY: "auto", whiteSpace: "pre-line" , textAlign: "justify"}}>
                                 {anecdota.descripcion}
                             </p>
@@ -72,7 +72,7 @@ export const AnecdotaView = ({ anecdota, enlaces }) => {
                 <div className="col-6">
                     <nav>
                         <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Imagenes</a>
+                            <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Im&aacute;genes</a>
                             <a className="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Videos</a>
                         </div>
                     </nav>

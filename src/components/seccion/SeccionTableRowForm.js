@@ -37,7 +37,7 @@ export const SeccionTableRowForm = ({ seccion, setSecciones, setSeccionActive })
                 if(response.status === StatusCodes.ACCEPTED){
                     setSecciones(secciones => filterDropById(secciones, seccion.id));
                     messageCloseSwal();
-                    messageSuccessSwal("Seccion eliminada con exito");
+                    messageSuccessSwal("Secci\u00F3n eliminada con \u00E9xito");
                     dispatch(startLoadingSecciones());                              
                 } else {
                     controlErrorFetch(response, dispatch);                 

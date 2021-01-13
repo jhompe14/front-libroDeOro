@@ -32,7 +32,7 @@ export const ContrasenaRecoveredForm = ({usuario}) => {
         .then(response => {
             if(response.status === StatusCodes.ACCEPTED){
                 messageCloseSwal();
-                messageSuccessSwalWithFunction("La contrase\u00F1a ha sido modificada con exito.", 
+                messageSuccessSwalWithFunction("La contrase\u00F1a ha sido modificada con \u00E9xito.", 
                 () => {
                     history.replace(`/auth/login`);
                 });               

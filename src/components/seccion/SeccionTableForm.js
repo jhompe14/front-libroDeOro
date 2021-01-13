@@ -18,7 +18,7 @@ export const SeccionTableForm = ({ secciones, setSecciones, setSeccionActive }) 
                         <th scope="col">Grupo</th>                        
                         <th scope="col">Rama</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Descripci&oacute;n</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

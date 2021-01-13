@@ -51,7 +51,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
     const handleSubmit = () => {       
         if(edit){
             if(formValues.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION){
-                messageConfirmSwal("Recuerde", `Al guardar los cambios la anecdota pasara a estado PENDIENTE APROBACI\u00D3N`, () =>{
+                messageConfirmSwal("Recuerde", `Al guardar los cambios la an\u00E9cdota pasara a estado PENDIENTE APROBACI\u00D3N`, () =>{
                     updateAnecdota();
                 });
             }else {
@@ -76,7 +76,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Anecdota creada exitosamente. La anecdota entra en estado PENDIENTE APROBACI\u00D3N", 
+                    messageSuccessSwalWithFunction("An\u00E9cdota creada exitosamente. La an\u00E9cdota entra en estado PENDIENTE APROBACI\u00D3N", 
                     () => {
                         history.replace(`/anecdota/listado`);
                     });                    
@@ -102,7 +102,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Anecdota modificada exitosamente.", 
+                    messageSuccessSwalWithFunction("An\u00E9cdota modificada exitosamente.", 
                     () => {
                         history.replace(`/anecdota/listado`);
                     });                    
@@ -227,12 +227,12 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                 </div>
                 <div className="col-4">
                     <div>               
-                        <label>Seccion</label>
+                        <label>Secci&oacute;n</label>
                         <select                            
                             name="idSeccion"  
                             className="form-control"
                             onChange={handleInputChange}>
-                            <option value="0" selected={getSelectedSeccion(0)}>Seleccione una seccion</option>
+                            <option value="0" selected={getSelectedSeccion(0)}>Seleccione una secci&oacute;n</option>
                             {                                
                                 seccionesFilter && seccionesFilter.map(seccion => 
                                                         <option key={seccion.id} 
@@ -268,7 +268,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                         </div>                        
                     </div> 
 
-                    <label>Descripcion</label>  
+                    <label>Descripci&oacute;n</label>  
                     <textarea 
                         name="descripcion" 
                         className="form-control"
@@ -284,7 +284,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
                                 edit && 
                                 <a className="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Enlaces Cargados</a>
                             }
-                            <a className={"nav-item nav-link "+activeNavImages} id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected={ariaSelectedNavImages}>Cargar Imagenes</a>
+                            <a className={"nav-item nav-link "+activeNavImages} id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected={ariaSelectedNavImages}>Cargar Im&aacute;genes</a>
                             <a className="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Cargar Videos</a>
                         </div>
                     </nav>
@@ -392,7 +392,7 @@ export const AnecdotaForm = ({ anecdotaEdit, edit, enlaces, setEnlaces }) => {
             <div className="mt-2">
                 {
                     edit &&
-                    <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anecdotas</button>
+                    <button onClick={goListadoAnecdotas} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;An&eacute;cdotas</button>
                 }
                 &nbsp;&nbsp;&nbsp;
                 <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>                

@@ -32,17 +32,17 @@ export const AnecdotaListadoTableRow = ({anecdota}) => {
                 <div className="row">
                     {
                         authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
-                            <div className="col-2" title="Administrar Anecdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faTools}/></div>
+                            <div className="col-2" title="Administrar An&eacute;cdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faTools}/></div>
                     }
                     {
                         authReducer?.tipoUsuario == TYPE_USUARIO_INTEGRANTE &&
-                            <div className="col-2" title="Ver Anecdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faEye}/></div>
+                            <div className="col-2" title="Ver An&eacute;cdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faEye}/></div>
                     }
                     {
                         authReducer?.tipoUsuario == TYPE_USUARIO_INTEGRANTE && 
                             (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_APROBACION || 
                                 (anecdota.estado == TYPE_ESTADO_ANECDOTA_PENDIENTE_MODIFICACION && authReducer?.usuario == anecdota.usuarioGestion)) &&
-                            <div className="col-2" title="Modificar Anecdota" onClick={handleGoAnecdotaEdit}><FontAwesomeIcon icon={faPenAlt}/></div>
+                            <div className="col-2" title="Modificar An&eacute;cdota" onClick={handleGoAnecdotaEdit}><FontAwesomeIcon icon={faPenAlt}/></div>
                     }                    
                 </div>
             </td>

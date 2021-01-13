@@ -70,7 +70,7 @@ export const AnecdotaListadoScreen = () => {
     
     return (
       <div className="animate__animated animate__slideInLeft">
-        <h1>Listado de Anecdotas</h1>
+        <h1>Listado de An&eacute;cdotas</h1>
         <hr/>
 
         <AnecdotaListadoFilter 

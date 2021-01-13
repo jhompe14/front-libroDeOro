@@ -39,9 +39,9 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
     };
 
     const handleFinalizarUsuario = () => {
-        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados esten correctos, recuerde que al correo 
+        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados est\u00E9n correctos, recuerde que al correo 
                                             <b>${usuario.correo}</b> se enviaran todas las notificaciones de cambio de estado 
-                                            de anecdotas y recuperacion de contraseña`, () => {
+                                            de an\u00E9cdotas y recuperaci\u00F3n de contrase\u00F1a`, () => {
             updateUsuario();
         });
     }
@@ -59,7 +59,7 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Usuario modificado con exito", () => {
+                    messageSuccessSwalWithFunction("Usuario modificado con \u00E9xito", () => {
                         history.replace(`/`);
                     });                    
                 })                
