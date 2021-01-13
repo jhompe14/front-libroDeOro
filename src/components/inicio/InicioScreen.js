@@ -21,7 +21,8 @@ export const InicioScreen = () => {
     }
 
     return (
-        <div>
-        </div>
+        
+        <img src="escudo_scouts.jpg" className="imagen_centrada"/>
+        
     )
 }
