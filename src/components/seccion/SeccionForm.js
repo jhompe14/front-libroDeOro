@@ -15,8 +15,9 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
 
     const dispatch = useDispatch();
     const { grupoReducer:{grupos}, ramaReducer:{ramas}, authReducer } = useSelector( state => state);  
-    const[ramasFilter, setRamasFilter] = useState([]);
+    const [ramasFilter, setRamasFilter] = useState([]);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialSeccion);
+    const [disabledForm, setDisabledForm] = useState(false); 
     
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
@@ -25,6 +26,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
     useEffect(() => {
         if(seccionActive.id){ 
             handleObjectChange(seccionActive);
+            setDisabledForm(true);
         }
     }, [seccionActive]);
 
@@ -43,7 +45,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {                  
                     messageCloseSwal();
-                    messageSuccessSwal("Seccion creada con exito");
+                    messageSuccessSwal("Secci\u00F3n creada con \u00E9xito");
                     dispatch(startLoadingSecciones());
                     handleClean();
                 })                
@@ -62,7 +64,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {                   
                     messageCloseSwal();
-                    messageSuccessSwal("Seccion actualizada con exito");
+                    messageSuccessSwal("Secci\u00F3n actualizada con \u00E9xito");
                     dispatch(startLoadingSecciones());
                     handleClean();
                 });                
@@ -78,6 +80,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
     const handleClean = () =>{
         setSeccionActive(initialSeccion);
         reset(initialSeccion);
+        setDisabledForm(false);
     }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
@@ -93,7 +96,8 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                         <select
                             name="idGrupo"  
                             className="form-control"
-                            onChange={handleInputChange}>
+                            onChange={handleInputChange}
+                            disabled={disabledForm}>
                             <option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>
                             {                                
                                 grupos && grupos.map(grupo => 
@@ -110,7 +114,8 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                         <select                            
                             name="idRama"  
                             className="form-control"
-                            onChange={handleInputChange}>
+                            onChange={handleInputChange}
+                            disabled={disabledForm}>
                             <option value="0" selected={getSelectedRama(0)}>Seleccione una rama</option>
                             {                                
                                 ramasFilter && ramasFilter.map(rama => 
@@ -134,7 +139,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                             onChange={handleInputChange}/>
                     </div>
                     <div className="mt-2">
-                        <label>Descripcion</label>  
+                        <label>Descripci&oacute;n</label>  
                         <textarea 
                             name="descripcion" 
                             className="form-control" 
@@ -145,9 +150,9 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
             </div>
             <div className="row mt-2">
                 &nbsp;&nbsp;&nbsp;
-                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/>&nbsp;&nbsp;Limpiar</button>
                 &nbsp;&nbsp;
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
             </div>            
         </>
     )

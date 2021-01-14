@@ -17,9 +17,9 @@ export const RamaTableForm = ({ramas, setRamas, setRamaActive}) => {
                     <tr className="background_libro_oro">
                         <th scope="col">Grupo</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Edad Minima</th>
-                        <th scope="col">Edad Maxima</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Edad M&iacute;nima</th>
+                        <th scope="col">Edad M&aacute;xima</th>
+                        <th scope="col">Descripci&oacute;n</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

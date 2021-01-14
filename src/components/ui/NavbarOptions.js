@@ -6,11 +6,30 @@ export const NavbarOptions = ({authReducer}) => {
     return (
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
             <ul className="navbar-nav">
+
+                {
+                    authReducer.tipoUsuario === TYPE_USUARIO_INTEGRANTE &&
+                    <li className="nav-item dropdown">
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Libro de Oro
+                        </a>
+                        <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
+                            <NavLink 
+                                className="nav-link" 
+                                exact
+                                to="/anecdota/libro">
+                                Ver
+                            </NavLink>
+                        </div>
+                    </li>
+                            
+                }
+
                 { 
                     authReducer.tipoUsuario === TYPE_USUARIO_ADMINISTRADOR &&                   
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Mestros
+                                Maestros
                             </a>
                             <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
                                 <NavLink 
@@ -32,29 +51,15 @@ export const NavbarOptions = ({authReducer}) => {
                                     className="nav-item nav-link" 
                                     exact
                                     to="/seccion">
-                                        Seccion
+                                        Secciones
                                 </NavLink>
                             </div>
                         </li>
-                }
-
-                {
-                    authReducer.tipoUsuario === TYPE_USUARIO_INTEGRANTE &&
-                    <>                   
-                        <li className="nav-item dropdown">
-                            <NavLink 
-                                className="nav-item nav-link"
-                                exact
-                                to="/usuario-update">
-                                   Usuario
-                            </NavLink>
-                        </li> 
-                    </>                  
-                }
+                }                
 
                 <li className="nav-item dropdown">
                     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Administracion de Anecdotas
+                        Administraci&oacute;n de An&eacute;cdotas
                     </a>
                     <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
                         {
@@ -63,8 +68,8 @@ export const NavbarOptions = ({authReducer}) => {
                                 activeClassName="active"
                                 className="nav-item nav-link" 
                                 exact
-                                to="/anecdota">
-                                    Creacion de Anecdotas
+                                to="/anecdota/create">
+                                    Creaci&oacute;n de An&eacute;cdotas
                             </NavLink>
                         }
 
@@ -72,12 +77,39 @@ export const NavbarOptions = ({authReducer}) => {
                             activeClassName="active"
                             className="nav-item nav-link" 
                             exact
-                            to="/anecdota-listado">
-                            Listado de Anecdotas
+                            to="/anecdota/listado">
+                            Listado de An&eacute;cdotas
                         </NavLink>
                                                             
                     </div>
                 </li>
+
+                {
+                    authReducer.tipoUsuario === TYPE_USUARIO_INTEGRANTE &&
+                    <>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Administraci&oacute;n de Usuario
+                            </a>
+                            <div className="dropdown-menu background_libro_oro" aria-labelledby="navbarDropdownMenuLink">
+                                <NavLink 
+                                    activeClassName="active"
+                                    className="nav-item nav-link" 
+                                    exact
+                                    to="/usuario/update">
+                                        Informaci&oacute;n b&aacute;sica
+                                </NavLink>
+                                <NavLink 
+                                    activeClassName="active"
+                                    className="nav-item nav-link" 
+                                    exact
+                                    to="/contrasena/update">
+                                        Modificar Contrase&ntilde;a
+                                </NavLink>
+                            </div>
+                        </li>
+                    </>                  
+                }
             </ul>
         </div>
     )

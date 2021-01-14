@@ -18,9 +18,9 @@ export const LoginForm = () => {
         dispatch(startLoginUser(formValues.usuario, formValues.contrasena));
     }
 
-    const handleRedirectUsuario = () => {
-        history.replace("/usuario-create");
-    }
+    const handleRedirectUsuario = () =>  history.replace("/usuario/create");
+
+    const handleRedirectContrasenaUsuario = () => history.replace("/contrasena/usuario");
 
     return (
         <div className="row m-5 justify-content-center align-items-center">
@@ -48,10 +48,9 @@ export const LoginForm = () => {
                             onChange={handleInputChange} />
                         
                         <button onClick={handleLogin} className="btn btn-lg btn-primary btn-block"> Acceder </button>                        
-                    </form>
-                    
-                    <a onClick={handleRedirectUsuario} className="text-center new-account">Crear un Usuario </a>
-                
+                    </form>                    
+                    <a onClick={handleRedirectUsuario} className="text-center new-account">Crear Usuario </a>
+                    <a onClick={handleRedirectContrasenaUsuario} className="text-center new-account">Recuperar Contrase&ntilde;a </a>                
                 </div>                
             </div>
         </div>

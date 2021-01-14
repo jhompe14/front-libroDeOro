@@ -12,7 +12,8 @@ import { HOST_URL_BACK,
     METHOD_PUT} from '../../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
-        messageSuccessSwalWithFunction } from '../../../util/messages';
+        messageSuccessSwalWithFunction,
+        messageConfirmSwal } from '../../../util/messages';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 
 export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, usuario, authReducer }) => {
@@ -37,7 +38,15 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
         anioRetiro: 0
     };
 
-    const handleFinalizarUsuario = () =>{
+    const handleFinalizarUsuario = () => {
+        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados est\u00E9n correctos, recuerde que al correo 
+                                            <b>${usuario.correo}</b> se enviaran todas las notificaciones de cambio de estado 
+                                            de an\u00E9cdotas y recuperaci\u00F3n de contrase\u00F1a`, () => {
+            updateUsuario();
+        });
+    }
+
+    const updateUsuario = () => {
         messageLoadingSwal();
         
         const objSendUsuario ={
@@ -50,7 +59,7 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Usuario modificado con exito", () => {
+                    messageSuccessSwalWithFunction("Usuario modificado con \u00E9xito", () => {
                         history.replace(`/`);
                     });                    
                 })                
@@ -76,9 +85,9 @@ export const UsuarioTrayectoria = ({setWizard, trayectorias, setTrayectorias, us
                 trayectorias={trayectorias} 
                 setTrayectorias = {setTrayectorias}/>
 
-            <button onClick={changeWizard} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Anterior</button>
+            <button onClick={changeWizard} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Anterior</button>
             &nbsp;&nbsp;&nbsp;
-            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Finalizar</button>
+            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Finalizar</button>
         </div>
     )
 }

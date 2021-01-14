@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { commandFetch } from '../../helpers/commandFetch';
 import { useForm } from '../../hooks/useForm';
 import { HOST_URL_BACK, METHOD_POST, METHOD_PUT, API_RAMAS } from '../../util/constant';
@@ -17,10 +17,12 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
     const dispatch = useDispatch();
     const { grupoReducer:{grupos}, authReducer } = useSelector( state => state);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialRama);
+    const [disabledForm, setDisabledForm] = useState(false); 
 
     useEffect(() => {
         if(ramaActive.id){
             handleObjectChange(ramaActive);
+            setDisabledForm(true);
         }
     }, [ramaActive]);
 
@@ -39,7 +41,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwal("Rama creada con exito");
+                    messageSuccessSwal("Rama creada con \u00E9xito");
                     dispatch(startLoadingRamas());
                     handleClean();
                 })                
@@ -58,7 +60,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwal("Rama actualizada con exito");
+                    messageSuccessSwal("Rama actualizada con \u00E9xito");
                     dispatch(startLoadingRamas());
                     handleClean();
                 });                
@@ -74,6 +76,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
     const handleClean = () =>{
         setRamaActive(initialRama);
         reset(initialRama);
+        setDisabledForm(false);
     }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
@@ -87,7 +90,8 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                         <select                            
                             name="idGrupo"  
                             className="form-control"
-                            onChange={handleInputChange}>
+                            onChange={handleInputChange}
+                            disabled={disabledForm}>
                             { (<option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>) }
                             {
                                                                 
@@ -113,7 +117,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                 <div className="col-6">
                     <div className="row">
                         <div className="col-3">
-                            <label>Edad Minima</label> 
+                            <label>Edad M&iacute;nima</label> 
                             <input 
                                 type="number" 
                                 name="edadMinima" 
@@ -122,7 +126,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                                 onChange={handleInputChange}/>
                         </div>
                         <div className="col-3">
-                            <label>Edad Maxima</label> 
+                            <label>Edad M&aacute;xima</label> 
                             <input 
                                 type="number" 
                                 name="edadMaxima" 
@@ -132,7 +136,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                         </div>
                     </div>
                     <div className="mt-2">
-                        <label>Descripcion</label>  
+                        <label>Descripci&oacute;n</label>  
                         <textarea 
                             name="descripcion" 
                             className="form-control" 
@@ -143,9 +147,9 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
             </div>
             <div className="row mt-2">
                 &nbsp;&nbsp;&nbsp;
-                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/>&nbsp;&nbsp;Limpiar</button>
                 &nbsp;&nbsp;
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
             </div>            
         </>
     )

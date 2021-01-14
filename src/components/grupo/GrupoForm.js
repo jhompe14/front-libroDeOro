@@ -37,7 +37,7 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {                  
                     messageCloseSwal();
-                    messageSuccessSwal("Grupo creado con exito");
+                    messageSuccessSwal("Grupo creado con \u00E9xito");
                     dispatch(startLoadingGrupos());
                     handleClean();
                 })                
@@ -56,7 +56,7 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
             if(response.status === StatusCodes.ACCEPTED){
                 response.json().then(grupo => {                   
                     messageCloseSwal();
-                    messageSuccessSwal("Grupo actualizado con exito");
+                    messageSuccessSwal("Grupo actualizado con \u00E9xito");
                     dispatch(startLoadingGrupos());
                     handleClean();
                 });                
@@ -86,7 +86,7 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
                     value= {formValues.nombre} 
                     onChange={handleInputChange}/>  
 
-                <label>Descripcion</label>  
+                <label>Descripci&oacute;n</label>  
                 <textarea 
                     name="descripcion" 
                     className="form-control" 
@@ -94,9 +94,9 @@ export const GrupoForm = ({ grupoActive, setGrupoActive, initialGrupo }) => {
                     onChange={handleInputChange}/>                           
             </div>
             <div className="mt-2">
-                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/> Limpiar</button>
+                <button onClick={handleClean} className="btn btn-primary"><FontAwesomeIcon icon={faHandSparkles}/>&nbsp;&nbsp;Limpiar</button>
                 &nbsp;&nbsp;
-                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+                <button onClick={handleSubmit} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
             </div>
         </>
     )

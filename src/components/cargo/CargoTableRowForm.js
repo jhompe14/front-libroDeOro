@@ -25,14 +25,14 @@ export const CargoTableRowForm = ({ cargo, setCargos, setCargoActive }) => {
     };
 
     const handleDeleteGrupo = () => {
-        messageConfirmSwal(`Quiere eliminar el cargo ${cargo.nombre}`, () =>{
+        messageConfirmSwal("¿Esta seguro?", `Quiere eliminar el cargo ${cargo.nombre}`, () =>{
             messageLoadingSwal();
             commandFetch(`${HOST_URL_BACK}${API_CARGOS}/${cargo.id}`, METHOD_DELETE, undefined, authReducer?.token)
             .then(response => {
                 if(response.status === StatusCodes.ACCEPTED){
                     setCargos(cargos => filterDropById(cargos, cargo.id));
                     messageCloseSwal();
-                    messageSuccessSwal("Cargo eliminado con exito");                              
+                    messageSuccessSwal("Cargo eliminado con \u00E9xito");                              
                 } else {
                     controlErrorFetch(response, dispatch);                
                 }

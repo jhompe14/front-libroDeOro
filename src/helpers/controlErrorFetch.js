@@ -9,7 +9,7 @@ export const controlErrorFetch = (err, dispatch) => {
         setActiveWarningFunc();   
         messageCloseSwal();
         if(err.status && err.status===StatusCodes.FORBIDDEN){
-            messageWarningFunction("La session ha expirado, por favor vuelva a iniciar sesion", 
+            messageWarningFunction("La sesi\u00F3n ha expirado, por favor vuelva a iniciar sesi\u00F3n", 
                 () => {
                     dispatch(startLogoutUser());
                     setInactiveWarningFunc();
@@ -19,7 +19,7 @@ export const controlErrorFetch = (err, dispatch) => {
                 messageErrorFetch(msg);                                     
             });            
         } else {
-            messageErrorFetch("Ha ocurrido un error interno por favor comuniquese con el administrador");
+            messageErrorFetch("Ha ocurrido un error interno por favor comun\u00EDquese con el administrador");
         }
     } 
 }

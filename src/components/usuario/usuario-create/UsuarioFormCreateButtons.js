@@ -9,7 +9,8 @@ import { HOST_URL_BACK,
     METHOD_POST } from '../../../util/constant';
 import { messageLoadingSwal, 
         messageCloseSwal, 
-        messageSuccessSwalWithFunction } from '../../../util/messages';
+        messageSuccessSwalWithFunction, 
+        messageConfirmSwal} from '../../../util/messages';
 import { controlErrorFetch } from '../../../helpers/controlErrorFetch';
 import { commandFetch } from '../../../helpers/commandFetch';
 
@@ -20,6 +21,14 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
     const goLogin = () => history.replace("/auth/login");
 
     const handleFinalizarUsuario = () =>{
+        messageConfirmSwal("CUIDADO!", `Verifique que todos los campos diligenciados est\u00E9n correctos, al correo 
+                                            <b>${formValues.correo}</b> se enviaran todas las notificaciones de 
+                                            cambio de estado de an\u00E9cdotas y recuperaci\u00F3n de contrase\u00F1a`, () => {
+            createUsuario();
+        });
+    }
+
+    const createUsuario = () => {
         messageLoadingSwal();  
         
         commandFetch(`${HOST_URL_BACK}${API_USUARIOS}`, METHOD_POST, formValues)
@@ -27,8 +36,8 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
             if(response.status === StatusCodes.CREATED){
                 response.json().then(() => {
                     messageCloseSwal();
-                    messageSuccessSwalWithFunction("Usuario creado con exito, intente ingresar desde la pantalla login.", () => {
-                        history.replace(`/auth/login`);
+                    messageSuccessSwalWithFunction("Usuario creado con \u00E9xito, intente ingresar desde la pantalla login.", () => {
+                        goLogin();
                     });                    
                 })                
             } else {
@@ -43,9 +52,9 @@ export const UsuarioFormCreateButtons = ({formValues}) => {
 
     return (
         <div>
-            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/> Login</button>
+            <button onClick={goLogin} className="btn btn-primary"><FontAwesomeIcon icon={faBackward}/>&nbsp;&nbsp;Login</button>
             &nbsp;&nbsp;&nbsp;
-            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/> Guardar</button>
+            <button onClick={handleFinalizarUsuario} className="btn btn-primary"><FontAwesomeIcon icon={faSave}/>&nbsp;&nbsp;Guardar</button>
         </div>
     )
 }

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { controlErrorFetch } from '../../helpers/controlErrorFetch';
 import { HOST_URL_BACK, API_CARGOS } from '../../util/constant';
 import { CargoTableRowForm } from './CargoTableRowForm';
-import { StatusCodes } from 'http-status-codes';
 import { queryFetch } from '../../helpers/queryFetch';
 import { messageLoadingSwal, messageCloseSwal } from '../../util/messages';
 
@@ -16,13 +15,6 @@ export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, t
     const loadCargos = async() => {
         messageLoadingSwal();
         await queryFetch(`${HOST_URL_BACK}${API_CARGOS}/type/${typecargo}/id/${typeId}`, authReducer?.token)
-            .then(resp => {
-                if(resp.status === StatusCodes.OK){
-                    return resp.json()
-                }else{
-                    return new Promise((resolve, reject) => reject({status: resp.status}));
-                }
-            })
             .then(data =>{
                 messageCloseSwal();
                 if(data.length > 0){
@@ -44,7 +36,7 @@ export const CargoTableForm = ({ cargos, setCargos, setCargoActive, typecargo, t
                 <thead>
                     <tr className="background_libro_oro">
                         <th scope="col">Nombre</th>
-                        <th scope="col">Descripcion</th>
+                        <th scope="col">Descripci&oacute;n</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

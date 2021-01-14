@@ -1,3 +1,5 @@
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,19 +12,26 @@ export const Navbar = () => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark background_libro_oro">
-            <Link 
-                className="navbar-brand" 
-                to="/">Libro de Oro Scouts</Link>
         {
-           authReducer?.usuario &&
-                <NavbarOptions authReducer = { authReducer }/>
-        }                  
-            
-        {
-            authReducer?.usuario &&
-                <NavbarLogout />            
+            !authReducer?.usuario &&
+                <Link 
+                    className="navbar-brand"
+                    to="/">Libro de Oro Scouts</Link>
         }
 
+        {
+           authReducer?.usuario &&
+                <>
+                    <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
+                    &nbsp;&nbsp;
+                    <Link 
+                        className="navbar-brand"
+                        to="/"><b>{authReducer.usuario.toUpperCase()}</b>
+                    </Link>
+                    <NavbarOptions authReducer = { authReducer }/>
+                    <NavbarLogout />
+                </>
+        }  
         </nav>        
     )
 }

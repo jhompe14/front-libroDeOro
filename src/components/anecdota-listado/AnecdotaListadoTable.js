@@ -5,7 +5,7 @@ import { AnecdotaListadoTableRow } from './AnecdotaListadoTableRow';
 
 export const AnecdotaListadoTable = ({page, setPage, totalItems, anecdotas}) => {
     
-    const PAGE_SIZE = 4;
+    const PAGE_SIZE = 6;
 
     const handlePageChange = (pageNumber) =>{
         setPage(pageNumber);
@@ -16,14 +16,15 @@ export const AnecdotaListadoTable = ({page, setPage, totalItems, anecdotas}) => 
              <table className="table table-sm">
                 <thead>
                     <tr className="background_libro_oro">
+                        <th scope="col">C&oacute;digo</th>
                         <th scope="col">Grupo</th>
                         <th scope="col">Rama</th>
-                        <th scope="col">Seccion</th>
+                        <th scope="col">Secci&oacute;n</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Fecha Suceso</th>
                         <th scope="col">Usuario Registro</th>
                         <th scope="col">Estado</th>
-                        <th scope="col">Usuario Gestion</th>
+                        <th scope="col">Usuario Gesti&oacute;n</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>

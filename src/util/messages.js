@@ -1,5 +1,21 @@
 import Swal from 'sweetalert2';
 
+export const messageErrorSwal = (message) => {
+    Swal.fire('Error', message, 'error');
+};
+
+export const messageSuccessSwal = (message) => {
+    Swal.fire('\u00C9xito', message, 'success');
+}
+
+export const messageWarningSwal = (message) => {
+    Swal.fire('Cuidado!', message, 'warning');
+}
+
+export const messageCloseSwal = () => {
+    Swal.close();
+};
+
 export const messageLoadingSwal = () => {
     Swal.fire({
         title: 'Cargando...',
@@ -11,22 +27,15 @@ export const messageLoadingSwal = () => {
     });
 };
 
-export const messageErrorSwal = (message) => {
-    Swal.fire('Error', message, 'error');
-};
-
-export const messageSuccessSwal = (message) => {
-    Swal.fire('Éxito', message, 'success');
-}
-
 export const messageSuccessSwalWithFunction = (message, funcOk) => {
     Swal.fire({
-      title: 'Éxito',
-      text: message,
+      title: '\u00C9xito',
+      html: message,
       icon: 'success',
       showCancelButton: false,
       confirmButtonColor: '#3085d6',
-      confirmButtonText: 'OK'
+      confirmButtonText: 'Aceptar',
+      allowOutsideClick: false,
     }).then((result) => {
       if (result.isConfirmed) {
         funcOk();
@@ -34,20 +43,17 @@ export const messageSuccessSwalWithFunction = (message, funcOk) => {
     })
 }
 
-export const messageCloseSwal = () => {
-    Swal.close();
-};
-
-export const messageConfirmSwal = (message, funcConfirm) => {
+export const messageConfirmSwal = (title, message, funcConfirm) => {
     Swal.fire({
-        title: '¿Esta seguro?',
-        text: message,
+        title: title,
+        html: message,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Aceptar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed) {
             funcConfirm();
@@ -62,6 +68,7 @@ export const messageWarningFunction = (message, funcWarning) => {
         html: message,
         timer: 3000,
         timerProgressBar: true,
+        allowOutsideClick: false,
         willOpen: () => {
             Swal.showLoading();            
         },
