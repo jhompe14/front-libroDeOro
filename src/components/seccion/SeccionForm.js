@@ -15,8 +15,9 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
 
     const dispatch = useDispatch();
     const { grupoReducer:{grupos}, ramaReducer:{ramas}, authReducer } = useSelector( state => state);  
-    const[ramasFilter, setRamasFilter] = useState([]);
+    const [ramasFilter, setRamasFilter] = useState([]);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialSeccion);
+    const [disabledForm, setDisabledForm] = useState(false); 
     
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.idGrupo));
@@ -25,6 +26,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
     useEffect(() => {
         if(seccionActive.id){ 
             handleObjectChange(seccionActive);
+            setDisabledForm(true);
         }
     }, [seccionActive]);
 
@@ -78,6 +80,7 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
     const handleClean = () =>{
         setSeccionActive(initialSeccion);
         reset(initialSeccion);
+        setDisabledForm(false);
     }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
@@ -93,7 +96,8 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                         <select
                             name="idGrupo"  
                             className="form-control"
-                            onChange={handleInputChange}>
+                            onChange={handleInputChange}
+                            disabled={disabledForm}>
                             <option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>
                             {                                
                                 grupos && grupos.map(grupo => 
@@ -110,7 +114,8 @@ export const SeccionForm = ({ seccionActive, setSeccionActive, initialSeccion}) 
                         <select                            
                             name="idRama"  
                             className="form-control"
-                            onChange={handleInputChange}>
+                            onChange={handleInputChange}
+                            disabled={disabledForm}>
                             <option value="0" selected={getSelectedRama(0)}>Seleccione una rama</option>
                             {                                
                                 ramasFilter && ramasFilter.map(rama => 

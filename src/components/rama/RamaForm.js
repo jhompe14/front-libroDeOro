@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { commandFetch } from '../../helpers/commandFetch';
 import { useForm } from '../../hooks/useForm';
 import { HOST_URL_BACK, METHOD_POST, METHOD_PUT, API_RAMAS } from '../../util/constant';
@@ -17,10 +17,12 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
     const dispatch = useDispatch();
     const { grupoReducer:{grupos}, authReducer } = useSelector( state => state);
     const [formValues, handleInputChange, handleObjectChange, reset] = useForm(initialRama);
+    const [disabledForm, setDisabledForm] = useState(false); 
 
     useEffect(() => {
         if(ramaActive.id){
             handleObjectChange(ramaActive);
+            setDisabledForm(true);
         }
     }, [ramaActive]);
 
@@ -74,6 +76,7 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
     const handleClean = () =>{
         setRamaActive(initialRama);
         reset(initialRama);
+        setDisabledForm(false);
     }
 
     const getSelectedGrupo = (grupoId) =>  formValues && formValues.idGrupo === grupoId ? 'selected': '';
@@ -87,7 +90,8 @@ export const RamaForm = ({ ramaActive, setRamaActive, initialRama }) => {
                         <select                            
                             name="idGrupo"  
                             className="form-control"
-                            onChange={handleInputChange}>
+                            onChange={handleInputChange}
+                            disabled={disabledForm}>
                             { (<option value="0" selected={getSelectedGrupo(0)}>Seleccione un grupo</option>) }
                             {
                                                                 
