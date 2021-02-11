@@ -25,20 +25,36 @@ export const UsuarioTrayectoriaForm = ({ setTrayectorias, initialTrayectoria, au
     const[ramasFilter, setRamasFilter] = useState([]);
     const[seccionesFilter, setSeccionesFilter] = useState([]);
     const[cargosFilter, setCargosFilter] = useState([]);
-    const [formValues, handleInputChange, reset] = useForm(initialTrayectoria);
+    const[formValues, handleInputChange, handleObjectChange, reset] = useForm(initialTrayectoria);
 
     useEffect(() => {
         setRamasFilter(filterRamasByGrupo(ramas, formValues.grupo));
+        setSeccionesFilter([]);
         setCargosFilter(filterCargosByGrupoRamaSeccion(cargos, formValues.grupo, formValues.rama, formValues.seccion));
+        handleObjectChange({
+            ...formValues,
+            rama: 0,
+            seccion: 0,
+            cargo: 0,
+        });
     }, [formValues.grupo]);
 
     useEffect(() => {
         setSeccionesFilter(filterSeccionesByRama(secciones, formValues.rama));
         setCargosFilter(filterCargosByGrupoRamaSeccion(cargos, formValues.grupo, formValues.rama, formValues.seccion));
+        handleObjectChange({
+            ...formValues,
+            seccion: 0,
+            cargo: 0,
+        });
     }, [formValues.rama]);
 
     useEffect(() => {
         setCargosFilter(filterCargosByGrupoRamaSeccion(cargos, formValues.grupo, formValues.rama, formValues.seccion));
+        handleObjectChange({
+            ...formValues,
+            cargo: 0,
+        });
     }, [formValues.seccion]);
 
     const handleAddTrayectoria = () => {
