@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { AboutScreen } from '../components/about/AboutScreen';
 import { LoginScreen } from '../components/login/LoginScreen';
 import { ContrasenaGetUsuarioScreen } from '../components/usuario/contrasena-get-usuario/ContrasenaGetUsuarioScreen';
 import { ContrasenaRecoveredScreen } from '../components/usuario/contrasena-recovered/ContrasenaRecoveredScreen';
@@ -15,6 +16,7 @@ export const PublicRoute = () => {
                 <Route exact path="/usuario/create" component={UsuarioCreateScreen} />
                 <Route exact path="/contrasena/usuario" component={ContrasenaGetUsuarioScreen} />
                 <Route exact path="/contrasena/:idRecovered" component={ContrasenaRecoveredScreen} />
+                <Route exact path="/about" component={AboutScreen} />
                 <Redirect to="/auth/login" />
             </Switch>     
         </div>
