@@ -11,6 +11,11 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
     
     const [formValues, handleInputChange] = useForm(usuario);
     const checkedTipoIntegrante = (tipoIntegrante) =>  formValues.tipoIntegrante === tipoIntegrante ? true : false;
+
+    const upperCaseOnChange = (e) => {
+        e.target.value = e.target.value.toUpperCase()
+        handleInputChange(e)
+    }
         
     return (
         <div className="content animate__animated animate__slideInLeft">
@@ -25,7 +30,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                             name="nombres" 
                             className="form-control"
                             value= {formValues.nombres} 
-                            onChange={handleInputChange}/>
+                            onChange={upperCaseOnChange}/>
                     </div>
                     <div  className="mt-2">               
                         <label>Apellidos</label> 
@@ -34,7 +39,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                             name="apellidos" 
                             className="form-control"
                             value= {formValues.apellidos} 
-                            onChange={handleInputChange}/>
+                            onChange={upperCaseOnChange}/>
                     </div>                   
                     <div  className="mt-2">               
                         <label>Correo</label> 
@@ -52,7 +57,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                             name="telefono" 
                             className="form-control"
                             value= {formValues.telefono} 
-                            onChange={handleInputChange}/>
+                            onChange={upperCaseOnChange}/>
                     </div>
                     <div  className="mt-2">
                         <label>Tipo Integrante</label>
@@ -88,7 +93,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                             name="direccion" 
                             className="form-control"
                             value= {formValues.direccion} 
-                            onChange={handleInputChange}/>
+                            onChange={upperCaseOnChange}/>
                     </div>
                     <div  className="mt-2">               
                         <label>Ciudad</label> 
@@ -97,7 +102,7 @@ export const UsuarioForm = ({setWizard, usuario, setUsuario, formType, authReduc
                             name="ciudad" 
                             className="form-control"
                             value= {formValues.ciudad} 
-                            onChange={handleInputChange}/>
+                            onChange={upperCaseOnChange}/>
                     </div>
                     {
                         formType === TYPE_FORM_CREATE &&
