@@ -10,6 +10,7 @@ import { GrupoScreen } from '../components/grupo/GrupoScreen';
 import { InicioScreen } from '../components/inicio/InicioScreen';
 import { RamaScreen } from '../components/rama/RamaScreen';
 import { SeccionScreen } from '../components/seccion/SeccionScreen';
+import { UsuarioListadoScreen } from '../components/usuario-listado/UsuarioListadoScreen';
 import { ContrasenaUpdateScreen } from '../components/usuario/contrasena-update/ContrasenaUpdateScreen';
 import { UsuarioUpdateScreen } from '../components/usuario/usuario-update/UsuarioUpdateScreen';
 
@@ -24,12 +25,13 @@ export const PrivateRoute = () => {
                 <Route exact path="/seccion" component={SeccionScreen} />
                 <Route exact path="/cargo/type/:typecargo/id/:typeId" component={CargoScreen} />
                 <Route exact path="/usuario/update" component={UsuarioUpdateScreen} />
+                <Route exact path="/usuario/listado" component={UsuarioListadoScreen} />
                 <Route exact path="/contrasena/update" component={ContrasenaUpdateScreen} />                
                 <Route exact path="/anecdota/listado" component={AnecdotaListadoScreen} />
                 <Route exact path="/anecdota/create" component={AnecdotaCreateScreen} />
                 <Route exact path="/anecdota/libro" component={AnecdotaLibroScreen} />
                 <Route exact path="/anecdota/view/:idAnecdota/from/:from" component={AnecdotaViewScreen}/>
-                <Route exact path="/anecdota/edit/:idAnecdota" component={AnecdotaEditScreen}/>
+                <Route exact path="/anecdota/edit/:idAnecdota" component={AnecdotaEditScreen}/>               
                 <Route exact path="/" component={InicioScreen} />   
                 <Redirect to="/" />   
             </Switch>

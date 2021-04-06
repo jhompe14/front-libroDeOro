@@ -31,8 +31,11 @@ export const AnecdotaListadoTableRow = ({anecdota}) => {
             <td>
                 <div className="row">
                     {
-                        authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR && 
-                            <div className="col-2" title="Administrar An&eacute;cdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faTools}/></div>
+                        authReducer?.tipoUsuario == TYPE_USUARIO_ADMINISTRADOR &&
+                            <> 
+                                <div className="col-2" title="Administrar An&eacute;cdota" onClick={handleGoAnecdotaView}><FontAwesomeIcon icon={faTools}/></div>
+                                <div className="col-2" title="Modificar An&eacute;cdota" onClick={handleGoAnecdotaEdit}><FontAwesomeIcon icon={faPenAlt}/></div>
+                            </>
                     }
                     {
                         authReducer?.tipoUsuario == TYPE_USUARIO_INTEGRANTE &&
