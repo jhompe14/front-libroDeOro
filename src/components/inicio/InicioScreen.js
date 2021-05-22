@@ -22,7 +22,7 @@ export const InicioScreen = () => {
 
     return (
         
-        <img src="escudo_scouts.jpg" className="imagen_centrada"/>
+        <img src="portada.jpg" className="imagen_centrada"/>
         
     )
 }
